@@ -5,9 +5,21 @@ class Libpressio(CMakePackage):
     """A generic abstraction for the compression of dense tensors"""
 
     homepage = "https://github.com/codarcode/libpressio"
-    git      = "https://github.com/codarcode/libpressio"
+    url      = "https://github.com/robertu94/libpressio/archive/0.31.1.tar.gz"
+    git      = "https://github.com/robertu94/libpressio"
 
     version('master', branch='master')
+    version('0.31.1', sha256='32c1fd8319fbbb844a0a252d44761f81f17c6f3549daadce47e81524d84605a4')
+    version('0.31.0', sha256='9d4bc8b2c1a210a58f34216cebe7cd5935039d244b7e90f7e2792bda81ff7ddc')
+    version('0.30.1', sha256='e2249bdced68d80a413de59f8393922553a8900a14e731030e362266e82a9af8')
+    version('0.30.0', sha256='91de53099d9381e3744e7a1ac06d2db0f9065378c4d178328b78ac797ee3ec65')
+    version('0.29.1', sha256='ced1e98fbd383669e59ec06d2e0c15e27dbceda9ac5569d311c538b2fe6d3876')
+    version('0.29.0', sha256='a417a1d0ed75bd51131b86fba990502666d8c1388ad6282b3097aa461ccf9785')
+    version('0.28.0', sha256='5c4e0fe8c7c80615688f271b57b35ee9d924ac07c6d3d56d0303e610338ed332')
+    version('0.27.1', sha256='3f7d2401ff8b113781d93c5bf374f47ca35b2f962634c6310b73620da735e63d')
+    version('0.27.0', sha256='387ee5958de2d986095cda2aaf39d0bf319d02eaeeea2a565aea97e6a6f31f36')
+    version('0.26.0', sha256='c451591d106d1671c9ddbb5c304979dd2d083e0616b2aeede62e7a6b568f828c')
+
 
     variant('blosc', default=True, description='support the blosc lossless compressors')
     variant('fpzip', default=True, description='support for the FPZIP lossy compressor')
