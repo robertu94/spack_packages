@@ -9,6 +9,7 @@ class Libpressio(CMakePackage):
     git      = "https://github.com/robertu94/libpressio"
 
     version('master', branch='master')
+    version('0.34.1', sha256='791ff249a685fab1733d4c3c936db6a064aa912d47926ad4bd26b1829f6e2178')
     version('0.34.0', sha256='da62a15da103e763e34dae43be3436873e4fb550630dddc55232ae644accda02')
     version('0.33.0', sha256='61200855a0846ce765b686fa368496f44534e633031811803ba2cb31f94c25b1')
     version('0.32.0', sha256='187e75fc6d3f84003829d2b8aec584e99d72d65f2d82835998714ae05ae008af')
@@ -33,6 +34,7 @@ class Libpressio(CMakePackage):
     variant('sz', default=True, description='support for the SZ error bounded lossy compressor')
     variant('zfp', default=True, description='support for the ZFP error bounded lossy compressor')
     variant('boost', default=False, description='support older compilers using boost')
+    variant('petsc', default=True, description='support IO using petsc format')
 
     depends_on('boost', when="+boost")
     depends_on('c-blosc', when="+blosc")
@@ -44,6 +46,7 @@ class Libpressio(CMakePackage):
     depends_on('swig@3.12:', when="+python", type="build")
     depends_on('sz', when="+sz")
     depends_on('zfp', when="+zfp")
+    depends_on('petsc', when="+petsc")
 
     def cmake_args(self):
         args = []
@@ -63,6 +66,8 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_MAGICK=ON")
         if "+mgard" in self.spec:
             args.append("-DLIBPRESSIO_HAS_MGARD=ON")
+        if "+petsc" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_PETSC=ON")
         if "+boost" in self.spec:
             args.append("-DLIBPRESSIO_CXX_VERSION=11")
 
