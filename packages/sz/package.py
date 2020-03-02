@@ -1,10 +1,15 @@
+# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
+# Spack Project Developers. See the top-level COPYRIGHT file for details.
+#
+# SPDX-License-Identifier: (Apache-2.0 OR MIT)
+
 from spack import *
 
 
 class Sz(CMakePackage):
-    """The SZ Error Bounded Lossy Compressor"""
+    """Error-bounded Lossy Compressor for HPC Data"""
 
-    homepage = "https://github.com/disheng222/sz"
+    homepage = "https://collab.cels.anl.gov/display/ESR/SZ"
     url      = "https://github.com/disheng222/SZ/archive/v2.1.8.0.tar.gz"
     git      = "https://github.com/disheng222/sz"
     maintainers = ['disheng222']
@@ -25,7 +30,6 @@ class Sz(CMakePackage):
     version('1.4.10.0', sha256='cf23cf1ffd7c69c3d3128ae9c356b6acdc03a38f92c02db5d9bfc04f3fabc506')
     version('1.4.9.2',  sha256='9dc785274d068d04c2836955fc93518a9797bfd409b46fea5733294b7c7c18f8')
 
-
     variant('python', default=False, description="builds the python wrapper")
     variant('netcdf', default=False, description="build the netcdf reader")
     variant('hdf5', default=False, description="build the hdf5 filter")
@@ -35,6 +39,8 @@ class Sz(CMakePackage):
     variant('fortran', default=False, description='Enable fortran compilation')
     variant('shared', default=True, description="build shared versions of the libraries")
 
+    # Part of latest sources don't support -O3 optimization
+    # with Fujitsu compiler.
     patch('fix_optimization.patch', when='@2.0.2.0:%fj')
 
 
@@ -42,53 +48,71 @@ class Sz(CMakePackage):
     depends_on('zstd')
 
     extends('python', when="+python")
-    depends_on('python@3:', when="+python")
-    depends_on('swig@3.12:', when="+python")
-    depends_on('py-numpy', when="+python")
+    depends_on('python@3:', when="+python", type=('build', 'link', 'run'))
+    depends_on('swig@3.12:', when="+python", type='build')
+    depends_on('py-numpy', when="+python", type=('build', 'link', 'run'))
     depends_on('hdf5', when="+hdf5")
     depends_on('netcdf-c', when="+netcdf")
 
-    #before 2.1.8.1 this was a autotools package
-    @when("@:2.1.8.0")
-    def build(self, spec, prefix):
-        pass
+    @property
+    def build_directory(self):
+        if self.version >= Version("2.1.8.1"):
+            return "spack-build"
+        else:
+            return "."
 
-    #before 2.1.8.1 this was a autotools package
     @when("@:2.1.8.0")
     def cmake(self, spec, prefix):
-        pass
-
-    #before 2.1.8.1 this was a autotools package
-    @when("@:2.1.8.0")
-    def install(self, spec, prefix):
+        """use autotools before 2.1.8.1"""
         configure_args = ["--prefix=" + prefix]
         if "+fortran" in spec:
             configure_args.append("--enable-fortran")
         else:
             configure_args.append("--disable-fortran")
         configure(*configure_args)
-        make()
-        make("install")
-        
 
     def cmake_args(self):
-        args = []
-        if "+python" in  self.spec:
+        """configure the package with CMake for version 2.1.8.1 and later"""
+        args=[]
+
+        if "+python" in self.spec:
             args.append("-DBUILD_PYTHON_WRAPPER=ON")
-        if "+netcdf" in  self.spec:
+        else:
+            args.append("-DBUILD_PYTHON_WRAPPER=OFF")
+
+        if "+netcdf" in self.spec:
             args.append("-DBUILD_NETCDF_READER=ON")
-        if "+hdf5" in  self.spec:
+        else:
+            args.append("-DBUILD_NETCDF_READER=OFF")
+
+        if "+hdf5" in self.spec:
             args.append("-DBUILD_HDF5_FILTER=ON")
-        if "+pastri" in  self.spec:
+        else:
+            args.append("-DBUILD_HDF5_FILTER=OFF")
+
+        if "+pastri" in self.spec:
             args.append("-DBUILD_PASTRI=ON")
-        if "+time_compression" in  self.spec:
+        else:
+            args.append("-DBUILD_PASTRI=OFF")
+
+        if "+time_compression" in self.spec:
             args.append("-DBUILD_TIMECMPR=ON")
-        if "+random_access" in  self.spec:
+        else:
+            args.append("-DBUILD_TIMECMPR=OFF")
+
+        if "+random_access" in self.spec:
             args.append("-DBUILD_RANDOMACCESS=ON")
+        else:
+            args.append("-DBUILD_RANDOMACCESS=OFF")
+
         if "+fortran" in self.spec:
             args.append("-DBUILD_FORTRAN=ON")
+        else:
+            args.append("-DBUILD_FORTRAN=OFF")
+
         if "+shared" in  self.spec:
             args.append("-DBUILD_SHARED_LIBS=ON")
         else:
             args.append("-DBUILD_SHARED_LIBS=OFF")
         return args
+

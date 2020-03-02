@@ -9,6 +9,9 @@ class Libpressio(CMakePackage):
     git      = "https://github.com/robertu94/libpressio"
 
     version('master', branch='master')
+    version('0.34.4', sha256='5a997c6f4b8c954a98046a851d0f3b31ce7c5be6e7e615068df4f1d7b86c9630')
+    version('0.34.3', sha256='1f5994862c33df4588d411b49fba20a40294627d0b325bbd5234f169eb1d4842')
+    version('0.34.2', sha256='3b8d3f801799023c8efe5069895723ce4e742330282774dc0873c2fa3910eeb2')
     version('0.34.1', sha256='791ff249a685fab1733d4c3c936db6a064aa912d47926ad4bd26b1829f6e2178')
     version('0.34.0', sha256='da62a15da103e763e34dae43be3436873e4fb550630dddc55232ae644accda02')
     version('0.33.0', sha256='61200855a0846ce765b686fa368496f44534e633031811803ba2cb31f94c25b1')
