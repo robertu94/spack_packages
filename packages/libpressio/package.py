@@ -9,6 +9,9 @@ class Libpressio(CMakePackage):
     git      = "https://github.com/robertu94/libpressio"
 
     version('master', branch='master')
+    version('0.37.0', sha256='98877fa2daf91ac91c2e0e0014684131d6efc4a1f2f77917d40fdbf424d74588')
+    version('0.36.0', sha256='452a3973cf359786409e064ca4b63a5f81072a9d72a52d1a4084d197f21fc26b')
+    version('0.35.0', sha256='50e6de305e1ffdcf423cec424e919bb0bdebee6449d34ff26a40421f09392826')
     version('0.34.4', sha256='5a997c6f4b8c954a98046a851d0f3b31ce7c5be6e7e615068df4f1d7b86c9630')
     version('0.34.3', sha256='1f5994862c33df4588d411b49fba20a40294627d0b325bbd5234f169eb1d4842')
     version('0.34.2', sha256='3b8d3f801799023c8efe5069895723ce4e742330282774dc0873c2fa3910eeb2')
@@ -38,6 +41,7 @@ class Libpressio(CMakePackage):
     variant('zfp', default=True, description='support for the ZFP error bounded lossy compressor')
     variant('boost', default=False, description='support older compilers using boost')
     variant('petsc', default=True, description='support IO using petsc format')
+    variant('mpi', default=True, description='support for launching processes using mpi')
 
     depends_on('boost', when="+boost")
     depends_on('c-blosc', when="+blosc")
@@ -50,6 +54,7 @@ class Libpressio(CMakePackage):
     depends_on('sz', when="+sz")
     depends_on('zfp', when="+zfp")
     depends_on('petsc', when="+petsc")
+    depends_on('mpi@2:', when="+mpi")
 
     def cmake_args(self):
         args = []
@@ -73,6 +78,9 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_PETSC=ON")
         if "+boost" in self.spec:
             args.append("-DLIBPRESSIO_CXX_VERSION=11")
+        if "+mpi" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_MPI=ON")
+
 
 
         return args

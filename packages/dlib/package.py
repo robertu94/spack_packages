@@ -37,7 +37,10 @@ class Dlib(CMakePackage):
     depends_on('zlib')
     depends_on('libpng')
     depends_on('libjpeg')
+    depends_on('cblas')
 
     def cmake_args(self):
         args = []
+        if "+shared" in self.spec:
+            args.append("-DBUILD_SHARED_LIBS=ON")
         return args
