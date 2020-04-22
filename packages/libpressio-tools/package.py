@@ -1,7 +1,7 @@
 from spack import *
 
 
-class PressioTools(CMakePackage):
+class LibpressioTools(CMakePackage):
     """General Utilities for LibPressio"""
 
     homepage = "https://github.com/robertu94/pressio-tools"
@@ -9,6 +9,7 @@ class PressioTools(CMakePackage):
 
     version('master', branch='master')
 
-    depends_on('libpressio+hdf5')
+    depends_on('libpressio+hdf5+lua')
     depends_on('libdistributed')
+    depends_on('libpressio-opt')
     depends_on('boost')
