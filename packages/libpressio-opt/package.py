@@ -9,7 +9,7 @@ class LibpressioOpt(CMakePackage):
 
     version('develop', branch='develop')
 
-    depends_on('libpressio+hdf5+lua')
+    depends_on('libpressio@0.40.0:+hdf5+lua')
     depends_on('libdistributed')
     depends_on('dlib')
 
