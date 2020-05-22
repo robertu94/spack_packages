@@ -9,6 +9,7 @@ class Libpressio(CMakePackage):
     git      = "https://github.com/robertu94/libpressio"
 
     version('master', branch='master')
+    version('0.40.1', sha256='73a65f17e727191b97dfdf770dd2c285900af05e6fee93aa9ced9eadb86f58ff')
     version('0.40.0', sha256='80e68172eeef0fbff128ede354eaac759a9408c3ef72c5eed871bb9430b960ff')
     version('0.39.0', sha256='e62fea9bcb96529507fdd83abc991036e8ed9aa858b7d36587fce3d559420036')
     version('0.38.2', sha256='5f38387d92338eac8658cd70544a5d9a609bd632090f4f69bcbc9f07ec4abd7b')
@@ -57,7 +58,7 @@ class Libpressio(CMakePackage):
     depends_on('mgard', when="+mgard")
     depends_on('python@3:', when="+python")
     depends_on('swig@3.12:', when="+python", type="build")
-    depends_on('sz', when="+sz")
+    depends_on('sz@2.1.8.1:', when="+sz")
     depends_on('zfp', when="+zfp")
     depends_on('petsc', when="+petsc")
     depends_on('mpi@2:', when="+mpi")
