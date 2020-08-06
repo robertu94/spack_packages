@@ -9,6 +9,7 @@ class Libpressio(CMakePackage):
     git      = "https://github.com/robertu94/libpressio"
 
     version('master', branch='master')
+    version('0.41.0', sha256='b789360d70656d99cd5e0ceebfc8828bdf129f7e2bfe6451592a735be9a0809a')
     version('0.40.1', sha256='73a65f17e727191b97dfdf770dd2c285900af05e6fee93aa9ced9eadb86f58ff')
     version('0.40.0', sha256='80e68172eeef0fbff128ede354eaac759a9408c3ef72c5eed871bb9430b960ff')
     version('0.39.0', sha256='e62fea9bcb96529507fdd83abc991036e8ed9aa858b7d36587fce3d559420036')
@@ -37,18 +38,19 @@ class Libpressio(CMakePackage):
     version('0.26.0', sha256='c451591d106d1671c9ddbb5c304979dd2d083e0616b2aeede62e7a6b568f828c')
 
 
-    variant('blosc', default=True, description='support the blosc lossless compressors')
-    variant('fpzip', default=True, description='support for the FPZIP lossy compressor')
-    variant('hdf5', default=True, description='support reading and writing from hdf5 files')
-    variant('magick', default=True, description='support the imagemagick image compressors')
-    variant('mgard', default=True, description='support for the MAGARD error bounded lossy compressor')
+    variant('blosc', default=False, description='support the blosc lossless compressors')
+    variant('fpzip', default=False, description='support for the FPZIP lossy compressor')
+    variant('hdf5', default=False, description='support reading and writing from hdf5 files')
+    variant('magick', default=False, description='support the imagemagick image compressors')
+    variant('mgard', default=False, description='support for the MAGARD error bounded lossy compressor')
     variant('python', default=False, description='build the python wrappers')
-    variant('sz', default=True, description='support for the SZ error bounded lossy compressor')
-    variant('zfp', default=True, description='support for the ZFP error bounded lossy compressor')
+    variant('sz', default=False, description='support for the SZ error bounded lossy compressor')
+    variant('zfp', default=False, description='support for the ZFP error bounded lossy compressor')
     variant('boost', default=False, description='support older compilers using boost')
-    variant('petsc', default=True, description='support IO using petsc format')
-    variant('mpi', default=True, description='support for launching processes using mpi')
-    variant('lua', default=True, description='support for composite metrics using lua')
+    variant('petsc', default=False, description='support IO using petsc format')
+    variant('mpi', default=False, description='support for launching processes using mpi')
+    variant('lua', default=False, description='support for composite metrics using lua')
+    variant('libdistributed', default=False, description='support for distributed multi-buffer support')
 
     depends_on('boost', when="+boost")
     depends_on('c-blosc', when="+blosc")
@@ -63,6 +65,7 @@ class Libpressio(CMakePackage):
     depends_on('petsc', when="+petsc")
     depends_on('mpi@2:', when="+mpi")
     depends_on('sol2', when="+lua")
+    depends_on('libdistributed@0.0.10:', when="+libdistributed")
 
     def cmake_args(self):
         args = []
@@ -90,6 +93,8 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_MPI=ON")
         if "+lua" in self.spec:
             args.append("-DLIBPRESSIO_HAS_LUA=ON")
+        if "+libdistributed" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_LIBDISTRIBUTED=ON")
 
 
 

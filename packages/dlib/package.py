@@ -37,7 +37,8 @@ class Dlib(CMakePackage):
     depends_on('zlib')
     depends_on('libpng')
     depends_on('libjpeg')
-    depends_on('cblas')
+    depends_on('blas')
+    depends_on('lapack')
 
     def cmake_args(self):
         args = []
