@@ -9,6 +9,7 @@ class Libpressio(CMakePackage):
     git      = "https://github.com/robertu94/libpressio"
 
     version('master', branch='master')
+    version('0.42.0', sha256='c08e047e202271ec15eeda53670c6082815d168009f4e993debcc0d035904d6b')
     version('0.41.0', sha256='b789360d70656d99cd5e0ceebfc8828bdf129f7e2bfe6451592a735be9a0809a')
     version('0.40.1', sha256='73a65f17e727191b97dfdf770dd2c285900af05e6fee93aa9ced9eadb86f58ff')
     version('0.40.0', sha256='80e68172eeef0fbff128ede354eaac759a9408c3ef72c5eed871bb9430b960ff')
@@ -65,7 +66,7 @@ class Libpressio(CMakePackage):
     depends_on('petsc', when="+petsc")
     depends_on('mpi@2:', when="+mpi")
     depends_on('sol2', when="+lua")
-    depends_on('libdistributed@0.0.10:', when="+libdistributed")
+    depends_on('libdistributed@0.0.11:', when="+libdistributed")
 
     def cmake_args(self):
         args = []
