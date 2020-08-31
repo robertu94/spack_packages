@@ -9,8 +9,8 @@ class LibpressioOpt(CMakePackage):
 
     version('develop', branch='develop')
 
-    depends_on('libpressio@0.40.1:+hdf5+lua')
-    depends_on('libdistributed@0.0.10')
+    depends_on('libpressio@0.40.1:+hdf5+lua+libdistributed+mpi')
+    depends_on('libdistributed@0.0.11:')
     depends_on('dlib')
 
     def cmake_args(self):
