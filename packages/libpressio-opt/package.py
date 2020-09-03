@@ -13,5 +13,12 @@ class LibpressioOpt(CMakePackage):
     depends_on('libdistributed@0.0.11:')
     depends_on('dlib')
 
+    variant("test", default=False, description='build the unittests')
+
     def cmake_args(self):
-      return ["-DBUILD_TESTING=OFF"]
+        args = []
+        if "+test" in self.spec:
+            args.append("-DBUILD_TESTING=OFF")
+        else:
+            args.append("-DBUILD_TESTING=ON")
+        return args
