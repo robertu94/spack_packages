@@ -19,15 +19,18 @@ class Libdistributed(CMakePackage):
     version('0.0.2', sha256='c25309108fe17021fd5f06ba98386210708158c439e98326e68f66c42875e58a')
     version('0.0.1', sha256='4c23ce0fd70a12ee5f8760ea00377ab6370d86b30ab42476e07453b19ea4ac44')
 
-    variant("test", default=False, description="build the unittests")
-
     depends_on('mpi@2:')
 
     def cmake_args(self):
         args = []
-        if "+test" in self.spec:
+        if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
             args.append("-DBUILD_TESTING=OFF")
         return args
+
+    @run_after('build')
+    @on_package_attributes(run_tests=True)
+    def test(self):
+        make('test')
 

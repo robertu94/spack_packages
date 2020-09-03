@@ -18,7 +18,6 @@ class LibpressioTools(CMakePackage):
 
     variant("opt", default=False, description="support the libpressio-opt package")
     variant("error_injector", default=False, description="support the libpressio-errorinjector package")
-    variant("test", default=False, description="build the unittests")
 
     def cmake_args(self):
         args=[]
@@ -26,9 +25,15 @@ class LibpressioTools(CMakePackage):
             args.append("-DLIBPRESSIO_TOOLS_HAS_OPT=YES")
         if "+error_injector" in self.spec:
             args.append("-DLIBPRESSIO_TOOLS_HAS_ERROR_INJECTOR=YES")
-        if "+test" in self.spec:
+        if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
             args.append("-DBUILD_TESTING=OFF")
 
         return args
+
+    @run_after('build')
+    @on_package_attributes(run_tests=True)
+    def test(self):
+        make('test')
+

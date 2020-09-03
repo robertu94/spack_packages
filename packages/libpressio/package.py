@@ -56,7 +56,6 @@ class Libpressio(CMakePackage):
     variant('lua', default=False, description='support for composite metrics using lua')
     variant('libdistributed', default=False, description='support for distributed multi-buffer support')
     variant('ftk', default=False, description="build support for the feature tracking toolkit")
-    variant('test', default=False, description="build the unittests")
 
     depends_on('boost', when="+boost")
     depends_on('c-blosc', when="+blosc")
@@ -106,12 +105,13 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_LIBDISTRIBUTED=ON")
         if "+ftk" in self.spec:
             args.append("-DLIBPRESSIO_HAS_FTK=ON")
-        if "+test" in self.spec:
+        if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
             args.append("-DBUILD_TESTING=OFF")
-
-
-
-
         return args
+
+    @run_after('build')
+    @on_package_attributes(run_tests=True)
+    def test(self):
+        make('test')
