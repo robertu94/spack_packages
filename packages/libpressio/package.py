@@ -75,8 +75,6 @@ class Libpressio(CMakePackage):
     depends_on('pkg-config', type='build')
     depends_on('ftk@master', when="+ftk")
 
-    extends('python', when="+python")
-
     def cmake_args(self):
         args = []
         if "+python" in self.spec:
