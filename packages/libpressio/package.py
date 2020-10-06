@@ -10,6 +10,12 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.49.0', sha256='adfe5c64a5d170197893fe5a4c9338cde6cbdd5b54e52534886425101be4458f')
+    version('0.48.0', sha256='087a7f944240caf2d121c1520a6877beea5d30cc598d09a55138014d7953348a')
+    version('0.47.0', sha256='efce0f6f32e00482b80973d951a6ddc47b20c8703bd0e63ab59acc0e339d410b')
+    version('0.46.3', sha256='24bc5d8532a90f07ab2a412ea28ddbfc8ff7ab27cd9b4e7bd99a92b2a0b5acfd')
+    version('0.46.2', sha256='3ebbafa241e54cb328966ea99eab5d837c4a889f17c3b2048cc2961166a84cc4')
+    version('0.46.1', sha256='be7468b30a367bcbefab09ed5ac07320cd323904c9129d6b874175b39ef65cd9')
     version('0.46.0', sha256='ab944358edc7e03be604749002f1f00aaf4d55d20bac2689d40bd4e66357879d')
     version('0.45.0', sha256='b3307b99f82f0300dfed7dd122447a6e74ca8ad8c012d2fc60467e6e067ac226')
     version('0.44.0', sha256='cec114325167731233be294aab329d54862457cb2e1f1a87d42d100da7c53aa5')
@@ -59,6 +65,8 @@ class Libpressio(CMakePackage):
     variant('lua', default=False, description='support for composite metrics using lua')
     variant('libdistributed', default=False, description='support for distributed multi-buffer support')
     variant('ftk', default=False, description="build support for the feature tracking toolkit")
+    variant('digitrounding', default=False, description="build support for the digit rounding")
+    variant('bitgrooming', default=False, description="build support for the bitgrooming")
 
     depends_on('boost', when="+boost")
     depends_on('c-blosc', when="+blosc")
@@ -77,6 +85,8 @@ class Libpressio(CMakePackage):
     depends_on('libdistributed@0.0.11:', when="+libdistributed")
     depends_on('pkg-config', type='build')
     depends_on('ftk@master', when="+ftk")
+    depends_on('digitrounding', when="+digitrounding")
+    depends_on('bitgroomingz', when="+bitgrooming")
 
     def cmake_args(self):
         args = []
@@ -108,6 +118,10 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_LIBDISTRIBUTED=ON")
         if "+ftk" in self.spec:
             args.append("-DLIBPRESSIO_HAS_FTK=ON")
+        if "+bitgrooming" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_BIT_GROOMING=ON")
+        if "+digitrounding" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_DIGIT_ROUNDING=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
