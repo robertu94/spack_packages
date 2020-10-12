@@ -68,6 +68,7 @@ class Libpressio(CMakePackage):
     variant('ftk', default=False, description="build support for the feature tracking toolkit")
     variant('digitrounding', default=False, description="build support for the digit rounding")
     variant('bitgrooming', default=False, description="build support for the bitgrooming")
+    variant('openmp', default=False, description="build plugins that use openmp")
 
     depends_on('boost', when="+boost")
     depends_on('c-blosc', when="+blosc")
@@ -123,6 +124,8 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_BIT_GROOMING=ON")
         if "+digitrounding" in self.spec:
             args.append("-DLIBPRESSIO_HAS_DIGIT_ROUNDING=ON")
+        if "+openmp" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_OPENMP=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
