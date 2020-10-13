@@ -39,6 +39,7 @@ class Dlib(CMakePackage):
     depends_on('libjpeg')
     depends_on('blas')
     depends_on('lapack')
+    depends_on('libsm')
 
     def cmake_args(self):
         args = []

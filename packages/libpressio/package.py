@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.49.2', sha256='cde90e0183024dc1a78d510e2ae3effa087c86c5761f84cba0125f10abc74254')
     version('0.49.1', sha256='6d1952ada65d52d2fd5d4c60bb17e51d264c2c618f9b66dadeffa1e5f849394a')
     version('0.49.0', sha256='adfe5c64a5d170197893fe5a4c9338cde6cbdd5b54e52534886425101be4458f')
     version('0.48.0', sha256='087a7f944240caf2d121c1520a6877beea5d30cc598d09a55138014d7953348a')
@@ -77,6 +78,7 @@ class Libpressio(CMakePackage):
     depends_on('imagemagick', when="+magick")
     depends_on('mgard', when="+mgard")
     depends_on('python@3:', when="+python")
+    depends_on('py-numpy', when="+python")
     depends_on('swig@3.12:', when="+python", type="build")
     depends_on('sz@2.1.8.1:', when="+sz")
     depends_on('fftw', when="+sz")
@@ -89,11 +91,14 @@ class Libpressio(CMakePackage):
     depends_on('ftk@master', when="+ftk")
     depends_on('digitrounding', when="+digitrounding")
     depends_on('bitgroomingz', when="+bitgrooming")
+    depends_on('cmake@3.14:')
+
+    extends("python", when="+python")
 
     def cmake_args(self):
         args = []
         if "+python" in self.spec:
-            args.append("-DBUILD_PYTHON_WRAPPERS=ON")
+            args.append("-DBUILD_PYTHON_WRAPPER=ON")
         if "+hdf5" in self.spec:
             args.append("-DLIBPRESSIO_HAS_HDF=ON")
         if "+sz" in self.spec:
