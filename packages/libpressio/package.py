@@ -86,7 +86,7 @@ class Libpressio(CMakePackage):
     depends_on('py-numpy', when="+python")
     depends_on('swig@3.12:', when="+python", type="build")
     depends_on('sz@2.1.8.1:', when="+sz")
-    depends_on('fftw', when="+sz")
+    depends_on('fftw', when="+sz ^sz@:2.1.10")
     depends_on('zfp', when="+zfp")
     depends_on('petsc', when="+petsc")
     depends_on('mpi@2:', when="+mpi")
