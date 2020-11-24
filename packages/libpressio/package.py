@@ -68,7 +68,7 @@ class Libpressio(CMakePackage):
     variant('python', default=False, description='build the python wrappers')
     variant('sz', default=False, description='support for the SZ error bounded lossy compressor')
     variant('zfp', default=False, description='support for the ZFP error bounded lossy compressor')
-    variant('boost', default=False, description='support older compilers using boost', when="@:0.51.0")
+    variant('boost', default=False, description='support older compilers using boost')
     variant('petsc', default=False, description='support IO using petsc format')
     variant('mpi', default=False, description='support for launching processes using mpi')
     variant('lua', default=False, description='support for composite metrics using lua')
@@ -78,7 +78,9 @@ class Libpressio(CMakePackage):
     variant('bitgrooming', default=False, description="build support for the bitgrooming")
     variant('openmp', default=False, description="build plugins that use openmp")
 
-    depends_on('boost', when="+boost")
+    depends_on('boost', when="@:0.51.0+boost")
+    depends_on('libstdcompat+boost', when="@0.52.0:+boost")
+    depends_on('libstdcompat', when="@0.52.0:~boost")
     depends_on('c-blosc', when="+blosc")
     depends_on('fpzip', when="+fpzip")
     depends_on('hdf5', when="+hdf5")
@@ -99,7 +101,6 @@ class Libpressio(CMakePackage):
     depends_on('digitrounding', when="+digitrounding")
     depends_on('bitgroomingz', when="+bitgrooming")
     depends_on('cmake@3.14:')
-    depends_on('libstdcompat', when="@0.52.0:")
 
     extends("python", when="+python")
 
