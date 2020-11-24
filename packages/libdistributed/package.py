@@ -9,6 +9,7 @@ class Libdistributed(CMakePackage):
     git      = "https://github.com/robertu94/libdistributed"
 
     version('master', branch='master')
+    version('0.1.0', sha256='e10daa6d4a6dc371057e92d2b706ae16450b41ed7c0d386cffeb68e160f556c1')
     version('0.0.10', sha256='3af4ce81b3ae016e80e401adfcfad856e15a76da4d2a81535cb4bd993c11104b')
     version('0.0.8', sha256='78bc1fbc99e46ea0e03cb181623262be0f527767efd3249baa249cb24b794762')
     version('0.0.7', sha256='b2c65752df7bc55fcdc9a5eb7b36c203667f2fb6382d3eaecdaf1504421d4d7b')
@@ -20,6 +21,7 @@ class Libdistributed(CMakePackage):
     version('0.0.1', sha256='4c23ce0fd70a12ee5f8760ea00377ab6370d86b30ab42476e07453b19ea4ac44')
 
     depends_on('mpi@2:')
+    depends_on('libstdcompat@0.0.2:', when="@0.1.0:")
 
     def cmake_args(self):
         args = []
