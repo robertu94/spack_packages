@@ -68,7 +68,7 @@ class Libpressio(CMakePackage):
     variant('python', default=False, description='build the python wrappers')
     variant('sz', default=False, description='support for the SZ error bounded lossy compressor')
     variant('zfp', default=False, description='support for the ZFP error bounded lossy compressor')
-    variant('boost', default=False, description='support older compilers using boost')
+    variant('boost', default=False, description='support older compilers using boost', when="@:0.51.0")
     variant('petsc', default=False, description='support IO using petsc format')
     variant('mpi', default=False, description='support for launching processes using mpi')
     variant('lua', default=False, description='support for composite metrics using lua')
