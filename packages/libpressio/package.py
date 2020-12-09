@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.54.0', sha256='cd28ddf054446c286f9bfae563aa463e638ee03e0353c0828a9ce44be4ce2df9')
     version('0.53.2', sha256='4a7b57f1fd8e3e85ecf4a481cc907b81a71c4f44cf2c4a506cb37a6513a819a4')
     version('0.53.1', sha256='1425dec7ee1a7ddf1c3086b83834ef6e49de021901a62d5bff0f2ca0c75d3455')
     version('0.53.0', sha256='0afb44c2dab8dd8121d174193eb6623b29da9592e5fe1bbe344cfc9cacbec0cb')
@@ -106,6 +107,7 @@ class Libpressio(CMakePackage):
     depends_on('digitrounding', when="+digitrounding")
     depends_on('bitgroomingz', when="+bitgrooming")
     depends_on('cmake@3.14:')
+    depends_on('py-mpi4py', when="@0.54.0:+mpi+python")
 
     extends("python", when="+python")
 
@@ -113,6 +115,8 @@ class Libpressio(CMakePackage):
         args = []
         if "+python" in self.spec:
             args.append("-DBUILD_PYTHON_WRAPPER=ON")
+            if "+mpi" in self.spec:
+                args.append("-DLIBPRESSIO_HAS_MPI4PY=ON")
         if "+hdf5" in self.spec:
             args.append("-DLIBPRESSIO_HAS_HDF=ON")
             args.append("-DHDF5_ROOT=" + self.spec['hdf5'].prefix)
