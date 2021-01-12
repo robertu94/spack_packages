@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.55.0', sha256='fb74cfe2a8f3da51f9840082fa563c2a4ce689972c164e95b1b8a1817c4224cf')
     version('0.54.0', sha256='cd28ddf054446c286f9bfae563aa463e638ee03e0353c0828a9ce44be4ce2df9')
     version('0.53.2', sha256='4a7b57f1fd8e3e85ecf4a481cc907b81a71c4f44cf2c4a506cb37a6513a819a4')
     version('0.53.1', sha256='1425dec7ee1a7ddf1c3086b83834ef6e49de021901a62d5bff0f2ca0c75d3455')
@@ -83,6 +84,8 @@ class Libpressio(CMakePackage):
     variant('digitrounding', default=False, description="build support for the digit rounding")
     variant('bitgrooming', default=False, description="build support for the bitgrooming")
     variant('openmp', default=False, description="build plugins that use openmp")
+    variant('docs', default=False, description="build and install manual pages")
+    variant('remote', default=False, description="build the remote launch plugin")
 
     depends_on('boost', when="@:0.51.0+boost")
     depends_on('libstdcompat+boost', when="@0.52.0:+boost")
@@ -108,6 +111,9 @@ class Libpressio(CMakePackage):
     depends_on('bitgroomingz', when="+bitgrooming")
     depends_on('cmake@3.14:')
     depends_on('py-mpi4py', when="@0.54.0:+mpi+python")
+    depends_on('doxygen+graphviz', when="+docs")
+    depends_on('curl', when="+remote")
+    depends_on('nlohmann-json', when="+remote")
 
     extends("python", when="+python")
 
@@ -150,6 +156,10 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_DIGIT_ROUNDING=ON")
         if "+openmp" in self.spec:
             args.append("-DLIBPRESSIO_HAS_OPENMP=ON")
+        if "+docs" in self.spec:
+            args.append("-DBUILD_DOCS=ON")
+        if "+remote" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_REMOTELAUNCH=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
@@ -160,3 +170,9 @@ class Libpressio(CMakePackage):
     @on_package_attributes(run_tests=True)
     def test(self):
         make('test')
+
+    @run_after('build')
+    def install_docs(self):
+        if "+docs" in self.spec:
+            with working_dir(self.build_directory):
+                make('docs')
