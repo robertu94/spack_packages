@@ -26,10 +26,13 @@ from spack import *
 class Dlib(CMakePackage):
     """toolkit containing machine learning algorithms and tools for creating complex software in C++ to solve real world problems"""
 
-    # FIXME: Add a proper url for your package's homepage here.
     homepage = "http://dlib.net/"
     url      = "https://github.com/davisking/dlib/archive/v19.19.tar.gz"
+    git      = "https://github.com/davisking/dlib"
 
+    version('master', branch='master')
+    version('19.21', sha256='116f52e58be04b47dab52057eaad4b5c4d5c3032d927fe23d55b0741fc4107a0')
+    version('19.20', sha256='fc3f0986350e8e53aceadf95a71d2f413f1eedc469abda99a462cb528741d411')
     version('19.19', sha256='7af455bb422d3ae5ef369c51ee64e98fa68c39435b0fa23be2e5d593a3d45b87')
 
     variant('shared', default=True, description="build the shared libraries")
