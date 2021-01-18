@@ -42,6 +42,7 @@ class Reeber(CMakePackage):
     depends_on('boost')
     depends_on('amrex+amrdata@20.11', when="+amrex")
     depends_on('intel-tbb', when="+tbb")
+    depends_on('hdf5')
 
     variant("amrex", description="support for armex", default=False)
     variant("tbb", description="support for tbb", default=False)
