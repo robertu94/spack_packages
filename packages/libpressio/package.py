@@ -115,6 +115,7 @@ class Libpressio(CMakePackage):
     depends_on('bitgroomingz', when="+bitgrooming")
     depends_on('cmake@3.14:')
     depends_on('py-mpi4py', when="@0.54.0:+mpi+python")
+    depends_on('py-numcodecs', when="@0.54.0:+mpi+python")
     depends_on('doxygen+graphviz', when="+docs")
     depends_on('curl', when="+remote")
     depends_on('nlohmann-json', when="+remote")
