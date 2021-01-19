@@ -33,6 +33,7 @@ class Digitrounding(CMakePackage):
 
     # FIXME: Add proper versions here.
     version('master', branch="master")
+    version('2020-27-20', commit="7b18679aded7a85e6f221f7f5cd4f080f322bc33")
 
     # FIXME: Add dependencies if required.
     depends_on('zlib')
