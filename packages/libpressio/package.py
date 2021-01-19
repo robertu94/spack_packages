@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.56.0', sha256='77003c9dde0590ca37fddfbe380b29b9f897fa0dadb9b9f953819f5e9d9f08f0')
     version('0.55.3', sha256='f8c6ae6ae48c4d38a82691d7de219ebf0e3f9ca38ae6ba31a64181bfd8a8c50a')
     version('0.55.2', sha256='47f25f27f4bff22fd32825d5a1135522e61f9505758dde3d093cfbdaff0b3255')
     version('0.55.1', sha256='39f1799d965cd0fec06f0a43dec865c360cbb206e4254f4deb4f7b7f7f3c3b2f')
