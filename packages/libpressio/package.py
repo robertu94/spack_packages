@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.56.2', sha256='1ae20415ba50a4dcfec7992e9a571f09f075f077ebdd7c1afb9a19b158f6205d')
     version('0.56.1', sha256='01b7c09f1eafff819de0079baf033f75547432be62dc10cb96691d078994a4e9')
     version('0.56.0', sha256='77003c9dde0590ca37fddfbe380b29b9f897fa0dadb9b9f953819f5e9d9f08f0')
     version('0.55.3', sha256='f8c6ae6ae48c4d38a82691d7de219ebf0e3f9ca38ae6ba31a64181bfd8a8c50a')
@@ -100,8 +101,8 @@ class Libpressio(CMakePackage):
     depends_on('hdf5', when="+hdf5")
     depends_on('imagemagick', when="+magick")
     depends_on('mgard', when="+mgard")
-    depends_on('python@3:', when="+python")
-    depends_on('py-numpy', when="+python")
+    depends_on('python@3:', when="+python", type=("build", "link", "run"))
+    depends_on('py-numpy', when="+python", type=("build", "link", "run"))
     depends_on('swig@3.12:', when="+python", type="build")
     depends_on('sz@2.1.8.1:', when="@0.55.2:+sz")
     depends_on('sz@2.1.11.1:', when="@0.55.3:+sz")
@@ -115,10 +116,10 @@ class Libpressio(CMakePackage):
     depends_on('ftk@master', when="+ftk")
     depends_on('digitrounding', when="+digitrounding")
     depends_on('bitgroomingz', when="+bitgrooming")
-    depends_on('cmake@3.14:')
-    depends_on('py-mpi4py', when="@0.54.0:+mpi+python")
-    depends_on('py-numcodecs', when="@0.54.0:+mpi+python")
-    depends_on('doxygen+graphviz', when="+docs")
+    depends_on('cmake@3.14:', type="build")
+    depends_on('py-mpi4py', when="@0.54.0:+mpi+python", type=("build", "link", "run"))
+    depends_on('py-numcodecs', when="@0.54.0:+python", type="run")
+    depends_on('doxygen+graphviz', when="+docs", type="build")
     depends_on('curl', when="+remote")
     depends_on('nlohmann-json', when="+remote")
 
@@ -128,6 +129,7 @@ class Libpressio(CMakePackage):
         args = []
         if "+python" in self.spec:
             args.append("-DBUILD_PYTHON_WRAPPER=ON")
+            args.append("-DPython3_EXECUTABLE={0}".format(self.spec['python'].command))
             if "+mpi" in self.spec:
                 args.append("-DLIBPRESSIO_HAS_MPI4PY=ON")
         if "+hdf5" in self.spec:
