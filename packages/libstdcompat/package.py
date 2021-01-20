@@ -27,4 +27,14 @@ class Libstdcompat(CMakePackage):
         args = []
         if "+boost" in self.spec:
             args.append("-DSTDCOMPAT_CXX_VERSION=11")
+        if self.run_tests:
+            args.append("-DBUILD_TESTING=ON")
+        else:
+            args.append("-DBUILD_TESTING=OFF")
         return args
+
+    @run_after('build')
+    @on_package_attributes(run_tests=True)
+    def test(self):
+        make('test')
+
