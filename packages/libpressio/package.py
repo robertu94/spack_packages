@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.59.0', sha256='eae5933a7b37834cf4f70424b083f99799f9381ee8bb616f3a01d4ab2e5631a6')
     version('0.58.0', sha256='6b092dda66e7cc1bc4842fe54ab41248c4f136307cc955081e8052222c82aff1')
     version('0.57.0', sha256='4f978616c13f311170fdc992610ad1fd727884cf0d20b6849b2c985d936c482b')
     version('0.56.2', sha256='1ae20415ba50a4dcfec7992e9a571f09f075f077ebdd7c1afb9a19b158f6205d')
@@ -95,6 +96,7 @@ class Libpressio(CMakePackage):
     variant('docs', default=False, description="build and install manual pages")
     variant('remote', default=False, description="build the remote launch plugin")
     variant('json', default=False, description="build the JSON support")
+    variant('szauto', default=False, description="build szauto support")
 
     depends_on('boost', when="@:0.51.0+boost")
     depends_on('libstdcompat+boost', when="@0.52.0:+boost")
@@ -126,6 +128,7 @@ class Libpressio(CMakePackage):
     depends_on('curl', when="+remote")
     depends_on('nlohmann-json', when="+remote")
     depends_on('nlohmann-json', when="+json")
+    depends_on('szauto', when="+szauto")
     conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
 
     extends("python", when="+python")
@@ -142,6 +145,8 @@ class Libpressio(CMakePackage):
             args.append("-DHDF5_ROOT=" + self.spec['hdf5'].prefix)
         if "+sz" in self.spec:
             args.append("-DLIBPRESSIO_HAS_SZ=ON")
+        if "+szauto" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_SZ_AUTO=ON")
         if "+zfp" in self.spec:
             args.append("-DLIBPRESSIO_HAS_ZFP=ON")
         if "+fpzip" in self.spec:
