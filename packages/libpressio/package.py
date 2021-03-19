@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.60.0', sha256='a57fce96d50a603075a8a4a583431a1a03170df4d2894ff30f84d8c5ab4caf47')
     version('0.59.0', sha256='eae5933a7b37834cf4f70424b083f99799f9381ee8bb616f3a01d4ab2e5631a6')
     version('0.58.0', sha256='6b092dda66e7cc1bc4842fe54ab41248c4f136307cc955081e8052222c82aff1')
     version('0.57.0', sha256='4f978616c13f311170fdc992610ad1fd727884cf0d20b6849b2c985d936c482b')
@@ -99,6 +100,8 @@ class Libpressio(CMakePackage):
     variant('szauto', default=False, description="build szauto support")
 
     depends_on('boost', when="@:0.51.0+boost")
+    depends_on('libstdcompat@0.0.3:+boost', when="@0.60.0:+boost")
+    depends_on('libstdcompat@0.0.3:', when="@0.60.0:~boost")
     depends_on('libstdcompat+boost', when="@0.52.0:+boost")
     depends_on('libstdcompat', when="@0.52.0:~boost")
     depends_on('c-blosc', when="+blosc")
