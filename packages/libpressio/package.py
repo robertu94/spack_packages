@@ -131,8 +131,8 @@ class Libpressio(CMakePackage):
     depends_on('py-numcodecs', when="@0.54.0:+python", type="run")
     depends_on('doxygen+graphviz', when="+docs", type="build")
     depends_on('curl', when="+remote")
-    depends_on('nlohmann-json', when="+remote")
-    depends_on('nlohmann-json', when="+json")
+    depends_on('nlohmann-json~single_header', when="+remote")
+    depends_on('nlohmann-json~single_header', when="+json")
     depends_on('szauto', when="+szauto")
     conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
 
