@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.63.0', sha256='32d716f52073d7ea246d01fefb420bfe5b834ebc10579edd79ebce7a87dd1a81')
     version('0.62.0', sha256='248eedc764312da401aa29304275e009196ebdb5b08594a1522bb165c16874aa')
     version('0.61.0', sha256='7b4304b7556d8ec0742d1b8a9280f7f788307d2a6f4d2f59cc8e8358b6c69c11')
     version('0.60.0', sha256='a57fce96d50a603075a8a4a583431a1a03170df4d2894ff30f84d8c5ab4caf47')
@@ -102,6 +103,8 @@ class Libpressio(CMakePackage):
     variant('szauto', default=False, description="build szauto support")
 
     depends_on('boost', when="@:0.51.0+boost")
+    depends_on('libstdcompat@0.0.5:+boost', when="@0.63.0:+boost")
+    depends_on('libstdcompat@0.0.5:', when="@0.63.0:~boost")
     depends_on('libstdcompat@0.0.3:+boost', when="@0.60.0:+boost")
     depends_on('libstdcompat@0.0.3:', when="@0.60.0:~boost")
     depends_on('libstdcompat+boost', when="@0.52.0:+boost")
