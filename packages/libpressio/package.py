@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.65.0', sha256='beb4f7bc73b746fe68c4333fa4d4e1dba05f5f5fb386874b83cbf7f105e83c45')
     version('0.64.0', sha256='1af87b410eabee7f377b047049eae486cf3161fa67546789440f1d1e56e2324d')
     version('0.63.0', sha256='32d716f52073d7ea246d01fefb420bfe5b834ebc10579edd79ebce7a87dd1a81')
     version('0.62.0', sha256='248eedc764312da401aa29304275e009196ebdb5b08594a1522bb165c16874aa')
@@ -102,6 +103,7 @@ class Libpressio(CMakePackage):
     variant('remote', default=False, description="build the remote launch plugin")
     variant('json', default=False, description="build the JSON support")
     variant('szauto', default=False, description="build szauto support")
+    variant('unix', default=False, description="build support for unixisms like mmap and rusage")
 
     depends_on('boost', when="@:0.51.0+boost")
     depends_on('libstdcompat@0.0.5:+boost', when="@0.63.0:+boost")
@@ -191,6 +193,8 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_REMOTELAUNCH=ON")
         if "+json" in self.spec:
             args.append("-DLIBPRESSIO_HAS_JSON=ON")
+        if "+unix" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_LINUX=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
