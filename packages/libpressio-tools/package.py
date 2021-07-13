@@ -5,7 +5,7 @@ class LibpressioTools(CMakePackage):
     """General Utilities for LibPressio"""
 
     homepage = "https://github.com/robertu94/pressio-tools"
-    git      = "git@github.com:robertu94/pressio-tools"
+    git      = "https://github.com/robertu94/pressio-tools"
 
     version('master', branch='master')
 
