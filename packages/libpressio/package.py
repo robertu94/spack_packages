@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.70.4', sha256='6df62154d0a8919fa91f6fce4ffb2f77584d5ddc61c85eee34557d36de9906b2')
     version('0.70.3', sha256='40cca7f6d3bd19fdcf6f6c17521acdf63dfda0fb5b173c23d4521818b16a9a46')
     version('0.70.2', sha256='30929e02c0ce5db8d9ff1eeca42df92e68439c7dd5a3c1fea0bb44ead2343442')
     version('0.70.1', sha256='855923ca58b1c549681d368d2112d05b96fae9e3199f2a10c2013fcb2f630036')
@@ -136,6 +137,7 @@ class Libpressio(CMakePackage):
     depends_on('swig@3.12:', when="+python", type="build")
     depends_on('sz@2.1.8.1:', when="@0.55.2:+sz")
     depends_on('sz@2.1.11.1:', when="@0.55.3:+sz")
+    depends_on('sz@2.1.12:', when="@0.69.0:+sz")
     depends_on('fftw', when="+sz ^sz@:2.1.10")
     depends_on('zfp', when="+zfp")
     depends_on('petsc', when="+petsc")
