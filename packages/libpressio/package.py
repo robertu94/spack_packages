@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.70.7', sha256='82722a9e7fbec3b2d79be226ba73bbf3108d3206d006a763db46d20cc044a8b5')
     version('0.70.6', sha256='e76be47b0b8bd18d7ac44d59242adc45dc721465638aefd2c8564fd778d1adbd')
     version('0.70.5', sha256='c6ee62643c08a7ceca7c45eb28edff0eeb070671bf0d502563b6cc8ada4bf695')
     version('0.70.4', sha256='6df62154d0a8919fa91f6fce4ffb2f77584d5ddc61c85eee34557d36de9906b2')
@@ -155,8 +156,8 @@ class Libpressio(CMakePackage):
     depends_on('py-numcodecs', when="@0.54.0:+python", type="run")
     depends_on('doxygen+graphviz', when="+docs", type="build")
     depends_on('curl', when="+remote")
-    depends_on('nlohmann-json~single_header', when="+remote")
-    depends_on('nlohmann-json~single_header', when="+json")
+    depends_on('nlohmann-json+multiple_headers', when="+remote")
+    depends_on('nlohmann-json+multiple_headers', when="+json")
     depends_on('szauto', when="+szauto")
     conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
 
