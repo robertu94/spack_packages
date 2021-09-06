@@ -17,6 +17,7 @@ class Libstdcompat(CMakePackage):
 
     version('master', branch='master')
 
+    version('0.0.8', sha256='3103295033fb6723dc462a8979ccfe3b571347c2a458f4cc8d8324981dedead9')
     version('0.0.7', sha256='8cb4ed704aef427bbe4c86ee874a350561e6e059223e7b3d60f1e0d7300ccfe9')
     version('0.0.6', sha256='cf4288422c9e9ab9e7c831c11a6a67907fe19b0da40601cc2b05e76e3be2f795')
     version('0.0.5', sha256='a8599a12253b5ebdb38c6e416e7896444fd48a15167fe481985182ed17fc6883')
@@ -25,14 +26,40 @@ class Libstdcompat(CMakePackage):
     version('0.0.2', sha256='36424399e649be38bdb21899aa45f94aebba25c66048bab2751b1b3b9fd27238')
     version('0.0.1', sha256='3d63e901f4e20b9032a67086f4b4281f641ee0dea436cf15f7058faa40d8637b')
 
+    variant("cpp_compat", values=("11", "14", "17", "20", "auto"),
+            default="auto", multi=False, description="version of the c++ standard to use and depend on")
+    variant('cpp_unstable', default=False, description='sets CXX_STANDARD_REQUIRED')
     variant('boost', default=False, description='support older compilers using boost')
 
     depends_on('boost', when="+boost")
+    depends_on('boost', when="cpp_compat=11")
+    depends_on('boost', when="cpp_compat=14")
+
+    conflicts("+cpp_unstable", when="@:0.0.7")
+    conflicts("cpp_compat=11", when="@:0.0.7")
+    conflicts("cpp_compat=14", when="@:0.0.7")
+    conflicts("cpp_compat=17", when="@:0.0.7")
+    conflicts("cpp_compat=20", when="@:0.0.7")
 
     def cmake_args(self):
         args = []
-        if "+boost" in self.spec:
+        cpp_compat = self.spec.variants['cpp_compat'].value
+
+        if "cpp_unstable" in self.spec:
+            args.append("-DSTDCOMPAT_CXX_UNSTABLE=ON")
+
+        if cpp_compat == "11":
             args.append("-DSTDCOMPAT_CXX_VERSION=11")
+        elif cpp_compat == "14":
+            args.append("-DSTDCOMPAT_CXX_VERSION=14")
+        elif cpp_compat == "17":
+            args.append("-DSTDCOMPAT_CXX_VERSION=17")
+        elif cpp_compat == "17":
+            args.append("-DSTDCOMPAT_CXX_VERSION=20")
+        elif "+boost" in self.spec:
+            args.append("-DSTDCOMPAT_CXX_VERSION=11")
+
+
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
