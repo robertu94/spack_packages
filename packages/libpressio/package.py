@@ -10,6 +10,8 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.71.0', sha256='9b9ba9689c53e9cfa4d9fee52653ed393d2307c437dac41daceb6f98564fbcd1')
+    version('0.70.8', sha256='f0600cabd0341669ef1d6e838ef3496cff5200239a3b96a4941c434d71e4517c')
     version('0.70.7', sha256='82722a9e7fbec3b2d79be226ba73bbf3108d3206d006a763db46d20cc044a8b5')
     version('0.70.6', sha256='e76be47b0b8bd18d7ac44d59242adc45dc721465638aefd2c8564fd778d1adbd')
     version('0.70.5', sha256='c6ee62643c08a7ceca7c45eb28edff0eeb070671bf0d502563b6cc8ada4bf695')
@@ -166,6 +168,7 @@ class Libpressio(CMakePackage):
     def cmake_args(self):
         args = []
         if "+python" in self.spec:
+            args.append("-DLIBPRESSIO_PYTHON_SITELIB={0}".format(site_packages_dir))
             args.append("-DBUILD_PYTHON_WRAPPER=ON")
             args.append("-DPython3_EXECUTABLE={0}".format(self.spec['python'].command))
             if "+mpi" in self.spec:
