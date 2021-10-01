@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.71.3', sha256='f1185acdc6143fe7e417754032336ef50fec5760b08cb291962305429adf18da')
     version('0.71.2', sha256='0501f6a0a9cfad62f80834d1dd77c678b000202903168aec0d2c4928ff6e581c')
     version('0.71.1', sha256='cd9daa4b28da3b5e3cb36cace11b4e580a66fb14ca04a807c5a135a9448bb5df')
     version('0.71.0', sha256='9b9ba9689c53e9cfa4d9fee52653ed393d2307c437dac41daceb6f98564fbcd1')
@@ -124,6 +125,8 @@ class Libpressio(CMakePackage):
     variant('unix', default=False, description="build support for unixisms like mmap and rusage")
 
     depends_on('boost', when="@:0.51.0+boost")
+    depends_on('libstdcompat@0.0.10+boost', when="@0.71.3:+boost")
+    depends_on('libstdcompat@0.0.10', when="@0.71.3:")
     depends_on('libstdcompat@0.0.7:+boost', when="@0.70.3:+boost")
     depends_on('libstdcompat@0.0.7:', when="@0.70.3:~boost")
     depends_on('libstdcompat@0.0.6:+boost', when="@0.70.2:+boost")
