@@ -34,6 +34,7 @@ class OpentelemetryCpp(CMakePackage):
     # maintainers = ['github_user1', 'github_user2']
 
     version('main', branch="main")
+    version('1.0.1', sha256='32f12ff15ec257e3462883f84bc291c2d5dc30055604c12ec4b46a36dfa3f189')
     version('1.0.0-rc1', sha256='4df1e67296d1f5ac09037d7c12581cdb2ae639f8dfd698efd6be4513a361b6cf')
 
     variant('shared', default=True, description="build shared libs")

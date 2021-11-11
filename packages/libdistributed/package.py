@@ -9,6 +9,7 @@ class Libdistributed(CMakePackage):
     git      = "https://github.com/robertu94/libdistributed"
 
     version('master', branch='master')
+    version('0.2.0', sha256='4540136d39f98a21c59a7e127cb0568266747bfff886edf0f0007be4959a09a3')
     version('0.1.2', sha256='c22f93e6ea781ea33812481b19c7bc5e688e51f91991debc7f27a493ef2c78b3')
     version('0.1.1', sha256='a5201fd754588034e2c87a21f0283dd9fda758d7820450179eabd68b3dae8cb6')
     version('0.1.0', sha256='e10daa6d4a6dc371057e92d2b706ae16450b41ed7c0d386cffeb68e160f556c1')
