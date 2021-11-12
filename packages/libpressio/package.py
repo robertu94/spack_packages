@@ -126,8 +126,8 @@ class Libpressio(CMakePackage):
     variant('unix', default=False, description="build support for unixisms like mmap and rusage")
 
     depends_on('boost', when="@:0.51.0+boost")
-    depends_on('libstdcompat@0.0.10+boost', when="@0.71.3:+boost")
-    depends_on('libstdcompat@0.0.10', when="@0.71.3:")
+    depends_on('libstdcompat@0.0.10:+boost', when="@0.71.3:+boost")
+    depends_on('libstdcompat@0.0.10:', when="@0.71.3:")
     depends_on('libstdcompat@0.0.7:+boost', when="@0.70.3:+boost")
     depends_on('libstdcompat@0.0.7:', when="@0.70.3:~boost")
     depends_on('libstdcompat@0.0.6:+boost', when="@0.70.2:+boost")
