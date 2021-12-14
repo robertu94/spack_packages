@@ -22,9 +22,9 @@ class LibpressioOpt(CMakePackage):
     def cmake_args(self):
         args = []
         if self.run_tests:
-            args.append("-DBUILD_TESTING=OFF")
-        else:
             args.append("-DBUILD_TESTING=ON")
+        else:
+            args.append("-DBUILD_TESTING=OFF")
         return args
 
     @run_after('build')

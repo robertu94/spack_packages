@@ -126,6 +126,8 @@ class Libpressio(CMakePackage):
     variant('json', default=False, description="build the JSON support")
     variant('szauto', default=False, description="build szauto support")
     variant('unix', default=False, description="build support for unixisms like mmap and rusage")
+    variant('ndzip', default=False, description="build support for the NDZIP compressor")
+    variant('arc', default=False, description="build support for the ARC error correction tool")
 
     depends_on('boost', when="@:0.51.0+boost")
     depends_on('libstdcompat@0.0.10:+boost', when="@0.71.3:+boost")
@@ -169,6 +171,8 @@ class Libpressio(CMakePackage):
     depends_on('nlohmann-json+multiple_headers', when="+remote")
     depends_on('nlohmann-json+multiple_headers', when="+json")
     depends_on('szauto', when="+szauto")
+    depends_on('ndzip', when="+ndzip")
+    depends_on('arc', when="+arc")
     conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
 
     extends("python", when="+python")
@@ -225,6 +229,10 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_JSON=ON")
         if "+unix" in self.spec:
             args.append("-DLIBPRESSIO_HAS_LINUX=ON")
+        if "+ndzip" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_NDZIP=ON")
+        if "+arc" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_ARC=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
