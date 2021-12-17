@@ -24,7 +24,12 @@ class Mgard(CMakePackage, CudaPackage):
         ]
         if "+cuda" in self.spec:
             args.append("-DMGARD_ENABLE_CUDA=ON")
-            args.append("-DCUDA_ARCH_STRING={}".format(
-                ";".join(self.spec.variants["cuda_arch"].value))
-                )
+            cuda_arch = self.spec.variants["cuda_arch"].value
+            args.append("-DCUDA_ARCH_STRING={}".format(";".join(cuda_arch)))
+            if "75" in cuda_arch:
+                args.append("-DMGARD_ENABLE_CUDA_OPTIMIZE_TURING=ON")
+            if "70" in cuda_arch:
+                args.append("-DMGARD_ENABLE_CUDA_OPTIMIZE_VOLTA=ON")
+
+
         return args

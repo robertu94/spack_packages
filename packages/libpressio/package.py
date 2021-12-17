@@ -131,6 +131,8 @@ class Libpressio(CMakePackage):
     variant('arc', default=False, description="build support for the ARC error correction tool")
 
     depends_on('boost', when="@:0.51.0+boost")
+    depends_on('libstdcompat@0.0.13:+boost', when="@0.73.0:+boost")
+    depends_on('libstdcompat@0.0.13:', when="@0.73.0:")
     depends_on('libstdcompat@0.0.10:+boost', when="@0.71.3:+boost")
     depends_on('libstdcompat@0.0.10:', when="@0.71.3:")
     depends_on('libstdcompat@0.0.7:+boost', when="@0.70.3:+boost")
