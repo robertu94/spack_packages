@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.74.0', sha256='2fbd54bbc4d1f3ce4b107ac625ad97c6396bff8873f2ac51dd049d93aa3f2276')
     version('0.73.0', sha256='059c90ab50d2e50a1fff8bf25c0c387a9274090bf8657fa49aa1c211b4690491')
     version('0.72.2', sha256='1f620b8af272dd2823712c1e38a69c6375febe49eb9155a3f04667ea1931ebdb')
     version('0.72.1', sha256='f8ab9559c40a6a93ad0c1a894acf71e07c9fe1994f464852c9dd6f0423a6dc51')
@@ -129,6 +130,7 @@ class Libpressio(CMakePackage):
     variant('unix', default=False, description="build support for unixisms like mmap and rusage")
     variant('ndzip', default=False, description="build support for the NDZIP compressor")
     variant('arc', default=False, description="build support for the ARC error correction tool")
+    variant('netcdf', default=False, description="build support for the NDFCDF data format")
 
     depends_on('boost', when="@:0.51.0+boost")
     depends_on('libstdcompat@0.0.13:+boost', when="@0.73.0:+boost")
@@ -176,6 +178,7 @@ class Libpressio(CMakePackage):
     depends_on('szauto', when="+szauto")
     depends_on('ndzip', when="+ndzip")
     depends_on('arc', when="+arc")
+    depends_on('netcdf-c', when="+netcdf")
     conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
 
     extends("python", when="+python")
@@ -236,6 +239,8 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_NDZIP=ON")
         if "+arc" in self.spec:
             args.append("-DLIBPRESSIO_HAS_ARC=ON")
+        if "+netcdf" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_NETCDF=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
