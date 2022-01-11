@@ -33,6 +33,7 @@ class LibpressioTools(CMakePackage):
     variant('tthresh', default=False, description="depend on the GPL licensed libpressio-tthresh")
     variant('rcpp', default=False, description="depend on the GPL licensed libpressio-rmetric")
     variant('mpi', default=False, description="depend on MPI for distributed parallelism")
+    conflicts('+opt', '~mpi')
 
     def cmake_args(self):
         args=[]
@@ -43,7 +44,7 @@ class LibpressioTools(CMakePackage):
         if "+error_injector" in self.spec:
             args.append("-DLIBPRESSIO_TOOLS_HAS_ERROR_INJECTOR=YES")
         if "+tthresh" in self.spec:
-            args.append("-DLIBPRESSIO_TOOLS_HAS_TTHESH=YES")
+            args.append("-DLIBPRESSIO_TOOLS_HAS_TTHRESH=YES")
         if "+rcpp" in self.spec:
             args.append("-DLIBPRESSIO_TOOLS_HAS_RMETRIC=YES")
         if self.run_tests:
