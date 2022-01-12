@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.75.0', sha256='83aadd5e6172b3654b955954d13f2d9346fcd008bc901746f6f8b65a978235ee')
     version('0.74.1', sha256='aab7211c244a7a640e0b2d12346463c8650ef4f8d48fc58819a20d3b27ab5f81')
     version('0.74.0', sha256='2fbd54bbc4d1f3ce4b107ac625ad97c6396bff8873f2ac51dd049d93aa3f2276')
     version('0.73.0', sha256='059c90ab50d2e50a1fff8bf25c0c387a9274090bf8657fa49aa1c211b4690491')
@@ -132,6 +133,7 @@ class Libpressio(CMakePackage):
     variant('ndzip', default=False, description="build support for the NDZIP compressor")
     variant('arc', default=False, description="build support for the ARC error correction tool")
     variant('netcdf', default=False, description="build support for the NDFCDF data format")
+    variant('sz3', default=False, description="build support for the SZ3 compressor family")
 
     depends_on('boost', when="@:0.51.0+boost")
     depends_on('libstdcompat@0.0.13:+boost', when="@0.73.0:+boost")
@@ -181,6 +183,7 @@ class Libpressio(CMakePackage):
     depends_on('arc', when="+arc")
     depends_on('netcdf-c', when="+netcdf")
     conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
+    depends_on('sz3', when="+sz3")
 
     extends("python", when="+python")
 
@@ -242,6 +245,8 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_ARC=ON")
         if "+netcdf" in self.spec:
             args.append("-DLIBPRESSIO_HAS_NETCDF=ON")
+        if "+sz3" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_SZ3=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
