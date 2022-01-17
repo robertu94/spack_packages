@@ -9,6 +9,7 @@ class LibpressioTools(CMakePackage):
     git      = "https://github.com/robertu94/pressio-tools"
 
     version('master', branch='master')
+    version('0.0.22', sha256='9fcb20a3bf24e139386e94b413f10087d65ed32d2eb93cc7be8e87d736da9766')
     version('0.0.21', sha256='2ffe1018ff86eca0928ab8bbf568b2cf7ab739f0e191e2722a6f5071dac4a153')
     version('0.0.20', sha256='cad3a1dff25ae1dc442821e72fe8f7495e098bd0ea52c3beeac1ceb721c60351')
     version('0.0.19', sha256='cc8a4bb5259b7b8e14248a1a741067a865a0db36645c878d346da983e74c9521')
