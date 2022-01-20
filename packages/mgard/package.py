@@ -17,6 +17,7 @@ class Mgard(CMakePackage, CudaPackage):
     depends_on("tclap", when="@robertu94:")
     depends_on("yaml-cpp", when="@robertu94:")
     depends_on("nvcomp@robertu", when="+cuda")
+    conflicts('cuda_arch=none', when="+cuda")
 
     def cmake_args(self):
         args = [

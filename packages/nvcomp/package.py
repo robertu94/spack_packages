@@ -36,6 +36,7 @@ class Nvcomp(CMakePackage, CudaPackage):
     version('2.0.2', sha256='e75c746084e5100a4eecb8c31d546f70fe698e6f927d4fdb8326058712204f16')
 
     depends_on('cuda')
+    conflicts("~cuda")
 
     def cmake_args(self):
         args = [
