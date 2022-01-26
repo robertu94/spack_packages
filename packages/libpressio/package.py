@@ -1,7 +1,7 @@
 from spack import *
 
 
-class Libpressio(CMakePackage):
+class Libpressio(CMakePackage, CudaPackage):
     """A generic abstraction for the compression of dense tensors"""
 
     homepage = "https://github.com/codarcode/libpressio"
@@ -10,6 +10,7 @@ class Libpressio(CMakePackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.77.0', sha256='d2f362c8b48b6ea6b3a099f3dcb0ce844e3b45fd6cf0c4130fbbf48d54d1a9b3')
     version('0.76.1', sha256='09b6926efefa1b10f400dfc94927c195d1f266f34ed34cddeba11707c0cc6982')
     version('0.76.0', sha256='8ec0e3bcc57511a426047748f649096cf899a07767ddbcdbfad28500e1190810')
     version('0.75.1', sha256='8b9beb79507196575649d32116d13833e7dc9765370c245ac5a3640a50cb106a')
@@ -250,6 +251,8 @@ class Libpressio(CMakePackage):
             args.append("-DLIBPRESSIO_HAS_NETCDF=ON")
         if "+sz3" in self.spec:
             args.append("-DLIBPRESSIO_HAS_SZ3=ON")
+        if "+cuda" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_CUFILE=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
