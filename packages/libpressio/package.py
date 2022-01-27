@@ -139,6 +139,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant('arc', default=False, description="build support for the ARC error correction tool")
     variant('netcdf', default=False, description="build support for the NDFCDF data format")
     variant('sz3', default=False, description="build support for the SZ3 compressor family")
+    variant('mgardx', default=False, description="build support for the MGARDx compressor")
 
     depends_on('boost', when="@:0.51.0+boost")
     depends_on('libstdcompat@0.0.13:+boost', when="@0.73.0:+boost")

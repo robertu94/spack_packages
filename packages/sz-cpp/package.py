@@ -40,7 +40,7 @@ class SzCpp(CMakePackage):
 
     def cmake_args(self):
         args = [
-            self.define_from_variant('BUILD_SHARED_LIBS', 'shared')
+            self.define_from_variant('BUILD_SHARED_LIBS', 'shared'),
             self.define('BUILD_TESTING', self.run_tests)
         ]
         return args
