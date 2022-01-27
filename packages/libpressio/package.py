@@ -10,6 +10,7 @@ class Libpressio(CMakePackage, CudaPackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.78.0', sha256='d9292150686d2be616cd9145c24fe6fc12374df023eee14099ffdf7071e87044')
     version('0.77.0', sha256='d2f362c8b48b6ea6b3a099f3dcb0ce844e3b45fd6cf0c4130fbbf48d54d1a9b3')
     version('0.76.1', sha256='09b6926efefa1b10f400dfc94927c195d1f266f34ed34cddeba11707c0cc6982')
     version('0.76.0', sha256='8ec0e3bcc57511a426047748f649096cf899a07767ddbcdbfad28500e1190810')
@@ -186,6 +187,8 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on('ndzip', when="+ndzip")
     depends_on('arc', when="+arc")
     depends_on('netcdf-c', when="+netcdf")
+    depends_on('mgardx', when="+mgardx")
+    conflicts('+mgardx', when="+szauto") # SZ auto and MGARDx cause symbol conflicts with each other
     conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
     depends_on('sz3', when="+sz3")
 
@@ -253,6 +256,8 @@ class Libpressio(CMakePackage, CudaPackage):
             args.append("-DLIBPRESSIO_HAS_SZ3=ON")
         if "+cuda" in self.spec:
             args.append("-DLIBPRESSIO_HAS_CUFILE=ON")
+        if "+mgardx" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_MGARDX=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
