@@ -258,7 +258,7 @@ class Libpressio(CMakePackage, CudaPackage):
         if "+cuda" in self.spec:
             args.append("-DLIBPRESSIO_HAS_CUFILE=ON")
         if "+mgardx" in self.spec:
-            args.append("-DLIBPRESSIO_HAS_MGARDX=ON")
+            args.append("-DLIBPRESSIO_HAS_MGARDx=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
