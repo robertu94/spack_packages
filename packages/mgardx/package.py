@@ -32,7 +32,7 @@ class Mgardx(CMakePackage):
 
     variant('shared', description="build shared libraries", default=True)
 
-    version('2022-01-27', commit='420599b897720702fd3d236ec906bfc13803022e')
+    version('2022-01-27', commit='aabe9de1a331eaeb8eec41125dd45e30c1d03af4')
 
     depends_on('sz-cpp')
     depends_on('pkgconfig')
