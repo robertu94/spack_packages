@@ -27,13 +27,14 @@ class Sz3(CMakePackage):
     """SZ3 is the next generation of the SZ compressor framework"""
 
     # FIXME: Add a proper url for your package's homepage here.
-    homepage = ""
-    url      = "https://github.com/szcompressor/SZ3_Private"
-    git      = "git@github.com:szcompressor/SZ3_Private"
+    homepage = "https://github.com/szcompressor/SZ3"
+    url      = "https://github.com/robertu94/SZ3"
+    git      = "https://github.com/robertu94/SZ3"
 
     maintainers = ['disheng222']
 
-    version('interp', branch="interp")
+    version('master')
+    version("3.1.3", commit="695dff8dc326f3b165f6676d810f46add088a585")
 
     depends_on('zstd')
     depends_on('gsl')
