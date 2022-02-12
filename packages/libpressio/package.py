@@ -196,7 +196,7 @@ class Libpressio(CMakePackage, CudaPackage):
     def cmake_args(self):
         args = []
         if "+python" in self.spec:
-            args.append("-DLIBPRESSIO_PYTHON_SITELIB={0}".format(site_packages_dir))
+            args.append("-DLIBPRESSIO_PYTHON_SITELIB={0}".format(python_platlib))
             args.append("-DBUILD_PYTHON_WRAPPER=ON")
             args.append("-DPython3_EXECUTABLE={0}".format(self.spec['python'].command))
             if "+mpi" in self.spec:
