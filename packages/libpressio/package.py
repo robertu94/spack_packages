@@ -10,6 +10,8 @@ class Libpressio(CMakePackage, CudaPackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.82.1', sha256='f6b41ad6f56311078e67e68063f9124f32e63a9c1c9c0c0289c75addaf9fed94')
+    version('0.82.0', sha256='e60f843dda8312ae4269c3ee23aad67b50f29a8830c84fb6c10309c37e442410')
     version('0.81.0', sha256='51ab443a42895fefb4e0ae8eb841402f01a340f3dd30dcb372f837e36ac65070')
     version('0.80.1', sha256='9168789f8714d0bbce1a03ff3a41ef24c203f807fed1fbd5ca050798ebef015f')
     version('0.80.0', sha256='f93292dc258224a8ef69f33299a5deecfb45e7ea530575eeaa4ceff48093d20e')
@@ -144,6 +146,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant('netcdf', default=False, description="build support for the NDFCDF data format")
     variant('sz3', default=False, description="build support for the SZ3 compressor family")
     variant('mgardx', default=False, description="build support for the MGARDx compressor")
+    variant('bzip2', default=False, description="build support for the bzip2 compressor")
 
     depends_on('boost', when="@:0.51.0+boost")
 
@@ -193,6 +196,7 @@ class Libpressio(CMakePackage, CudaPackage):
     conflicts('+mgardx', when="+szauto") # SZ auto and MGARDx cause symbol conflicts with each other
     conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
     depends_on('sz3', when="+sz3")
+    depends_on('bzip2', when="+bzip2")
 
     extends("python", when="+python")
 
@@ -260,6 +264,8 @@ class Libpressio(CMakePackage, CudaPackage):
             args.append("-DLIBPRESSIO_HAS_CUFILE=ON")
         if "+mgardx" in self.spec:
             args.append("-DLIBPRESSIO_HAS_MGARDx=ON")
+        if "+bzip2" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_BZIP2=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:
