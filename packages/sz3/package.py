@@ -34,6 +34,7 @@ class Sz3(CMakePackage):
     maintainers = ['disheng222']
 
     version('master')
+    version("3.1.3.1", commit="323cb17b412d657c4be681b52c34beaf933fe7af")
     version("3.1.3", commit="695dff8dc326f3b165f6676d810f46add088a585")
 
     depends_on('zstd')
