@@ -10,6 +10,7 @@ class Libpressio(CMakePackage, CudaPackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.83.2', sha256='56dd63cb3924fb57f8f53929faecf2a5211985f160cdacf38b3d001e22728427')
     version('0.83.1', sha256='2afdc8421b4c0f638c8547bcdd54bdb405d1717dca32b804621c5c152adbe2a6')
     version('0.83.0', sha256='7c692bbf3ebdfa508a493902eb561c85b9087dd8003547dcd54baf0b2188d9bd')
     version('0.82.3', sha256='97a6a0a022d8ae60f477ce21d1ff10cc47bb2f7d3891bb3b49f4a7b166f9c2e1')
