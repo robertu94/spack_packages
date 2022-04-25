@@ -1,4 +1,4 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -11,11 +11,11 @@
 # next to all the things you'll want to change. Once you've handled
 # them, you can save this file and test your package like this:
 #
-#     spack install sz3
+#     spack install qoz
 #
 # You can edit this file again by typing:
 #
-#     spack edit sz3
+#     spack edit qoz
 #
 # See the Spack documentation for more information on packaging.
 # ----------------------------------------------------------------------------
@@ -23,26 +23,24 @@
 from spack import *
 
 
-class Sz3(CMakePackage):
-    """SZ3 is the next generation of the SZ compressor framework"""
+class Qoz(CMakePackage):
+    """Quality optimized version of SZ3 is the next generation of the SZ compressor framework"""
 
-    # FIXME: Add a proper url for your package's homepage here.
-    homepage = "https://github.com/szcompressor/SZ3"
-    url      = "https://github.com/robertu94/SZ3"
-    git      = "https://github.com/robertu94/SZ3"
+    git      = "https://github.com/robertu94/QoZ"
+    homepage = git
+
+    version('master', branch='develop')
 
     maintainers = ['disheng222']
-
-    version('master')
-    version("3.1.3.1", commit="323cb17b412d657c4be681b52c34beaf933fe7af")
-    version("3.1.3", commit="695dff8dc326f3b165f6676d810f46add088a585")
 
     depends_on('zstd')
     depends_on('gsl')
     depends_on('pkgconfig')
 
+
     def cmake_args(self):
-        return [
+        args = [
             "-DSZ3_USE_BUNDLED_ZSTD=OFF",
             "-DSZ3_DEBUG_TIMINGS=OFF",
         ]
+        return args
