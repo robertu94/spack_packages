@@ -155,6 +155,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant('sz3', default=False, description="build support for the SZ3 compressor family")
     variant('mgardx', default=False, description="build support for the MGARDx compressor")
     variant('bzip2', default=False, description="build support for the bzip2 compressor")
+    variant('qoz', default=False, description="build support for the qoz compressor")
 
     depends_on('boost', when="@:0.51.0+boost")
 
@@ -205,6 +206,7 @@ class Libpressio(CMakePackage, CudaPackage):
     conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
     depends_on('sz3', when="+sz3")
     depends_on('bzip2', when="+bzip2")
+    depends_on('qoz', when="+qoz")
 
     extends("python", when="+python")
 
@@ -274,6 +276,8 @@ class Libpressio(CMakePackage, CudaPackage):
             args.append("-DLIBPRESSIO_HAS_MGARDx=ON")
         if "+bzip2" in self.spec:
             args.append("-DLIBPRESSIO_HAS_BZIP2=ON")
+        if "+qoz" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_QoZ=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:

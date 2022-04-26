@@ -40,7 +40,7 @@ class Qoz(CMakePackage):
 
     def cmake_args(self):
         args = [
-            "-DSZ3_USE_BUNDLED_ZSTD=OFF",
-            "-DSZ3_DEBUG_TIMINGS=OFF",
+            "-DQoZ_USE_BUNDLED_ZSTD=OFF",
+            "-DQoZ_DEBUG_TIMINGS=OFF",
         ]
         return args
