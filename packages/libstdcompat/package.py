@@ -33,18 +33,34 @@ class Libstdcompat(CMakePackage):
 
     variant("cpp_compat", values=("11", "14", "17", "20", "auto"),
             default="auto", multi=False, description="version of the c++ standard to use and depend on")
-    variant('cpp_unstable', default=False, description='sets CXX_STANDARD_REQUIRED')
+    variant('cpp_unstable', default=True, description='sets CXX_STANDARD_REQUIRED')
     variant('boost', default=False, description='support older compilers using boost')
 
+    depends_on('boost', when="%gcc@:8.0.0")
     depends_on('boost+thread', when="+boost")
     depends_on('boost+thread', when="cpp_compat=11")
     depends_on('boost+thread', when="cpp_compat=14")
 
+    conflicts("~cpp_unstable", when="@0.0.7: cpp_compat=auto")
     conflicts("+cpp_unstable", when="@:0.0.7")
     conflicts("cpp_compat=11", when="@:0.0.7")
     conflicts("cpp_compat=14", when="@:0.0.7")
     conflicts("cpp_compat=17", when="@:0.0.7")
     conflicts("cpp_compat=20", when="@:0.0.7")
+
+    def max_cxx_version(self) -> str:
+        try:
+            self.compiler.cxx17_flag
+            return '17'
+        except Exception:
+            pass
+        try:
+            self.compiler.cxx14_flag
+            return '14'
+        except Exception:
+            pass
+        self.compiler.cxx11_flag
+        return '11'
 
     def cmake_args(self):
         args = []
@@ -53,16 +69,16 @@ class Libstdcompat(CMakePackage):
         if "cpp_unstable" in self.spec:
             args.append("-DSTDCOMPAT_CXX_UNSTABLE=ON")
 
-        if cpp_compat == "11":
+        if cpp_compat == "auto":
+            args.append("-DSTDCOMPAT_CXX_VERSION=%s" % self.max_cxx_version())
+        elif cpp_compat == "11":
             args.append("-DSTDCOMPAT_CXX_VERSION=11")
         elif cpp_compat == "14":
             args.append("-DSTDCOMPAT_CXX_VERSION=14")
         elif cpp_compat == "17":
             args.append("-DSTDCOMPAT_CXX_VERSION=17")
-        elif cpp_compat == "17":
+        elif cpp_compat == "20":
             args.append("-DSTDCOMPAT_CXX_VERSION=20")
-        elif "+boost" in self.spec:
-            args.append("-DSTDCOMPAT_CXX_VERSION=11")
 
 
         if self.run_tests:
