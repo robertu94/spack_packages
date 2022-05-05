@@ -48,7 +48,7 @@ class Libstdcompat(CMakePackage):
     conflicts("cpp_compat=17", when="@:0.0.7")
     conflicts("cpp_compat=20", when="@:0.0.7")
 
-    def max_cxx_version(self) -> str:
+    def max_cxx_version(self):
         try:
             self.compiler.cxx17_flag
             return '17'
