@@ -50,6 +50,7 @@ class Sz(CMakePackage):
     variant('fortran', default=False, description='Enable fortran compilation')
     variant('shared', default=True, description="build shared versions of the libraries")
     variant('stats', default=False, description="build profiling statistics for compression")
+    variant('openmp', default=False, description="build openmp support")
 
     # Part of latest sources don't support -O3 optimization
     # with Fujitsu compiler.
@@ -123,6 +124,11 @@ class Sz(CMakePackage):
             args.append("-DBUILD_RANDOMACCESS=ON")
         else:
             args.append("-DBUILD_RANDOMACCESS=OFF")
+
+        if "+openmp" in self.spec:
+            args.append("-DBUILD_OPENMP=ON")
+        else:
+            args.append("-DBUILD_OPENMP=OFF")
 
         if "+fortran" in self.spec:
             args.append("-DBUILD_FORTRAN=ON")
