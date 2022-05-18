@@ -22,6 +22,7 @@ class Tif22pnm(Package):
 
     # FIXME: Add dependencies if required.
     depends_on('libpng')
+    depends_on('libtiff')
 
     def install(self, spec, prefix):
         configure_args = [
