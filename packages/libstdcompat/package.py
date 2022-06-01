@@ -37,7 +37,7 @@ class Libstdcompat(CMakePackage):
     variant('cpp_unstable', default=True, description='sets CXX_STANDARD_REQUIRED')
     variant('boost', default=False, description='support older compilers using boost')
 
-    depends_on('boost', when="%gcc@:8.0.0")
+    depends_on('boost+thread', when="%gcc@:8.0.0")
     depends_on('boost+thread', when="+boost")
     depends_on('boost+thread', when="cpp_compat=11")
     depends_on('boost+thread', when="cpp_compat=14")
