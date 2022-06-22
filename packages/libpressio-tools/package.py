@@ -9,6 +9,7 @@ class LibpressioTools(CMakePackage):
     git      = "https://github.com/robertu94/pressio-tools"
 
     version('master', branch='master')
+    version('0.1.0', sha256='8a38d5fc968512e1054d336e5f9073567c54389b95344154365c08114b48ae11')
     version('0.0.24', sha256='b369efcc17f339fdd5741d817f1b7908bd2b5df5686c5406c6b1123b0daa82c5')
     version('0.0.23', sha256='08a141be14e63e491216a89d45737040fc3450c5b793e6a4819cd06f876b2b0b')
     version('0.0.22', sha256='9fcb20a3bf24e139386e94b413f10087d65ed32d2eb93cc7be8e87d736da9766')
@@ -22,20 +23,30 @@ class LibpressioTools(CMakePackage):
 
     depends_on('mpi', when="+mpi")
     depends_on('libpressio+hdf5+libdistributed+mpi', when="+mpi")
-
     depends_on('libpressio+hdf5', when="~mpi")
 
     depends_on('boost')
+
+    # 0.1.0 changed a bunch of things in the build system, make sure everything is up to date
+    depends_on('libpressio@0.85.0:', when="@0.1.0:")
+    depends_on('libpressio-opt@0.13.3', when="@0.1.0:+opt")
+    depends_on('libpressio-errorinjector@0.7.0:', when="@0.1.0:+error_injector")
+    depends_on('libpressio-tthresh@0.0.5:', when="@0.1.0:+tthresh")
+    depends_on('libpressio-rmetric@0.0.4:', when="@0.1.0:+rcpp")
+    depends_on('libpressio-adios2@0.0.2', when="@0.1.0:+adios2")
+
     depends_on('libpressio-opt', when="+opt")
     depends_on('libpressio-errorinjector', when="+error_injector")
     depends_on('libpressio-tthresh', when="+tthresh")
     depends_on('libpressio-rmetric', when="+rcpp")
+    depends_on('libpressio-adios2', when="+adios2")
 
     variant("opt", default=False, description="support the libpressio-opt package")
     variant("error_injector", default=False, description="support the libpressio-errorinjector package")
     variant('tthresh', default=False, description="depend on the GPL licensed libpressio-tthresh")
     variant('rcpp', default=False, description="depend on the GPL licensed libpressio-rmetric")
     variant('mpi', default=False, description="depend on MPI for distributed parallelism")
+    variant('adios2', default=False, description="depend on ADIOS2 for IO modules")
     conflicts('+opt', '~mpi')
 
     def cmake_args(self):

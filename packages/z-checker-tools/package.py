@@ -28,14 +28,13 @@ class ZCheckerTools(CMakePackage):
 
     homepage = "https://github.com/CODARcode/z-checker-installer"
     url      = "https://github.com/CODARcode/z-checker-installer/archive/refs/tags/0.7.0.tar.gz"
-    git      = "https://github.com/CODARcode/z-checker-installer"
+    git      = "https://github.com/robertu94/z-checker-installer"
 
     maintainers = ['disheng222', 'robertu94']
 
     version('develop', branch='develop')
-    version('develop-robertu94', branch='develop', git="https://github.com/robertu94/z-checker-installer")
 
-    depends_on('libpressio@0.66.3+sz+zfp+fpzip+json')
+    depends_on('libpressio@0.66.3:+sz+zfp+fpzip+json')
     depends_on('z-checker')
     depends_on('perl')
     depends_on('git')

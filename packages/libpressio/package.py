@@ -10,6 +10,7 @@ class Libpressio(CMakePackage, CudaPackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.85.0', sha256='79a600fdd5c7a418a0380425e1bbeb245d5d86e1676f251e5900b69738b72423')
     version('0.84.3', sha256='7b2ca198f919c1f981c88722da33ef69b564fe123d49330ad6ba17eba80c046e')
     version('0.84.2', sha256='c50b599a22ab89b7ef57dbaa717f5e97f4437d2bd4b6e572274c8c98022b05da')
     version('0.84.0', sha256='b22320a54dbb9f65a66af2a6f335884e7ba48abd3effe643e51e4e7cfe793b7d')
@@ -188,6 +189,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on('mpi@2:', when="+mpi")
     depends_on('sol2', when="+lua")
     depends_on('libdistributed@0.0.11:', when="+libdistributed")
+    depends_on('libdistributed@0.4.0:', when="@0.85.0:+libdistributed")
     depends_on('pkg-config', type='build')
     depends_on('ftk@master', when="+ftk")
     depends_on('digitrounding', when="+digitrounding")

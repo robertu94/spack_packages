@@ -36,12 +36,13 @@ class LibpressioTthresh(CMakePackage):
     maintainers = ['robertu94']
 
     version('main', branch="main")
+    version('0.0.5', sha256='2851f63b3449b4933e45db81f281298715398865ebb4a2661d68d7e2134cfec2')
     version('0.0.3', sha256='b0b0a4876d3362deafc2bb326be33882132e3d1666e0c5f916fd6fad74a18688')
     version('0.0.1', sha256='9efcfa97a5a81e9c456f50b712adb806d9d2f2ed6039860615df0f2e9d96569e')
 
     # FIXME: Add dependencies if required.
     depends_on('eigen')
-    depends_on('libpressio')
+    depends_on('libpressio@0.85.0:')
 
     def cmake_args(self):
         args = []
