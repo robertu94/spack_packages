@@ -10,6 +10,8 @@ class Libpressio(CMakePackage, CudaPackage):
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version('0.86.1', sha256='89b1b652215f67635da1baac81d3f927ff00f335c473322edcf24472b5a9b5a4')
+    version('0.86.0', sha256='867bd6ea6b632b7f6d6a89aac073cea738b574825c81ee83318802e9d3d5fbe8')
     version('0.85.0', sha256='79a600fdd5c7a418a0380425e1bbeb245d5d86e1676f251e5900b69738b72423')
     version('0.84.3', sha256='7b2ca198f919c1f981c88722da33ef69b564fe123d49330ad6ba17eba80c046e')
     version('0.84.2', sha256='c50b599a22ab89b7ef57dbaa717f5e97f4437d2bd4b6e572274c8c98022b05da')
@@ -159,6 +161,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant('mgardx', default=False, description="build support for the MGARDx compressor")
     variant('bzip2', default=False, description="build support for the bzip2 compressor")
     variant('qoz', default=False, description="build support for the qoz compressor")
+    variant('cusz', default=False, description="build support for the cusz compressor", when="@0.86.0:")
 
     depends_on('boost', when="@:0.51.0+boost")
 
@@ -211,6 +214,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on('sz3', when="+sz3")
     depends_on('bzip2', when="+bzip2")
     depends_on('qoz', when="+qoz")
+    depends_on('cusz', when="+cusz")
 
     extends("python", when="+python")
 
@@ -282,6 +286,8 @@ class Libpressio(CMakePackage, CudaPackage):
             args.append("-DLIBPRESSIO_HAS_BZIP2=ON")
         if "+qoz" in self.spec:
             args.append("-DLIBPRESSIO_HAS_QoZ=ON")
+        if "+cusz" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_CUSZ=ON")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:

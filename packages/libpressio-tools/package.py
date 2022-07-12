@@ -9,6 +9,7 @@ class LibpressioTools(CMakePackage):
     git      = "https://github.com/robertu94/pressio-tools"
 
     version('master', branch='master')
+    version('0.1.1', sha256='adec3ea9a12677c647fbc3a1f9909fde6f2dd5ed662ed0ee5cd753b26397643e')
     version('0.1.0', sha256='e016b1785f2dc5c8a8565ff3d7b50980788e057e61905a91ef1d16da73297a06')
     version('0.0.24', sha256='b369efcc17f339fdd5741d817f1b7908bd2b5df5686c5406c6b1123b0daa82c5')
     version('0.0.23', sha256='08a141be14e63e491216a89d45737040fc3450c5b793e6a4819cd06f876b2b0b')
@@ -40,6 +41,7 @@ class LibpressioTools(CMakePackage):
     depends_on('libpressio-tthresh', when="+tthresh")
     depends_on('libpressio-rmetric', when="+rcpp")
     depends_on('libpressio-adios2', when="+adios2")
+    depends_on('libpressio-frsz', when="+frsz")
 
     variant("opt", default=False, description="support the libpressio-opt package")
     variant("error_injector", default=False, description="support the libpressio-errorinjector package")
@@ -47,6 +49,7 @@ class LibpressioTools(CMakePackage):
     variant('rcpp', default=False, description="depend on the GPL licensed libpressio-rmetric")
     variant('mpi', default=False, description="depend on MPI for distributed parallelism")
     variant('adios2', default=False, description="depend on ADIOS2 for IO modules")
+    variant('frsz', default=False, description="depend on frsz", when="@0.1.1:")
     conflicts('+opt', '~mpi')
 
     def cmake_args(self):
@@ -61,6 +64,8 @@ class LibpressioTools(CMakePackage):
             args.append("-DLIBPRESSIO_TOOLS_HAS_TTHRESH=YES")
         if "+rcpp" in self.spec:
             args.append("-DLIBPRESSIO_TOOLS_HAS_RMETRIC=YES")
+        if "+frsz" in self.spec:
+            args.append("-DLIBPRESSIO_TOOLS_HAS_FRSZ=YES")
         if self.run_tests:
             args.append("-DBUILD_TESTING=ON")
         else:

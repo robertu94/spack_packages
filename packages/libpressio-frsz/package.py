@@ -11,11 +11,11 @@
 # next to all the things you'll want to change. Once you've handled
 # them, you can save this file and test your package like this:
 #
-#     spack install cusz
+#     spack install libpressio-frsz
 #
 # You can edit this file again by typing:
 #
-#     spack edit cusz
+#     spack edit libpressio-frsz
 #
 # See the Spack documentation for more information on packaging.
 # ----------------------------------------------------------------------------
@@ -23,25 +23,22 @@
 from spack import *
 
 
-class Cusz(CMakePackage, CudaPackage):
-    """A GPU accelerated error-bounded lossy compression for scientific data"""
+class LibpressioFrsz(CMakePackage):
+    """Fized Rate SZ"""
 
-    homepage = "https://szcompressor.org/"
-    git      = "https://github.com/robertu94/cusz"
+    # FIXME: Add a proper url for your package's homepage here.
+    homepage = "https://github.com/robertu94/frsz"
+    url = "https://github.com/robertu94/frsz"
+    git      = "ssh://git@github.com/robertu94/frsz"
 
-    maintainers = ['jtian0', 'dingwentao']
+    maintainers = ['robertu94']
 
-    conflicts('~cuda')
-    conflicts('cuda_arch=none', when="+cuda")
+    version('master', branch='main')
 
-    version('develop', branch='develop')
-
-    depends_on('cub', when="^ cuda@:10.2.89")
+    depends_on('libpressio')
 
     def cmake_args(self):
-        cuda_arch = self.spec.variants["cuda_arch"].value
         args = [
-            "-DBUILD_TESTING=OFF",
-            ("-DCMAKE_CUDA_ARCHITECTURES=%s" % cuda_arch)
+            "-DBUILD_TESTING=OFF"
         ]
         return args
