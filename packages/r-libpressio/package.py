@@ -32,6 +32,7 @@ class RLibpressio(RPackage):
     # notify when the package is updated.
     maintainers = ['robertu94']
 
+    version('1.4.1', sha256='fa9d47c84ddeb4edd9c5250067a87cc1bb549b9b1dd71e2501dd39ee4e171c27')
     version('1.3.2', sha256='6afc907aa3663fbb9bfc7c92ca57e15d05ecbec59f94badec24e8da99ac1422f')
     version('1.3', sha256='6ade53d30446de85d2bf6aff0f0a756887f970634b97456aec8b2920a96c0726')
     version('1.2', sha256='e5889abf6aabd14b25b5c11e8ecc42cfe56681b1e4f7ade9c9fc28de213981b4')
