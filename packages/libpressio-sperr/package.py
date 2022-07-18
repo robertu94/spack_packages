@@ -36,4 +36,5 @@ class LibpressioSperr(CMakePackage):
     depends_on('pkgconfig', type='build')
 
     version('master', branch='master')
+    version('0.0.2', sha256='61995d687f9e7e798e17ec7238d19d917890dc0ff5dec18293b840c4d6f8c115')
     version('0.0.1', sha256='e2c164822708624b97654046b42abff704594cba6537d6d0646d485bdf2d03ca')

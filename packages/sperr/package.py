@@ -29,11 +29,12 @@ class Sperr(CMakePackage):
     homepage = "https://github.com/shaomeng/SPERR"
     git      = "https://github.com/robertu94/SPERR"
 
+    version('2022.07.18', commit="640305d049db9e9651ebdd773e6936e2c028ff3a")
     version('2022.05.26', commit="7894a5fe1b5ca5a4aaa952d1779dfc31fd741243")
 
     depends_on('git', type='build')
     depends_on('zstd', type=('build','link'), when="+zstd")
-    depends_on('pkgconfig', type=('build'), when="+zstd")
+    depends_on('pkgconf', type=('build'), when="+zstd")
 
     variant('shared', description="build shared libaries", default=True)
     variant('qz', description="coding terminates by quantization level", default=True)
