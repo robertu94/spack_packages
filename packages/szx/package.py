@@ -31,11 +31,16 @@ class Szx(AutotoolsPackage):
 
     maintainers = ["robertu94"]
 
+    force_autoreconf = True
     version("main", branch="main")
+
+    depends_on('autoconf', type='build')
+    depends_on('automake', type='build')
+    depends_on('libtool', type='build')
 
     def configure_args(self):
         args = [
-            "--enable-openmp"
+            "--enable-openmp",
             "--enable-fortran"
         ]
         return args

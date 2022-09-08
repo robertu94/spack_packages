@@ -222,6 +222,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on('bzip2', when="+bzip2")
     depends_on('qoz', when="+qoz")
     depends_on('cusz', when="+cusz")
+    depends_on('szx', when="+szx")
 
     extends("python", when="+python")
 
