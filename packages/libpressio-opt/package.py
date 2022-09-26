@@ -5,7 +5,7 @@ class LibpressioOpt(CMakePackage):
     """Metacompressor which preforms optimization of compressor settings for LibPressio"""
 
     homepage = "https://github.com/robertu94/libpressio_opt"
-    git      = "git@github.com:robertu94/libpressio_opt"
+    git      = homepage
     url      = "https://github.com/robertu94/libpressio_opt/archive/refs/tags/0.11.0.tar.gz"
 
     version('develop', branch='develop')
