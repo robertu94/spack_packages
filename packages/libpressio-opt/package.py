@@ -10,6 +10,7 @@ class LibpressioOpt(CMakePackage):
 
     version('develop', branch='develop')
     version('sdr-develop', branch='develop', git="git@github.com:szcompressor/SDRFramework")
+    version("0.13.4", sha256="e9f715d11fe3558a31e1d9a939150209449ec8636ded047cb0adcd3db07569ae")
     version('0.13.3', sha256='98436b7fa6a53dd9cc09a9b978dc81c299501930cb8b844713080fc42d39d173')
     version('0.13.2', sha256='8a16ba23b5078b0ee3a75d8a64ba64b492ecfadc221dd28ae463f4d3f4f7d847')
     version('0.13.1', sha256='a831d326871c183a7e64b2015d687da3f17cf89c2d7d1d6770e3acbc1346aa8c')
