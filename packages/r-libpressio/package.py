@@ -1,26 +1,9 @@
-# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
-# ----------------------------------------------------------------------------
-# If you submit this package back to Spack as a pull request,
-# please first remove this boilerplate and all FIXME comments.
-#
-# This is a template package file for Spack.  We've put "FIXME"
-# next to all the things you'll want to change. Once you've handled
-# them, you can save this file and test your package like this:
-#
-#     spack install r-libpressio
-#
-# You can edit this file again by typing:
-#
-#     spack edit r-libpressio
-#
-# See the Spack documentation for more information on packaging.
-# ----------------------------------------------------------------------------
-
-from spack import *
+from spack.package import *
 
 
 class RLibpressio(RPackage):
@@ -29,9 +12,9 @@ class RLibpressio(RPackage):
     homepage = "https://github.com/robertu94/libpressio-r"
     url      = "https://github.com/robertu94/libpressio-r/archive/0.0.1.tar.gz"
 
-    # notify when the package is updated.
-    maintainers = ['robertu94']
+    maintainers = ["robertu94"]
 
+    version("1.6.0", sha256="4f8a712e5e84a201373a104e73b10282fcf98f1c7672cc1dd5a2ff07a32d54f6")
     version("1.5.0", sha256="6b0e095610f190aad5dded0dbc6c0783893d4d5e773afc80328fc8c5befeff58")
     version('1.4.1', sha256='fa9d47c84ddeb4edd9c5250067a87cc1bb549b9b1dd71e2501dd39ee4e171c27')
     version('1.3.2', sha256='6afc907aa3663fbb9bfc7c92ca57e15d05ecbec59f94badec24e8da99ac1422f')
@@ -45,7 +28,8 @@ class RLibpressio(RPackage):
     depends_on('r@3.3.0:', type=('build','run'))
     depends_on('r-rcpp', type=('build', 'link', 'run'))
     depends_on('libpressio+json', type=('build', 'link', 'run'))
-    depends_on('libpressio@0.65.0:+json', type=('build', 'link', 'run'), when="@1.2:")
+    depends_on('libpressio@0.65.0:', type=('build', 'link', 'run'), when="@1.2:1.5")
+    depends_on('libpressio@0.88.0:', type=('build', 'link', 'run'), when="@1.6:")
     depends_on('pkgconfig', type=('build'))
     depends_on('libpressio-tools@0.1.4:', type=('build','link', 'run'), when="+third_party")
 

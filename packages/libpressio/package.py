@@ -1,15 +1,21 @@
-from spack import *
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
+# Spack Project Developers. See the top-level COPYRIGHT file for details.
+#
+# SPDX-License-Identifier: (Apache-2.0 OR MIT)
+
+from spack.package import *
 
 
 class Libpressio(CMakePackage, CudaPackage):
     """A generic abstraction for the compression of dense tensors"""
 
     homepage = "https://github.com/codarcode/libpressio"
-    url      = "https://github.com/robertu94/libpressio/archive/0.31.1.tar.gz"
-    git      = "https://github.com/robertu94/libpressio"
+    url = "https://github.com/robertu94/libpressio/archive/0.31.1.tar.gz"
+    git = "https://github.com/robertu94/libpressio"
 
     version('master', branch='master')
     version('develop', branch='develop')
+    version("0.88.0", sha256="4358441f0d10559d571327162a216617d16d09569a80e13ad286e3b7c41c5b9b")
     version("0.87.0", sha256="2bea685e5ed3a1528ea68ba4a281902ff77c0bebd38ff212b6e8edbfa263b572")
     version("0.86.7", sha256="2a6319640a018c39aa93aaf0f027fd496d7ea7dc5ac95509313cf1b4b6b1fb00")
     version("0.86.6", sha256="31ac77137c31a524c2086e1fe4d9b1d3c1bc6d8594662cd4b67878ba8887cabb")
@@ -138,92 +144,103 @@ class Libpressio(CMakePackage, CudaPackage):
     version('0.27.0', sha256='387ee5958de2d986095cda2aaf39d0bf319d02eaeeea2a565aea97e6a6f31f36')
     version('0.26.0', sha256='c451591d106d1671c9ddbb5c304979dd2d083e0616b2aeede62e7a6b568f828c')
 
+    variant("szx", default=False, description="support the szx compressors")
+    variant("blosc", default=False, description="support the blosc lossless compressors")
+    variant("fpzip", default=False, description="support for the FPZIP lossy compressor")
+    variant("hdf5", default=False, description="support reading and writing from hdf5 files")
+    variant("magick", default=False, description="support the imagemagick image compressors")
+    variant(
+        "mgard", default=False, description="support for the MAGARD error bounded lossy compressor"
+    )
+    variant("python", default=False, description="build the python wrappers")
+    variant("sz", default=False, description="support for the SZ error bounded lossy compressor")
+    variant("zfp", default=False, description="support for the ZFP error bounded lossy compressor")
+    variant("boost", default=False, description="support older compilers using boost")
+    variant("petsc", default=False, description="support IO using petsc format")
+    variant("mpi", default=False, description="support for launching processes using mpi")
+    variant("lua", default=False, description="support for composite metrics using lua")
+    variant(
+        "libdistributed", default=False, description="support for distributed multi-buffer support"
+    )
+    variant("ftk", default=False, description="build support for the feature tracking toolkit")
+    variant("digitrounding", default=False, description="build support for the digit rounding")
+    variant("bitgrooming", default=False, description="build support for the bitgrooming")
+    variant("openmp", default=False, description="build plugins that use openmp")
+    variant("docs", default=False, description="build and install manual pages")
+    variant("remote", default=False, description="build the remote launch plugin")
+    variant("json", default=False, description="build the JSON support")
+    variant("szauto", default=False, description="build szauto support")
+    variant("unix", default=False, description="build support for unixisms like mmap and rusage")
+    variant("ndzip", default=False, description="build support for the NDZIP compressor")
+    variant("arc", default=False, description="build support for the ARC error correction tool")
+    variant("netcdf", default=False, description="build support for the NDFCDF data format")
+    variant("sz3", default=False, description="build support for the SZ3 compressor family")
+    variant("mgardx", default=False, description="build support for the MGARDx compressor")
+    variant("bzip2", default=False, description="build support for the bzip2 compressor")
+    variant("qoz", default=False, description="build support for the qoz compressor")
+    variant(
+        "cusz", default=False, description="build support for the cusz compressor", when="@0.86.0:"
+    )
 
-    variant('blosc', default=False, description='support the blosc lossless compressors')
-    variant('fpzip', default=False, description='support for the FPZIP lossy compressor')
-    variant('hdf5', default=False, description='support reading and writing from hdf5 files')
-    variant('magick', default=False, description='support the imagemagick image compressors')
-    variant('mgard', default=False, description='support for the MAGARD error bounded lossy compressor')
-    variant('python', default=False, description='build the python wrappers')
-    variant('sz', default=False, description='support for the SZ error bounded lossy compressor')
-    variant('zfp', default=False, description='support for the ZFP error bounded lossy compressor')
-    variant('boost', default=False, description='support older compilers using boost')
-    variant('petsc', default=False, description='support IO using petsc format')
-    variant('mpi', default=False, description='support for launching processes using mpi')
-    variant('lua', default=False, description='support for composite metrics using lua')
-    variant('libdistributed', default=False, description='support for distributed multi-buffer support')
-    variant('ftk', default=False, description="build support for the feature tracking toolkit")
-    variant('digitrounding', default=False, description="build support for the digit rounding")
-    variant('bitgrooming', default=False, description="build support for the bitgrooming")
-    variant('openmp', default=False, description="build plugins that use openmp")
-    variant('docs', default=False, description="build and install manual pages")
-    variant('remote', default=False, description="build the remote launch plugin")
-    variant('json', default=False, description="build the JSON support")
-    variant('szauto', default=False, description="build szauto support")
-    variant('unix', default=False, description="build support for unixisms like mmap and rusage")
-    variant('ndzip', default=False, description="build support for the NDZIP compressor")
-    variant('arc', default=False, description="build support for the ARC error correction tool")
-    variant('netcdf', default=False, description="build support for the NDFCDF data format")
-    variant('sz3', default=False, description="build support for the SZ3 compressor family")
-    variant('mgardx', default=False, description="build support for the MGARDx compressor")
-    variant('bzip2', default=False, description="build support for the bzip2 compressor")
-    variant('qoz', default=False, description="build support for the qoz compressor")
-    variant('cusz', default=False, description="build support for the cusz compressor", when="@0.86.0:")
-    variant('szx', default=False, description="build support for the cusz compressor", when="@0.87.0:")
+    depends_on("boost", when="@:0.51.0+boost")
 
-    depends_on('boost', when="@:0.51.0+boost")
+    depends_on("libstdcompat+boost", when="+boost")
+    depends_on("libstdcompat@0.0.14:", when="@0.79.0:")
+    depends_on("libstdcompat@0.0.13:", when="@0.73.0:")
+    depends_on("libstdcompat@0.0.10:", when="@0.71.3:")
+    depends_on("libstdcompat@0.0.7:", when="@0.70.3:")
+    depends_on("libstdcompat@0.0.6:", when="@0.70.2:")
+    depends_on("libstdcompat@0.0.5:", when="@0.63.0:")
+    depends_on("libstdcompat@0.0.3:", when="@0.60.0:")
+    depends_on("libstdcompat", when="@0.52.0:")
 
-    depends_on('libstdcompat+boost', when="+boost")
-    depends_on('libstdcompat@0.0.14:', when="@0.79.0:")
-    depends_on('libstdcompat@0.0.13:', when="@0.73.0:")
-    depends_on('libstdcompat@0.0.10:', when="@0.71.3:")
-    depends_on('libstdcompat@0.0.7:', when="@0.70.3:")
-    depends_on('libstdcompat@0.0.6:', when="@0.70.2:")
-    depends_on('libstdcompat@0.0.5:', when="@0.63.0:")
-    depends_on('libstdcompat@0.0.3:', when="@0.60.0:")
-    depends_on('libstdcompat', when="@0.52.0:")
-
-    depends_on('c-blosc', when="+blosc")
-    depends_on('fpzip', when="+fpzip")
-    depends_on('hdf5', when="+hdf5")
-    depends_on('imagemagick', when="+magick")
-    depends_on('mgard', when="+mgard")
-    depends_on('python@3:', when="+python", type=("build", "link", "run"))
-    depends_on('py-numpy', when="+python", type=("build", "link", "run"))
-    depends_on('swig@3.12:', when="+python", type="build")
-    depends_on('sz@2.1.8.1:', when="@0.55.2:+sz")
-    depends_on('sz@2.1.11.1:', when="@0.55.3:+sz")
-    depends_on('sz@2.1.12:', when="@0.69.0:+sz")
-    depends_on('fftw', when="+sz ^sz@:2.1.10")
-    depends_on('zfp', when="+zfp")
-    depends_on('petsc', when="+petsc")
-    depends_on('mpi@2:', when="+mpi")
-    depends_on('sol2', when="+lua")
-    depends_on('libdistributed@0.0.11:', when="+libdistributed")
-    depends_on('libdistributed@0.4.0:', when="@0.85.0:+libdistributed")
-    depends_on('pkg-config', type='build')
-    depends_on('ftk@master', when="+ftk")
-    depends_on('digitrounding', when="+digitrounding")
-    depends_on('bitgroomingz', when="+bitgrooming")
-    depends_on('cmake@3.14:', type="build")
-    depends_on('py-mpi4py', when="@0.54.0:+mpi+python", type=("build", "link", "run"))
-    depends_on('py-numcodecs', when="@0.54.0:+python", type="run")
-    depends_on('doxygen+graphviz', when="+docs", type="build")
-    depends_on('curl', when="+remote")
-    depends_on('nlohmann-json+multiple_headers', when="+remote")
-    depends_on('nlohmann-json+multiple_headers', when="+json")
-    depends_on('szauto', when="+szauto")
-    depends_on('ndzip', when="+ndzip")
-    depends_on('arc', when="+arc")
-    depends_on('netcdf-c', when="+netcdf")
-    depends_on('mgardx', when="+mgardx")
-    conflicts('+mgardx', when="+szauto") # SZ auto and MGARDx cause symbol conflicts with each other
-    conflicts('~json', when="@0.57.0:+remote", msg="JSON support required for remote after version 0.57.0")
-    depends_on('sz3', when="+sz3")
-    depends_on('bzip2', when="+bzip2")
-    depends_on('qoz', when="+qoz")
-    depends_on('cusz', when="+cusz")
-    depends_on('szx', when="+szx")
+    depends_on("c-blosc", when="+blosc")
+    depends_on("fpzip", when="+fpzip")
+    depends_on("hdf5", when="+hdf5")
+    depends_on("imagemagick", when="+magick")
+    depends_on("mgard", when="+mgard")
+    depends_on("python@3:", when="+python", type=("build", "link", "run"))
+    depends_on("py-numpy", when="+python", type=("build", "link", "run"))
+    depends_on("swig@3.12:", when="+python", type="build")
+    depends_on("sz@2.1.8.1:", when="@0.55.2:+sz")
+    depends_on("sz@2.1.11.1:", when="@0.55.3:+sz")
+    depends_on("sz@2.1.12:", when="@0.69.0:+sz")
+    depends_on("fftw", when="+sz ^sz@:2.1.10")
+    depends_on("zfp", when="+zfp")
+    depends_on("petsc", when="+petsc")
+    depends_on("mpi@2:", when="+mpi")
+    depends_on("lua-sol2", when="+lua")
+    depends_on("libdistributed@0.0.11:", when="+libdistributed")
+    depends_on("libdistributed@0.4.0:", when="@0.85.0:+libdistributed")
+    depends_on("pkg-config", type="build")
+    depends_on("ftk@master", when="+ftk")
+    depends_on("digitrounding", when="+digitrounding")
+    depends_on("bitgroomingz", when="+bitgrooming")
+    depends_on("cmake@3.14:", type="build")
+    depends_on("py-mpi4py", when="@0.54.0:+mpi+python", type=("build", "link", "run"))
+    depends_on("py-numcodecs", when="@0.54.0:+python", type="run")
+    depends_on("doxygen+graphviz", when="+docs", type="build")
+    depends_on("curl", when="+remote")
+    depends_on("nlohmann-json+multiple_headers", when="+remote")
+    depends_on("nlohmann-json+multiple_headers", when="+json")
+    depends_on("szauto", when="+szauto")
+    depends_on("ndzip", when="+ndzip")
+    depends_on("arc", when="+arc")
+    depends_on("netcdf-c", when="+netcdf")
+    depends_on("mgardx", when="+mgardx")
+    conflicts(
+        "+mgardx", when="+szauto"
+    )  # SZ auto and MGARDx cause symbol conflicts with each other
+    conflicts(
+        "~json",
+        when="@0.57.0:+remote",
+        msg="JSON support required for remote after version 0.57.0",
+    )
+    depends_on("sz3", when="+sz3")
+    depends_on("bzip2", when="+bzip2")
+    depends_on("qoz", when="+qoz")
+    depends_on("cusz", when="+cusz")
+    depends_on("szx", when="+szx")
 
     extends("python", when="+python")
 
@@ -232,12 +249,12 @@ class Libpressio(CMakePackage, CudaPackage):
         if "+python" in self.spec:
             args.append("-DLIBPRESSIO_PYTHON_SITELIB={0}".format(python_platlib))
             args.append("-DBUILD_PYTHON_WRAPPER=ON")
-            args.append("-DPython3_EXECUTABLE={0}".format(self.spec['python'].command))
+            args.append("-DPython3_EXECUTABLE={0}".format(self.spec["python"].command))
             if "+mpi" in self.spec:
                 args.append("-DLIBPRESSIO_HAS_MPI4PY=ON")
         if "+hdf5" in self.spec:
             args.append("-DLIBPRESSIO_HAS_HDF=ON")
-            args.append("-DHDF5_ROOT=" + self.spec['hdf5'].prefix)
+            args.append("-DHDF5_ROOT=" + self.spec["hdf5"].prefix)
         if "+sz" in self.spec:
             args.append("-DLIBPRESSIO_HAS_SZ=ON")
         if "+szauto" in self.spec:

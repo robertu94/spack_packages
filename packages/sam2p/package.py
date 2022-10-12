@@ -1,20 +1,21 @@
-# Copyright 2013-2020 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
-from spack import *
+from spack.package import *
 
 
 class Sam2p(Package):
-    """A raster to PostScript/PDF image conversn program"""
+    """A raster to PostScript/PDF image conversion program"""
 
     homepage = "https://github.com/pts/sam2p"
-    url      = "https://github.com/pts/sam2p/archive/v0.49.4.tar.gz"
-    git      = homepage
+    url = "https://github.com/pts/sam2p/archive/v0.49.4.tar.gz"
+    git = homepage
 
-    version('master', branch='master')
+    maintainers = ["robertu94"]
 
+    version("master", branch="master")
 
     def install(self, spec, prefix):
         compile_sh = Executable("./compile.sh")

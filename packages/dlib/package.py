@@ -2,24 +2,6 @@
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
-
-# ----------------------------------------------------------------------------
-# If you submit this package back to Spack as a pull request,
-# please first remove this boilerplate and all FIXME comments.
-#
-# This is a template package file for Spack.  We've put "FIXME"
-# next to all the things you'll want to change. Once you've handled
-# them, you can save this file and test your package like this:
-#
-#     spack install dlib
-#
-# You can edit this file again by typing:
-#
-#     spack edit dlib
-#
-# See the Spack documentation for more information on packaging.
-# ----------------------------------------------------------------------------
-
 from spack import *
 
 
@@ -30,6 +12,7 @@ class Dlib(CMakePackage):
     url      = "https://github.com/davisking/dlib/archive/v19.19.tar.gz"
     git      = "https://github.com/davisking/dlib"
 
+    maintainer = ["robertu94"]
     version('master', branch='master')
     version('19.22', sha256='5f44b67f762691b92f3e41dcf9c95dd0f4525b59cacb478094e511fdacb5c096')
     version('19.21', sha256='116f52e58be04b47dab52057eaad4b5c4d5c3032d927fe23d55b0741fc4107a0')
