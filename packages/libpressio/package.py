@@ -10,6 +10,7 @@ from spack.pkg.builtin.libpressio import Libpressio as BuiltinLibPressio
 class Libpressio(BuiltinLibPressio):
     """A generic abstraction for the compression of dense tensors"""
 
+    version("0.88.2", sha256="f5de6aff5ff906b164d6b2199ada10a8e32fb1e2a6295da3f0b79d9626661a46")
     version("0.88.1", sha256="d7fe73a6b2d8de6d19c85e87888dcf1a62956f56b4e6dfd23e26901740031e00")
 
     variant("szx", default=False, description="build support for SZx", when="@0.87.0:")
