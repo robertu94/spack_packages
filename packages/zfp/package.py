@@ -16,3 +16,4 @@ class Zfp(BuiltinZfp):
     def cmake_args(self):
         args = super().cmake_args()
         args.append(self.define_from_variant('BUILD_UTILITIES', 'utilities'))
+        return args
