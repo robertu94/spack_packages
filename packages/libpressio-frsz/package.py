@@ -9,16 +9,18 @@ from spack import *
 class LibpressioFrsz(CMakePackage):
     """Fized Rate SZ"""
 
-    # FIXME: Add a proper url for your package's homepage here.
     homepage = "https://github.com/robertu94/frsz"
-    url = "https://github.com/robertu94/frsz"
+    url = "https://github.com/robertu94/frsz/archive/refs/tags/0.0.2.tar.gz"
     git      = "ssh://git@github.com/robertu94/frsz"
 
     maintainers = ['robertu94']
 
     version('master', branch='main')
+    version('0.0.2')
+    version('0.0.1')
 
-    depends_on('libpressio')
+    depends_on('libpressio@0.89.0:', when="@0.0.2:")
+    depends_on('libpressio', when="@0.0.1")
 
     def cmake_args(self):
         args = [
