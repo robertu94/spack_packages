@@ -1,0 +1,32 @@
+# Copyright 2013-2022 Lawrence Livermore National Security, LLC and other
+# Spack Project Developers. See the top-level COPYRIGHT file for details.
+#
+# SPDX-License-Identifier: (Apache-2.0 OR MIT)
+
+from spack.package import *
+
+
+class LibpressioDataset(CMakePackage):
+    """A set of libraries for LibPressio to easily load datasets"""
+
+    homepage = "https://github.com/robertu94/libpressio_dataset"
+    url = "https://github.com/robertu94/libpressio_dataset/archive/refs/tags/0.0.2.tar.gz"
+    git = "https://github.com/robertu94/libpressio_dataset"
+
+    maintainers = ["robertu94"]
+
+    version("0.0.2", sha256="b5d62260cc596a6239a721bda12293bce34f86266c203a573d3afa8fe0876c2f")
+
+    variant("hdf5", default=False, description="add support for hdf5")
+    variant("shared", default=True, description="build shared libaries")
+
+    depends_on("libpressio@0.91.1:")
+    depends_on("hdf5", when="+hdf5")
+
+    def cmake_args(self):
+        args = [
+            self.define("BUILD_TESTING", self.run_tests),
+            self.define_from_variant("LIBPRESSIO_DATASET_HAS_HDF5", "hdf5"),
+            self.define_from_variant("BUILD_SHARED_LIBS", "shared")
+        ]
+        return args
