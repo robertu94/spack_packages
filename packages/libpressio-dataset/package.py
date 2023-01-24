@@ -15,12 +15,14 @@ class LibpressioDataset(CMakePackage):
 
     maintainers = ["robertu94"]
 
+    version("0.0.3", sha256="b821bd880159c93fe5a960f4b51927a3963b1f0d2b91dc2f6c4655d644e8a28b")
     version("0.0.2", sha256="b5d62260cc596a6239a721bda12293bce34f86266c203a573d3afa8fe0876c2f")
 
     variant("hdf5", default=False, description="add support for hdf5")
     variant("shared", default=True, description="build shared libaries")
 
-    depends_on("libpressio@0.91.1:")
+    depends_on("libpressio@0.93.0:", when="@0.0.3:")
+    depends_on("libpressio@0.91.1:", when="@:0.0.2")
     depends_on("hdf5", when="+hdf5")
 
     def cmake_args(self):
