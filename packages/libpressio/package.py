@@ -9,6 +9,7 @@ from spack.pkg.builtin.libpressio import Libpressio as BuiltinLibPressio
 
 class Libpressio(BuiltinLibPressio):
     """A generic abstraction for the compression of dense tensors"""
+    version("0.94.0", sha256="4250597cdd54043a7d5009ffc3feea3eac9496cdd38ea3f61f9727b7acd09add")
     version("0.93.0", sha256="1da5940aaf0190a810988dcd8f415b9c8db53bbbdfcb627d899921c89170d990")
     version("0.92.0", sha256="e9cab155deb07aabdca4ece2c826be905ed33f16c95f82f24eb01d181fce6109")
     version("0.91.1", sha256="35cd4b93e410a83c626c9c168d59ade3bf26a453bcbf50dfd77b6d141184b97c")
