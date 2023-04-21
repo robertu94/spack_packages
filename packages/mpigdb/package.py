@@ -14,6 +14,7 @@ class Mpigdb(Package):
 
     maintainers = ["robertu94"]
 
+    version("0.4.1", sha256="ee255ad9993d689194c62e57a0c4543b9c0963414ada81b6d7a2e4999935776e")
     version("0.2.0", sha256="ac134422b11b40af6567489986535133391154e83960d6cac53f9cf37c26c1ec")
 
     depends_on("rust@1.65:", type=("build"))
