@@ -36,7 +36,7 @@ class Halide(CMakePackage):
     # maintainers = ['github_user1', 'github_user2']
 
     version('master', branch='master')
-    version('10.0.0', sha266='23808f8e9746aea25349a16da92e89ae320990df3c315c309789fb209ee40f20')
+    version('10.0.0', sha256='23808f8e9746aea25349a16da92e89ae320990df3c315c309789fb209ee40f20')
 
     depends_on('llvm', type=('build','link','run'))
     depends_on('ninja', type='build')
