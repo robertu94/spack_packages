@@ -13,7 +13,8 @@ class PyTomocupy(PythonPackage):
 
     url = "https://github.com/tomography/tomocupy"
 
-    maintainers("robertu94")
+    maintainers = ['robertu94']
+
 
     version("2023-04-20", "5ded81d8da7d3f8ded6e1570e8c47cfc5446d5a5")
 
