@@ -5,6 +5,8 @@ from spack.pkg.builtin.libpressio_tools import LibpressioTools as BuiltinLibPres
 class LibpressioTools(BuiltinLibPressioTools):
     """Pre-Release: General Utilities for LibPressio"""
 
+    version("0.4.0", sha256="c68ae3b0e73c7c4fb1562f3515d41a227eb4c0e842eb3106b719afcc1e35a7d9")
+
     depends_on('libpressio-frsz', when="+frsz")
 
     variant("frsz", default=False, description="depend on frsz", when="@0.1.2:")
