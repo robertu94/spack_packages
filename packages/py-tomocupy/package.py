@@ -12,16 +12,18 @@ class PyTomocupy(PythonPackage):
     homepage = "https://tomocupy.readthedocs.io/en/latest/index.html"
 
     url = "https://github.com/tomography/tomocupy"
+    git = "https://github.com/tomography/tomocupy"
 
     maintainers("robertu94")
 
-    version("2023-04-20", "5ded81d8da7d3f8ded6e1570e8c47cfc5446d5a5")
+    version("2023-04-20", commit="5ded81d8da7d3f8ded6e1570e8c47cfc5446d5a5")
 
     depends_on("py-scikit-build", type="build")
+    depends_on("cmake", type="build")
     depends_on("py-setuptools", type="build")
     depends_on("py-cupy", type=("build", "run"))
     depends_on("swig", type=("build", "run"))
-    depends_on("opencv", type=("build", "run"))
+    depends_on("opencv+python3", type=("build", "run"))
     depends_on("py-pywavelets", type=("build", "run"))
     depends_on("py-numexpr", type=("build", "run"))
     depends_on("py-astropy", type=("build", "run"))
@@ -30,3 +32,7 @@ class PyTomocupy(PythonPackage):
     depends_on("py-torch", type=("build", "run"))
     depends_on("py-torchvision", type=("build", "run"))
     depends_on("py-torchaudio", type=("build", "run"))
+    depends_on("py-h5py", type="run")
+    depends_on("py-tifffile", type="run")
+    depends_on("py-pytorch-wavelets", type="run")
+    depends_on("py-scipy", type="run")
