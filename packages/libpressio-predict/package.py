@@ -35,7 +35,7 @@ class LibpressioPredict(CMakePackage):
         with when("+python"):
             depends_on("libpressio+pybind")
         with when("+rahman2023"):
-            requires("+python")
+            conflicts("~python")
         with when("+khan2023"):
             depends_on("libpressio+sz3+zfp")
             depends_on("sz3")
