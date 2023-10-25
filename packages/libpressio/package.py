@@ -10,6 +10,8 @@ from spack.pkg.builtin.libpressio import Libpressio as BuiltinLibPressio
 class Libpressio(BuiltinLibPressio):
     """A generic abstraction for the compression of dense tensors"""
 
+    version("0.97.3", sha256="631111253ec4cfd3138773eaf8280921e220b0d260985da762f0a0152e5b1b17")
+    version("0.97.2", sha256="70d549ef457d5192c084fbf6304cb362d367786afe88d7b8db4eea263f9c7d43")
     version("0.96.6", sha256="a8d3269f0f5289d46471a5b85e5cd32e370edb8df45d04f5e707e0a1f64eccd8")
     version("0.96.5", sha256="7cca6f3f98dde2dbd1c9ff7462d09975f6a3630704bd01b6bef6163418a0521b")
     version("0.96.4", sha256="7f012b01ce1a6c9f5897487089266de5b60659ed6b220eadba51d63613620404")
@@ -21,7 +23,8 @@ class Libpressio(BuiltinLibPressio):
     variant("pybind", default=False, description="build support for pybind metrics", when="@0.96.0:")
     variant("openssl", default=False, description="build support for hashing options", when="@0.96.2:")
     variant("szx", default=False, description="build support for SZx", when="@0.87.0:")
-    depends_on("szx", when="+szx")
+    depends_on("szx@:1.1.0", when="@0.87.0:0.97.1 +szx")
+    depends_on("szx@1.1.1:", when="@0.97.2: +szx")
     depends_on("libstdcompat@0.0.16:", when="@0.93.0:")
     depends_on("openssl", when="+openssl")
     depends_on("py-pybind11", when="+pybind")
