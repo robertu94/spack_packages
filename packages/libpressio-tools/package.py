@@ -6,6 +6,7 @@ class LibpressioTools(BuiltinLibPressioTools):
     """Pre-Release: General Utilities for LibPressio"""
 
 
+    version("0.4.4", sha256="edbff72b0dba11b145b4d61d507b869ef976c5a8941afb817a533b923a9d7a41")
     version("0.4.3", sha256="2122e2c5212325a54bb6a80f4b7fb56060a1d2d0fa5733ac5757109ea892c9f9")
     version("0.4.2", sha256="fc5cc2876c0bff2012d51daf5835380afba71061a162d9b29235e639eb94f241")
     version("0.4.1", sha256="c342866ce95167ff708c7b3559c43ee174b7f4e760940f1c145a2fb4b9250c83")
@@ -13,9 +14,11 @@ class LibpressioTools(BuiltinLibPressioTools):
 
     depends_on('libpressio-frsz', when="+frsz")
     depends_on('libpressio-adios1@0.0.2:', when="+adios1")
+    depends_on('lc-framework@1.1.1:', when="+lc")
 
     variant("frsz", default=False, description="depend on frsz", when="@0.1.2:")
     variant("adios1", default=False, description="depend on adios1", when="@0.4.3:")
+    variant("lc", default=False, description="depend on lc", when="@0.4.4:")
 
     def cmake_args(self):
         args = super().cmake_args()
@@ -23,4 +26,6 @@ class LibpressioTools(BuiltinLibPressioTools):
             args.append("-DLIBPRESSIO_TOOLS_HAS_FRSZ=YES")
         if "+adios1" in self.spec:
             args.append("-DLIBPRESSIO_TOOLS_HAS_ADIOS1=YES")
+        if "+lc" in self.spec:
+            args.append("-DLIBPRESSIO_TOOLS_HAS_LC=YES")
         return args
