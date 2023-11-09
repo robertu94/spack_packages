@@ -14,7 +14,7 @@ class LibpressioTools(BuiltinLibPressioTools):
 
     depends_on('libpressio-frsz', when="+frsz")
     depends_on('libpressio-adios1@0.0.2:', when="+adios1")
-    depends_on('lc-framework@1.1.1:', when="+lc")
+    depends_on('lc-framework@1.1.1:+libpressio', when="+lc")
 
     variant("frsz", default=False, description="depend on frsz", when="@0.1.2:")
     variant("adios1", default=False, description="depend on adios1", when="@0.4.3:")
