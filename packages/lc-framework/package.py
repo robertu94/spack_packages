@@ -32,7 +32,7 @@ class LcFramework(CMakePackage):
 
     maintainers("robertu94")
 
-    version("1.1.1", sha256="4d6f30a489cbcfde9ac48316a15ffbd83576a79235dd6d0e24b42a85b1afe40a")
+    version("1.1.2", sha256="5ccbeaf8e2ef93894854406054210c8525055d195b39e2f141b4f81175fe2815")
 
     variant("libpressio", description="build a libpressio plugin for LC", default=False)
 
