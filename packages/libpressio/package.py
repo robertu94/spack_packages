@@ -24,6 +24,7 @@ class Libpressio(BuiltinLibPressio):
     variant("pybind", default=False, description="build support for pybind metrics", when="@0.96.0:")
     variant("openssl", default=False, description="build support for hashing options", when="@0.96.2:")
     variant("szx", default=False, description="build support for SZx", when="@0.87.0:")
+    variant("blosc2", default=False, description="build support for blosc2", when="@0.98.0:")
     depends_on("szx@:1.1.0", when="@0.87.0:0.97.1 +szx")
     depends_on("szx@1.1.1:", when="@0.97.2: +szx")
     depends_on("libstdcompat@0.0.16:", when="@0.93.0:")
@@ -38,5 +39,7 @@ class Libpressio(BuiltinLibPressio):
             args.append("-DLIBPRESSIO_HAS_OPENSSL=ON")
         if "+pybind" in self.spec:
             args.append("-DLIBPRESSIO_HAS_PYTHON_LAUNCH=ON")
+        if "+blosc2" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_BLOSC2=ON")
 
         return args
