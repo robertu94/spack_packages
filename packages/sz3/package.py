@@ -11,3 +11,4 @@ class Sz3(Sz3Builtin):
     """SZ3 is the next generation of the SZ compressor framework"""
 
     version("artifact", git="https://github.com/lxAltria/SZ3", branch="artifact_mitigation")
+    version("3.1.8", commit="e308ebf8528c233286874b920c72c0a6c0218fb2")
