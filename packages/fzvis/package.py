@@ -28,6 +28,7 @@ class Fzvis(Package):
         npm("install")
         npm("run", "build")
         shutil.copytree("dist", prefix.usr.libexec.fzviz.ui)
+        mkdir(prefix.bin)
         shutil.copyfile("src/components/main.py", prefix.bin.join("fzvis"))
-        shutil.rmtree("npm-cache")
+        shutil.rmtree(prefix.join("npm-cache"))
 
