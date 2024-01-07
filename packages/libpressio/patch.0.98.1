@@ -1,0 +1,99 @@
+diff --git a/include/libpressio_ext/cpp/dtype.h b/include/libpressio_ext/cpp/dtype.h
+index 1ff0297..a9924ed 100644
+--- a/include/libpressio_ext/cpp/dtype.h
++++ b/include/libpressio_ext/cpp/dtype.h
+@@ -40,7 +40,7 @@ constexpr pressio_dtype pressio_size_type() {
+  */
+ template <class T>
+ constexpr pressio_dtype pressio_dtype_from_type() {
+-  static_assert(impl::is_one_of<T,double, float, bool, int8_t, int16_t, int32_t, int64_t, uint8_t, uint16_t, uint32_t, uint64_t, size_t, char, unsigned char>::value, 
++  static_assert(impl::is_one_of<T,double, float, bool, int8_t, int16_t, int32_t, int64_t, uint8_t, uint16_t, uint32_t, uint64_t, long, size_t, char, unsigned char>::value, 
+       "unexpected type");
+   return (std::is_same<T, double>::value ? pressio_double_dtype :
+       std::is_same<T, float>::value ? pressio_float_dtype :
+@@ -48,6 +48,7 @@ constexpr pressio_dtype pressio_dtype_from_type() {
+       std::is_same<T, int32_t>::value ? pressio_int32_dtype :
+       std::is_same<T, int16_t>::value ? pressio_int16_dtype :
+       std::is_same<T, int8_t>::value ? pressio_int8_dtype :
++      std::is_same<T, long>::value ? pressio_size_type() :
+       std::is_same<T, size_t>::value ? pressio_size_type() :
+       std::is_same<T, uint64_t>::value ? pressio_uint64_dtype :
+       std::is_same<T, uint32_t>::value ? pressio_uint32_dtype :
+diff --git a/src/plugins/compressors/external.cc b/src/plugins/compressors/external.cc
+index 6739b91..9e0e7bc 100644
+--- a/src/plugins/compressors/external.cc
++++ b/src/plugins/compressors/external.cc
+@@ -1,6 +1,7 @@
+ #include <tuple>
+ #include <regex>
+ #include <chrono>
++#include <sstream>
+ #include "std_compat/memory.h"
+ #include "libpressio_ext/cpp/compressor.h"
+ #include "libpressio_ext/cpp/data.h"
+diff --git a/src/plugins/compressors/sz3.cc b/src/plugins/compressors/sz3.cc
+index 3727a77..5922f70 100644
+--- a/src/plugins/compressors/sz3.cc
++++ b/src/plugins/compressors/sz3.cc
+@@ -214,9 +214,11 @@ public:
+   {
+     cleanup restore_threads;
+     if(config.openmp) {
++#if LIBPRESSIO_HAS_OPENMP
+         int32_t old_threads = omp_get_num_threads();
+         omp_set_num_threads(static_cast<int32_t>(nthreads));
+         restore_threads = [old_threads]{ omp_set_num_threads(old_threads);};
++#endif
+     }
+ 
+     auto reg_dims = input->normalized_dims();
+@@ -234,9 +236,11 @@ public:
+   {
+     cleanup restore_threads;
+     if(config.openmp) {
++#if LIBPRESSIO_HAS_OPENMP
+         int32_t old_threads = omp_get_num_threads();
+         omp_set_num_threads(static_cast<int32_t>(nthreads));
+         restore_threads = [old_threads]{ omp_set_num_threads(old_threads);};
++#endif
+     }
+ 
+     std::vector<size_t> output_dims = output->normalized_dims();
+diff --git a/tools/swig/pypressio.h b/tools/swig/pypressio.h
+index 3748c97..a88b821 100644
+--- a/tools/swig/pypressio.h
++++ b/tools/swig/pypressio.h
+@@ -118,23 +118,28 @@ struct pressio_option* option_new_strings(std::vector<std::string> const& string
+ }
+ 
+ struct pressio_data* data_new_empty(const pressio_dtype dtype, std::vector<uint64_t> dimensions) {
+-  return new pressio_data(pressio_data::empty(dtype, dimensions));
++  std::vector<size_t> dimensions_(dimensions.cbegin(), dimensions.cend());
++  return new pressio_data(pressio_data::empty(dtype, dimensions_));
+ }
+ struct pressio_data* data_new_nonowning(const pressio_dtype dtype, void* data, std::vector<uint64_t> dimensions) {
+-  return new pressio_data(pressio_data::nonowning(dtype, data, dimensions));
++  std::vector<size_t> dimensions_(dimensions.cbegin(), dimensions.cend());
++  return new pressio_data(pressio_data::nonowning(dtype, data, dimensions_));
+ }
+ struct pressio_data* data_new_copy(const enum pressio_dtype dtype, void* src, std::vector<uint64_t>  dimensions) {
+-  return new pressio_data(pressio_data::copy(dtype, src, dimensions));
++  std::vector<size_t> dimensions_(dimensions.cbegin(), dimensions.cend());
++  return new pressio_data(pressio_data::copy(dtype, src, dimensions_));
+ }
+ struct pressio_data* data_new_owning(const pressio_dtype dtype, std::vector<uint64_t> dimensions) {
+-  return new pressio_data(pressio_data::owning(dtype, dimensions));
++  std::vector<size_t> dimensions_(dimensions.cbegin(), dimensions.cend());
++  return new pressio_data(pressio_data::owning(dtype, dimensions_));
+ }
+ struct pressio_data* data_new_move(const pressio_dtype dtype,
+     void* data,
+     std::vector<uint64_t> dimensions,
+     pressio_data_delete_fn deleter,
+     void* metadata) {
+-  return new pressio_data(pressio_data::move(dtype, data, dimensions, deleter, metadata));
++  std::vector<size_t> dimensions_(dimensions.cbegin(), dimensions.cend());
++  return new pressio_data(pressio_data::move(dtype, data, dimensions_, deleter, metadata));
+ }
+ 
+ pressio_metrics* new_metrics(struct pressio* library, std::vector<std::string> metrics) {

@@ -33,6 +33,8 @@ class Libpressio(BuiltinLibPressio):
     depends_on("openssl", when="+openssl")
     depends_on("py-pybind11", when="+pybind")
 
+    patch('patch.0.98.1', when='@0.98.1')
+
     def cmake_args(self):
         args = super().cmake_args()
         if "+szx" in self.spec:
