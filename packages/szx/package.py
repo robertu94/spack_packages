@@ -9,7 +9,7 @@ class Szx(CMakePackage, AutotoolsPackage, CudaPackage):
     """An ultra fast error bounded compressor for scientific datasets"""
     homepage = "https://github.com/szcompressor/szx"
     url = "https://github.com/szcompressor/szx"
-    git = "ssh://git@github.com/szcompressor/szx"
+    git = "https://github.com/szcompressor/szx"
 
     maintainers = ["robertu94"]
 
