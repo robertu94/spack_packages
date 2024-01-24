@@ -10,6 +10,7 @@ from spack.pkg.builtin.libpressio import Libpressio as BuiltinLibPressio
 class Libpressio(BuiltinLibPressio):
     """A generic abstraction for the compression of dense tensors"""
 
+    version("0.99.0", sha256="b95916c4851a7ec952e5f29284e4f7477eaeff0e52a2e5b593481c72edf733d6")
     version("0.98.1", sha256="5246271fdf2e4ba99eeadfccd6224b75bf3af278a812ded74ec9adc11f6cabba")
     version("0.98.0", sha256="6b6507bf1489ff2cbeaf4c507d34e1015495c811730aa809e778f111213062db")
     version("0.97.3", sha256="631111253ec4cfd3138773eaf8280921e220b0d260985da762f0a0152e5b1b17")
@@ -26,12 +27,17 @@ class Libpressio(BuiltinLibPressio):
     variant("openssl", default=False, description="build support for hashing options", when="@0.96.2:")
     variant("szx", default=False, description="build support for SZx", when="@0.87.0:")
     variant("blosc2", default=False, description="build support for blosc2", when="@0.98.0:")
+    variant("matio", default=False, description="build support for matio", when="@0.99.0:")
+    variant("clang", default=False, description="build migration tools", when="@0.99.0:")
     depends_on("sz3@3.1.8:", when="@0.98.1 +sz3")
     depends_on("szx@:1.1.0", when="@0.87.0:0.97.1 +szx")
     depends_on("szx@1.1.1:", when="@0.97.2: +szx")
     depends_on("libstdcompat@0.0.16:", when="@0.93.0:")
     depends_on("openssl", when="+openssl")
     depends_on("py-pybind11", when="+pybind")
+    depends_on("cusz@0.6.0:", when="+cusz")
+    depends_on("matio+shared@1.5.17:", when="+matio")
+    depends_on("llvm@17: +clang", when="+clang")
 
     def cmake_args(self):
         args = super().cmake_args()
@@ -43,5 +49,9 @@ class Libpressio(BuiltinLibPressio):
             args.append("-DLIBPRESSIO_HAS_PYTHON_LAUNCH=ON")
         if "+blosc2" in self.spec:
             args.append("-DLIBPRESSIO_HAS_BLOSC2=ON")
+        if "+matio" in self.spec:
+            args.append("-DLIBPRESSIO_HAS_MATLABIO=ON")
+        if "+clang" in self.spec:
+            args.append("-DBUILD_MIGRATION_TOOLS=ON")
 
         return args
