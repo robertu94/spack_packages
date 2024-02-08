@@ -43,6 +43,7 @@ class Libstdcompat(BuiltinStdCompat):
         self.compiler.cxx11_flag
         return "11"
 
+    version("0.0.21", sha256="67cfd57080a74752b4c239e031cc44734286589a89bb1cd51a8bd7039f87a3f3")
     version("0.0.20", sha256="9fdc632eb135f57132953b512d8f9101e8eb4e6a88e6c3b838aaa9c51a2dbfd6")
     version("0.0.19", sha256="584ee52b1f82671e5d8fde786c46aa7e98d30104674c6f4b75dbae8d83b13f21")
 
