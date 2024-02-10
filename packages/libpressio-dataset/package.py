@@ -15,6 +15,7 @@ class LibpressioDataset(CMakePackage):
 
     maintainers = ["robertu94"]
 
+    version("0.0.8", sha256="5e0adac22b8c96f26b93e253bb9d30623bf357da608c10bddad3871c4e9dbe17")
     version("0.0.7", sha256="203b36b337d23b789658162ecc024d7acf60fbff2fdc5b946c0854998e03e7bf")
     version("0.0.6", sha256="24c07ac329714587d0778e6a2bf598aa8005de374595c36180de81ab020d55fc")
     version("0.0.5", sha256="07906545207831515ad7ce1ad99994887f458c2e2f422fd5ea7569a5b0d072ad")

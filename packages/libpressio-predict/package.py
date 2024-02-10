@@ -14,6 +14,7 @@ class LibpressioPredict(CMakePackage):
 
     maintainers("robertu94")
 
+    version("0.0.4", sha256="50131183196ba6476a887ee7ffeface3cbb368da24fab2f8c6352c1f891f8c1b")
     version("0.0.3", sha256="dc2b97f58ba3ec5a86f93a4085ebb45521edb0347cb90a4ae68283de16e3c526")
     version("0.0.2", sha256="02323e03c832cd1f116136347c6b2b52e5c04485fcd57aeb588b6f1923c62a60")
     version("0.0.0", sha256="b3c08be05e3b49542929e4d3849c232d1343c66c9f785b312bb37196dc530035")
@@ -22,7 +23,7 @@ class LibpressioPredict(CMakePackage):
     variant("shared", default=True, description="build shared libaries")
 
 
-    depends_on("libpressio-tools@0.4.2:")
+    depends_on("libpressio-tools@0.4.2:", when="@:0.0.3")
     depends_on("libpressio@0.96.3:", when="@:0.0.2")
     depends_on("libpressio@0.96.5:", when="@0.0.3:")
     depends_on("libpressio-dataset@0.0.7:", when="@0.0.3:")
