@@ -42,6 +42,8 @@ class Libpressio(BuiltinLibPressio):
     depends_on("matio+shared@1.5.17:", when="+matio")
     depends_on("llvm@17: +clang", when="+clang")
 
+    patch('patch.0.98.1', when='@0.98.1')
+
     def cmake_args(self):
         args = super().cmake_args()
         if "+szx" in self.spec:
