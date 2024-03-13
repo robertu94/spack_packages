@@ -32,7 +32,7 @@ class Libpressio(BuiltinLibPressio):
     variant("blosc2", default=False, description="build support for blosc2", when="@0.98.0:")
     variant("matio", default=False, description="build support for matio", when="@0.99.0:")
     variant("clang", default=False, description="build migration tools", when="@0.99.0:")
-    depends_on("sz3@3.1.8:", when="@0.98.1 +sz3")
+    depends_on("sz3@3.1.8:", when="@0.98.1: +sz3")
     depends_on("szx@:1.1.0", when="@0.87.0:0.97.1 +szx")
     depends_on("szx@1.1.1:", when="@0.97.2: +szx")
     depends_on("libstdcompat@0.0.16:", when="@0.93.0:")
