@@ -21,7 +21,7 @@ class Libstdcompat(BuiltinStdCompat):
     def max_cxx_version(self):
         if self.spec.version >= Version("0.0.20"):
             try:
-                self.compiler.cxx20_flag
+                self.compiler.cxx23_flag
                 return "23"
             except Exception:
                 pass
