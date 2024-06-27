@@ -10,6 +10,10 @@ class LibpressioTools(BuiltinLibPressioTools):
 
     variant("frsz", default=False, description="depend on frsz", when="@0.1.2:")
 
+    def setup_run_environment(self, env):
+        libraries = find_libraries(["liblibpressio_meta"], root=self.prefix, recursive=True)
+        env.set("LIBPRESSIO_PLUGINS", libraries)
+
     def cmake_args(self):
         args = super().cmake_args()
         if "+frsz" in self.spec:
