@@ -8,5 +8,3 @@ from spack.pkg.builtin.libice import Libice as BuiltinLibice
 
 class Libice(BuiltinLibice):
     """libICE - Inter-Client Exchange Library."""
-
-    depends_on("libbsd")

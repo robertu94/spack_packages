@@ -8,13 +8,10 @@ from spack.pkg.builtin.sz import Sz as SzBuiltin, CMakeBuilder as SZCMakeBuilder
 
 
 class Sz(SzBuiltin):
-    variant("openmp", default=False, description="build the multithreaded version using openmp")
-    variant("examples", default=False, description="build examples")
+    pass
 
 
 class CMakeBuilder(SZCMakeBuilder):
     def cmake_args(self):
         args = super().cmake_args()
-        args.append(self.define_from_variant("BUILD_OPENMP", "openmp"))
-        args.append(self.define_from_variant("BUILD_SZ_EXAMPLES", "examples"))
         return args
