@@ -9,3 +9,7 @@ from spack.pkg.builtin.cusz import Cusz as BuiltinCusz
 
 class Cusz(BuiltinCusz):
     """A GPU accelerated error-bounded lossy compression for scientific data"""
+
+    git = "https://github.com/robertu94/cusz"
+    version("streams", branch="feature-omp-ms")
+    depends_on("python", type=("build", "link", "run"), when="@streams")
