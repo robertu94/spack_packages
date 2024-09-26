@@ -14,6 +14,8 @@ class Libpressio(BuiltinLibPressio):
 
     depends_on("cusz@streams", when="@0.99.6:")
 
+    patch('patch.0.98.1', when='@0.98.1')
+
     def cmake_args(self):
         args = super().cmake_args()
         return args
