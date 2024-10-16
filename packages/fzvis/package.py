@@ -18,6 +18,9 @@ class Fzvis(Package):
 
     version("0.1.0", sha256="0a05bf2314066c5a9fd7d23ccf1b2f041df0815df25ab5c2d8a0abf570a5f902")
 
+    version("0.2.0", sha256="bd61d0210adcb70b6b2d189905b6585cd7cf3ea9840a59e6fdae14ea5bb3487d", 
+	url="https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.0.tar.gz")
+
     depends_on("npm", type="build")
     depends_on("libpressio+python+json", type="run")
     depends_on("py-flask", type="run")
