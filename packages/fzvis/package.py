@@ -11,8 +11,9 @@ class Fzvis(Package):
 
     homepage = "https://szcompressor.org/next.szcompressor.github.io/"
     url = "https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.1.tar.gz"
+    git = "https://github.com/YuxiaoLi1234/fzvis"
 
-    maintainers("robertu94", "YuxiaoLi1234")
+    maintainers("robertu94", "YuxiaoLi1234", "hrithikdevaiah-999")
 
     license("MIT")
 
@@ -23,9 +24,13 @@ class Fzvis(Package):
 	url="https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.1.tar.gz")
 
     depends_on("npm", type="build")
-    depends_on("libpressio+python+json", type="run")
+    depends_on("libpressio+python+json", type=("run","link"))
+    depends_on("libpressio-tools", type=("run", "link"))
+    depends_on("py-websockets", type="run")
     depends_on("py-flask", type="run")
     depends_on("py-flask-cors", type="run")
+    depends_on("py-websockets", type="run")
+    depends_on("py-flask-socketio", type="run")
 
     def install(self, spec, prefix):
         npm = which("npm")
@@ -33,6 +38,6 @@ class Fzvis(Package):
         npm("run", "build")
         shutil.copytree("dist", prefix.usr.libexec.fzviz.ui)
         mkdir(prefix.bin)
-        shutil.copyfile("src/components/main.py", prefix.bin.join("fzvis"))
+        shutil.copy2("src/components/main.py", prefix.bin.join("fzvis"))
         shutil.rmtree(prefix.join("npm-cache"))
 
