@@ -12,7 +12,7 @@ class LibpressioTools(BuiltinLibPressioTools):
 
     def setup_run_environment(self, env):
         libraries = find_libraries(["liblibpressio_meta"], root=self.prefix, recursive=True)
-        env.set("LIBPRESSIO_PLUGINS", libraries)
+        env.set("LIBPRESSIO_PLUGINS", libraries[0])
 
     def cmake_args(self):
         args = super().cmake_args()
