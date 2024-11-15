@@ -10,32 +10,33 @@ class Fzvis(Package):
     """visualization software for building and understanding the effects of compression"""
 
     homepage = "https://szcompressor.org/next.szcompressor.github.io/"
-    url = "https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.1.tar.gz"
+    url = "https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.2.tar.gz"
 
-    maintainers("robertu94", "YuxiaoLi1234")
+    maintainers("robertu94", "YuxiaoLi1234", "hrithikdevaiah-999")
 
     license("MIT")
 
-    version("0.2.0", sha256="bd61d0210adcb70b6b2d189905b6585cd7cf3ea9840a59e6fdae14ea5bb3487d", 
-	url="https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.0.tar.gz")
-
+    version("0.2.0", sha256="bd61d0210adcb70b6b2d189905b6585cd7cf3ea9840a59e6fdae14ea5bb3487d", url="https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.0.tar.gz")
+   
     version("0.2.1", sha256="7a42bf5d40c1e331d43a0ee1482f6104f0d5d4254e9d2d469362dcde4a7e8fc8", 
 	url="https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.1.tar.gz")
 
+    version("0.2.2", sha256="0d3893970ac775ea59cb8a845101f7e987037aa83dd71071df9bd0b42233c91f",
+	url="https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.2.tar.gz")
+
     depends_on("npm", type="build")
-    depends_on("libpressio+python+json", type="run")
+    depends_on("libpressio+python+json", type=("run","link"))
+    depends_on("libpressio-tools", type=("run", "link"))
+    depends_on("py-websockets", type="run")
     depends_on("py-flask", type="run")
     depends_on("py-flask-cors", type="run")
-    depends_on("py-flask-socketio@5.4.1", type="run")
-    depends_on("py-python-socketio@5.11.4", type="run")
-    depends_on("py-websockets@14.0", type="run")
 
     def install(self, spec, prefix):
         npm = which("npm")
         npm("install")
         npm("run", "build")
-        shutil.copytree("dist", prefix.usr.libexec.fzviz.ui)
+        shutil.copytree("dist", prefix.usr.libexec.fzvis.ui)
         mkdir(prefix.bin)
-        shutil.copyfile("src/components/main.py", prefix.bin.join("fzvis"))
+        shutil.copy2("src/components/main.py", prefix.bin.join("fzvis"))
         shutil.rmtree(prefix.join("npm-cache"))
 
