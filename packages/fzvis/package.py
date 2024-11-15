@@ -29,7 +29,6 @@ class Fzvis(Package):
     depends_on("py-websockets", type="run")
     depends_on("py-flask", type="run")
     depends_on("py-flask-cors", type="run")
-    depends_on("py-websockets@14.0", type="run")
 
     def install(self, spec, prefix):
         npm = which("npm")
