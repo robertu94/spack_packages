@@ -9,3 +9,5 @@ from spack.pkg.builtin.libpressio_tthresh import LibpressioTthresh as BuiltinLib
 
 class LibpressioTthresh(BuiltinLibPressioTthresh):
     """A tthresh implementation for libpressio"""
+    version("0.0.9", sha256="91fd5b6d8a8711b32743992866fdabd549a07423977776a77d465020b5786f1d")
+    depends_on("libpressio@1.0.0:", when="@0.0.9:")

@@ -9,4 +9,5 @@ from spack.pkg.builtin.libpressio_nvcomp import LibpressioNvcomp as BuiltinLibPr
 
 class LibpressioNvcomp(BuiltinLibPressioNvcomp):
     """LibPressio Bindings for NVCOMP"""
+    depends_on("nvcomp@2.0.2:", when="@:0.0.2")
 

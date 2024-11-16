@@ -8,7 +8,7 @@ from spack.pkg.builtin.sz import Sz as SzBuiltin, CMakeBuilder as SZCMakeBuilder
 
 
 class Sz(SzBuiltin):
-    pass
+    version('2.1.13', commit="f4667759ead6a902110e80ff838ccdfddbc8dcd7")
 
 
 class CMakeBuilder(SZCMakeBuilder):

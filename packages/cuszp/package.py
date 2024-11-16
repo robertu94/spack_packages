@@ -21,7 +21,7 @@ class Cuszp(CMakePackage, CudaPackage):
     conflicts("cuda_arch=none", when="+cuda")
 
     variant("examples", description="build the examples", default=True)
-    version("2.0", sha256="b40f72cd1e25596d1e63084d80deea6c435709203988fd8b79f2068a98998fef")
+    version("2.0.1", commit="47c8f51aeaa1b82293b2f723c17cecf4c239c921", git="https://github.com/robertu94/cuSZp")
 
     depends_on("cxx", type="build")
 

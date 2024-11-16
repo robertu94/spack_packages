@@ -9,3 +9,5 @@ from spack.pkg.builtin.libpressio_adios2 import LibpressioAdios2 as BuiltinLibPr
 
 class LibpressioAdios2(BuiltinLibPressioAdios2):
     """An IO plugin to read/write ADIOS2 files for LibPressio"""
+
+    git = "https://github.com/robertu94/libpressio_adios2"

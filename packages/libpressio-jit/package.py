@@ -16,6 +16,7 @@ class LibpressioJit(CMakePackage):
     maintainers("robertu94")
     license("BSD-4-Clause", checked_by="robertu94")
 
+    version("0.0.2", sha256="f8d8e9c7610765cf1bf3817b9dafcae382def50d397cbf040e015a161ebfa773")
     version("0.0.1", sha256="6aa771c624980589cc941e8cfca1c5fb6cea3fef2b060f58bfdf07109eda8c08")
 
     depends_on("poorjit", when="+poorjit")

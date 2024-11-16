@@ -14,6 +14,7 @@ class LibpressioAdios1(CMakePackage):
 
     maintainers("robertu94")
 
+    version("0.0.3", sha256="ea6919e8f67a37e892ee3a1044798d772e7826e06ef8b3b2df83aee2ad8f49ec")
     version("0.0.2", sha256="cb3c4ef3c9c3bd5f4c08d1145a07d2ce0c84605a2213b744992c6c8cef998d39")
 
     depends_on("adios")
