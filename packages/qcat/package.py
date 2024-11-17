@@ -25,6 +25,7 @@ class Qcat(CMakePackage):
     depends_on("c", type="build")
 
     depends_on("zstd")
+    depends_on("gnuplot" type=("run"))
 
     def cmake_args(self):
         args = ["-DQCAT_USE_BUNDLES=OFF"]
