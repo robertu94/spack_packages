@@ -10,7 +10,7 @@ class Fzvis(Package):
     """visualization software for building and understanding the effects of compression"""
 
     homepage = "https://szcompressor.org/next.szcompressor.github.io/"
-    url = "https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.3.tar.gz"
+    url = "https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.4.tar.gz"
     git = "https://github.com/YuxiaoLi1234/fzvis"
 
     maintainers("robertu94", "YuxiaoLi1234", "hrithikdevaiah-999")
@@ -28,6 +28,9 @@ class Fzvis(Package):
 
     version("0.2.3", sha256="dea16cbad1b54d376f7f3e70c64703946df313f9165d775659eff43f6a19b9ae",
 	url="https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.3.tar.gz")
+
+    version("0.2.4", sha256="bb7cb0a6b925a3104f049db17ef61ee3576e3a7ceff00b64ebbc66335e48fb44",
+	url="https://github.com/YuxiaoLi1234/fzvis/archive/refs/tags/v0.2.4.tar.gz")
 
     depends_on("npm", type="build")
     depends_on("libpressio+python+json", type=("run","link"))
