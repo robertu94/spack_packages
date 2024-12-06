@@ -1,4 +1,4 @@
-from spack import *
+from spack.packages import *
 
 
 class PyM(PythonPackage):
