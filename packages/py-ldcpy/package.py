@@ -19,7 +19,7 @@
 # See the Spack documentation for more information on packaging.
 # ----------------------------------------------------------------------------
 
-from spack.packages import *
+from spack import *
 
 
 class PyLdcpy(PythonPackage):
