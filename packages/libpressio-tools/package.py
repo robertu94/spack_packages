@@ -1,4 +1,4 @@
-from spack import *
+from spack.package import *
 from spack.pkg.builtin.libpressio_tools import LibpressioTools as BuiltinLibPressioTools
 
 

@@ -1,4 +1,4 @@
-# Copyright 2013-2021 Lawrence Livermore National Security, LLC and other
+# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
 # Spack Project Developers. See the top-level COPYRIGHT file for details.
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
@@ -11,11 +11,11 @@
 # next to all the things you'll want to change. Once you've handled
 # them, you can save this file and test your package like this:
 #
-#     spack install libunifex
+#     spack install msz
 #
 # You can edit this file again by typing:
 #
-#     spack edit libunifex
+#     spack edit msz
 #
 # See the Spack documentation for more information on packaging.
 # ----------------------------------------------------------------------------
@@ -23,22 +23,30 @@
 from spack.package import *
 
 
-class Libunifex(CMakePackage):
-    """Unified Executors Implementation"""
+class Msz(CMakePackage, CudaPackage):
+    """An Efficient Parallel Algorithm for Correcting Morse-Smale Segmentations in Error-Bounded Lossy Compressors"""
 
-    homepage = "https://github.com/facebookexperimental/libunifex"
-    git      = "https://github.com/facebookexperimental/libunifex"
+    homepage = "https://github.com/YuxiaoLi1234/MSz"
+    url = "https://github.com/YuxiaoLi1234/MSz/archive/refs/tags/v0.0.1.tar.gz"
+    git = "https://github.com/YuxiaoLi1234/MSz"
 
-    # FIXME: Add proper versions and checksums here.
-    version('main', branch='main')
+    maintainers("YuxiaoLi1234", "robertu94")
+
+    license("MIT", checked_by="robertu94")
+
+    version("0.0.1", sha256="504bed79593ec7605a4a3c63cb038163e9de6fea8f8d75487001612e83bd9073")
+
+    depends_on("cxx", type="build")
 
     # FIXME: Add dependencies if required.
-    depends_on('liburing')
+    depends_on("zfp")
+    depends_on("sz3")
+    depends_on("zstd")
+    conflicts("~cuda")
 
     def cmake_args(self):
         args = [
-            "-DBUILD_TESTING=OFF",
-            "-DBUILD_TESTING=OFF",
-            "-DUNIFEX_BUILD_EXAMPLES=OFF"
+            self.define_cuda_architectures(self)
         ]
+
         return args
