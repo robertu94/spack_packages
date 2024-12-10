@@ -20,6 +20,7 @@ class Libpressio(CMakePackage, CudaPackage):
     tests_require_compiler = True
     version("master", branch="master")
     version("develop", branch="develop")
+    version("1.0.2", sha256="3f720699d0b4d78382c6aa9997e21a55196c5d0f682edbe23dff32dbddffe0c4")
     version("1.0.1", sha256="cd12019bde3d23829375864118aa336d1ec80951eacb7b8471e736d9ad60059c")
     version("1.0.0", sha256="b081497ba3b723d5f2cd7306fac5235554ede77054a630e08594b92746a3ac6c")
     version("0.99.4", sha256="091e4bac2cedca5fb9495a22eee7be718c2d04d899d56c65fc088936884eac0e")
@@ -310,6 +311,7 @@ class Libpressio(CMakePackage, CudaPackage):
             msg="compiling a CUDA compressor without a CUDA support makes no sense",
         )
 
+    conflicts("~cuda+python", when="@1.0.1", msg="there is a problem building python without cuda in this version")
     conflicts("~cuda", when="@1.0.0", msg="there is a problem building without cuda in this version")
     conflicts("+szauto", when="@1.0.0", msg="there is a problem building szauto support in this version")
     conflicts("+digitrounding", when="@1.0.0", msg="there is a problem building digitrounding in this version")
