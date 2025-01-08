@@ -3,10 +3,11 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
+from spack.build_systems.cmake import CMakeBuilder
 from spack.package import *
 
 
-class Mgard(CMakePackage, CudaPackage):
+class Mgard(CMakePackage, CudaPackage, ROCmPackage):
     """MGARD error bounded lossy compressor
     forked from https://github.com/CODARcode/MGARD with patches to support Spack"""
 
@@ -22,6 +23,7 @@ class Mgard(CMakePackage, CudaPackage):
 
     license("Apache-2.0")
 
+    version("master", branch="master")
     version("2024.11.16", commit="87d30704d7a94f169a975bf70a0aeaa6affffea3", preferred=True)
     version("2023.12.09", commit="d61d8c06c49a72b2e582cc02de88b7b27e1275d2")
     version("2023.03.31", commit="a8a04a86ff30f91d0b430a7c52960a12fa119589")
@@ -30,7 +32,8 @@ class Mgard(CMakePackage, CudaPackage):
     version("2021.11.12", commit="3c05c80a45a51bb6cc5fb5fffe7b1b16787d3366")
     version("2020.10.01", commit="b67a0ac963587f190e106cc3c0b30773a9455f7a")
 
-    depends_on("cxx", type="build")  # generated
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
 
     variant(
         "serial",
@@ -74,6 +77,8 @@ class Mgard(CMakePackage, CudaPackage):
     # https://github.com/abseil/abseil-cpp/issues/1629
     conflicts("abseil-cpp@20240116.1", when="+cuda", msg="triggers nvcc parser bug")
 
+    patch("hip-pointer-attribute-struct-fix.patch", when="@:2023.12.09")
+
     def flag_handler(self, name, flags):
         if name == "cxxflags":
             for a_spec in [
@@ -91,17 +96,20 @@ class Mgard(CMakePackage, CudaPackage):
         spec = self.spec
         args = ["-DBUILD_TESTING=OFF"]
         args.append(self.define_from_variant("MGARD_ENABLE_CUDA", "cuda"))
+        args.append(self.define_from_variant("MGARD_ENABLE_HIP", "rocm"))
         if "+cuda" in spec:
             cuda_arch_list = spec.variants["cuda_arch"].value
-            arch_str = ";".join(cuda_arch_list)
-            if cuda_arch_list[0] != "none":
-                args.append(self.define("CMAKE_CUDA_ARCHITECTURES", arch_str))
-        if self.spec.satisfies("@:2021.11.12"):
-            if "+cuda" in self.spec:
-                if "75" in cuda_arch:
+            if self.spec.satisfies("@:2021.11.12"):
+                if "75" in cuda_arch_list:
                     args.append("-DMGARD_ENABLE_CUDA_OPTIMIZE_TURING=ON")
-                if "70" in cuda_arch:
+                if "70" in cuda_arch_list:
                     args.append("-DMGARD_ENABLE_CUDA_OPTIMIZE_VOLTA=ON")
+            else:
+                arch_str = ";".join(cuda_arch_list)
+                if cuda_arch_list[0] != "none":
+                    args.append(self.define("CMAKE_CUDA_ARCHITECTURES", arch_str))
+        if "+rocm" in spec:
+            args.append(CMakeBuilder.define_hip_architectures(self))
         elif self.spec.satisfies("@2022.11.18:"):
             args.append("-DMAXIMUM_DIMENSION=4")  # how do we do variants with arbitrary values
             args.append("-DMGARD_ENABLE_CLI=OFF")  # the CLI is busted

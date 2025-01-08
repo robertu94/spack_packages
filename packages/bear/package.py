@@ -38,6 +38,7 @@ class Bear(CMakePackage):
     depends_on("fmt@8:10", when="@3.1.3:")
     depends_on("fmt@8", when="@3.0.0:3.1.2")
     depends_on("grpc +shared", when="@3.0.0:")
+    depends_on("protobuf@:3.25", when="@3.0.0:")
     depends_on("nlohmann-json", when="@3.0.0:")
     depends_on("spdlog", when="@3.0.0:")
     depends_on("cmake@2.8:", when="@2.0.4:", type="build")

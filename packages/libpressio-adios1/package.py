@@ -22,6 +22,7 @@ class LibpressioAdios1(CMakePackage):
 
     def cmake_args(self):
         args = [
-            "-DCMAKE_MODULE_PATH={}".format(self.spec["adios"].prefix.etc)
+            self.define("CMAKE_MODULE_PATH", self.spec["adios"].prefix.etc),
+            self.define("BUILD_TESTING", self.run_tests),
         ]
         return args

@@ -180,6 +180,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("c", type="build")  # generated
     depends_on("cxx", type="build")  # generated
 
+    variant("llvm", description="add support for llvm", default=False)
     variant("cuszp", description="add support for cuszp", default=False)
     variant(
         "pybind", default=False, description="build support for pybind metrics", when="@0.96.0:"
@@ -228,6 +229,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant(
         "cusz", default=False, description="build support for the cusz compressor", when="@0.86.0:"
     )
+    variant("grib", default=False, description="build support for grib files", when="@1.0.4:")
 
     # cufile was only added to the .run file installer for cuda in 11.7.1
     # dispite being in the APT/RPM packages for much longer
@@ -291,7 +293,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("openssl", when="+openssl")
     depends_on("py-pybind11", when="+pybind")
     depends_on("matio+shared@1.5.17:", when="+matio")
-    depends_on("llvm@17: +clang", when="+clang")
+    depends_on("llvm@17: +clang+link_llvm_dylib", when="+clang")
     conflicts(
         "^ mgard@2022.11.18",
         when="@:0.88.3+mgard",
@@ -325,6 +327,8 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("cusz@0.14.0:", when="@1.0.0:+cusz")
 
     depends_on("cuszp@2.0.1:", when="+cuszp")
+
+    depends_on("eccodes+shared", when="+grib")
 
     extends("python", when="+python")
 
@@ -384,6 +388,8 @@ class Libpressio(CMakePackage, CudaPackage):
             self.define_from_variant("LIBPRESSIO_HAS_CUFILE", "cuda"),
             self.define_from_variant("LIBPRESSIO_HAS_CUDA", "cuda"),
             self.define_from_variant("LIBPRESSIO_HAS_HDF", "hdf5"),
+            self.define_from_variant("LIBPRESSIO_HAS_LLVM", "llvm"),
+            self.define_from_variant("LIBPRESSIO_HAS_GRIB", "grib"),
             self.define_from_variant("BUILD_DOCS", "docs"),
             self.define_from_variant("LIBPRESSIO_HAS_CUSZP", "cuszp"),
             self.define_from_variant("LIBPRESSIO_INSTALL_DOCS", "docs"),

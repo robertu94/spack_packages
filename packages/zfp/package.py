@@ -27,6 +27,7 @@ class Zfp(CMakePackage, CudaPackage):
 
     # Versions
     version("develop", branch="develop")
+    version("staging", branch="staging")
     version('1.0.2', commit="07fd5ade040df52358f72df9dc27db8c37ea1553", git="https://github.com/robertu94/zfp")
     version("1.0.1", sha256="ca0f7b4ae88044ffdda12faead30723fe83dd8f5bb0db74125df84589e60e52b")
     version("1.0.0", sha256="0ea08ae3e50e3c92f8b8cf41ba5b6e2de8892bc4a4ca0c59b8945b6c2ab617c4")
@@ -52,6 +53,7 @@ class Zfp(CMakePackage, CudaPackage):
     # Dependencies
     depends_on("cmake@3.9.0:", type="build", when="@:1.0.1")
     depends_on("cmake@3.20.0:", type="build", when="@1.0.2:")
+    depends_on("cmake@3.23.0:", type="build", when="@staging")
     depends_on("cuda@7:", type=("build", "test", "run"), when="+cuda")
     depends_on("python", type=("build", "test", "run"), when="+python")
     depends_on("py-numpy", type=("build", "test", "run"), when="+python")
