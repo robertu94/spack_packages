@@ -27,26 +27,41 @@ class Msz(CMakePackage, CudaPackage):
     """An Efficient Parallel Algorithm for Correcting Morse-Smale Segmentations in Error-Bounded Lossy Compressors"""
 
     homepage = "https://github.com/YuxiaoLi1234/MSz"
-    url = "https://github.com/YuxiaoLi1234/MSz/archive/refs/tags/v0.0.1.tar.gz"
     git = "https://github.com/YuxiaoLi1234/MSz"
 
     maintainers("YuxiaoLi1234", "robertu94")
 
     license("MIT", checked_by="robertu94")
 
-    version("0.0.1", sha256="504bed79593ec7605a4a3c63cb038163e9de6fea8f8d75487001612e83bd9073")
+    version("dev", branch="main")
 
+    variant("zstd", default=True, description="Enable Zstd compression")
+    variant("cuda", default=False, description="Enable CUDA support")
+    variant("openmp", default=False, description="Enable OpenMP for parallelism")
+
+    depends_on("zstd", when="+zstd")
+    depends_on("cuda", when="+cuda")
+    
     depends_on("cxx", type="build")
 
     # FIXME: Add dependencies if required.
-    depends_on("zfp")
-    depends_on("sz3")
-    depends_on("zstd")
-    conflicts("~cuda")
 
     def cmake_args(self):
-        args = [
-            self.define_cuda_architectures(self)
-        ]
+        args = []
+        if "+cuda" in self.spec:
+            args.append("-DENABLE_CUDA=ON")
+        else:
+            args.append("-DENABLE_CUDA=OFF")
+
+        if "+openmp" in self.spec:
+            args.append("-DENABLE_OPENMP=ON")
+        else:
+            args.append("-DENABLE_OPENMP=OFF")
+
+        if "+zstd" in self.spec:
+            args.append("-DENABLE_ZSTD=ON")
+        else:
+            args.append("-DENABLE_ZSTD=OFF")
 
         return args
+
