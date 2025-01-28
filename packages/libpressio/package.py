@@ -386,6 +386,7 @@ class Libpressio(CMakePackage, CudaPackage):
             self.define_from_variant("LIBPRESSIO_HAS_MGARDx", "mgardx"),
             self.define_from_variant("LIBPRESSIO_HAS_BZIP2", "bzip2"),
             self.define_from_variant("LIBPRESSIO_HAS_QoZ", "qoz"),
+            self.define_from_variant("LIBPRESSIO_HAS_MSz", "msz"),
             self.define_from_variant("LIBPRESSIO_HAS_CUSZ", "cusz"),
             self.define_from_variant("LIBPRESSIO_HAS_CUFILE", "cuda"),
             self.define_from_variant("LIBPRESSIO_HAS_CUDA", "cuda"),
