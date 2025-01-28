@@ -226,6 +226,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant("mgardx", default=False, description="build support for the MGARDx compressor")
     variant("bzip2", default=False, description="build support for the bzip2 compressor")
     variant("qoz", default=False, description="build support for the qoz compressor")
+    variant("msz", default=False, description="build support for the msz compressor")
     variant("core", default=True, description="build core builtin libraries")
     variant(
         "cusz", default=False, description="build support for the cusz compressor", when="@0.86.0:"
