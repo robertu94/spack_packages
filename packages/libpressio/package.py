@@ -323,6 +323,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("sz3@3.1.8:", when="@0.98.1: +sz3")
     depends_on("bzip2", when="+bzip2")
     depends_on("qoz", when="+qoz")
+    depends_on("msz", when="+msz")
 
     depends_on("cusz@0.6.0:", when="+cusz")
     depends_on("cusz@0.14.0:", when="@1.0.0:+cusz")
