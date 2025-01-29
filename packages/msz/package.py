@@ -41,10 +41,8 @@ class Msz(CMakePackage, CudaPackage):
 
     depends_on("zstd", when="+zstd")
     depends_on("cuda", when="+cuda")
-    
-    depends_on("cxx", type="build")
-
-    # FIXME: Add dependencies if required.
+    depends_on("pkgconfig", type="build", when="+zstd")
+    depends_on("cmake@3.19:", type="build")
 
     def cmake_args(self):
         args = []
@@ -59,9 +57,15 @@ class Msz(CMakePackage, CudaPackage):
             args.append("-DENABLE_OPENMP=OFF")
 
         if "+zstd" in self.spec:
+            zstd_prefix = self.spec["zstd"].prefix
             args.append("-DENABLE_ZSTD=ON")
+
+            # Use pkg-config to ensure correct library and include paths
+            zstd_lib_dir = f"{zstd_prefix.lib}"
+            zstd_include_dir = f"{zstd_prefix.include}"
+            args.append(f"-DZSTD_LIBRARY={zstd_lib_dir}/libzstd.so")
+            args.append(f"-DZSTD_INCLUDE_DIR={zstd_include_dir}")
         else:
             args.append("-DENABLE_ZSTD=OFF")
 
         return args
-
