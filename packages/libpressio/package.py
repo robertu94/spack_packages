@@ -226,6 +226,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant("mgardx", default=False, description="build support for the MGARDx compressor")
     variant("bzip2", default=False, description="build support for the bzip2 compressor")
     variant("qoz", default=False, description="build support for the qoz compressor")
+    variant("msz", default=False, description="build support for the msz compressor")
     variant("core", default=True, description="build core builtin libraries")
     variant(
         "cusz", default=False, description="build support for the cusz compressor", when="@0.86.0:"
@@ -323,6 +324,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("sz3@3.1.8:", when="@0.98.1: +sz3")
     depends_on("bzip2", when="+bzip2")
     depends_on("qoz", when="+qoz")
+    depends_on("msz", when="+msz")
 
     depends_on("cusz@0.6.0:", when="+cusz")
     depends_on("cusz@0.14.0:", when="@1.0.0:+cusz")
@@ -385,6 +387,7 @@ class Libpressio(CMakePackage, CudaPackage):
             self.define_from_variant("LIBPRESSIO_HAS_MGARDx", "mgardx"),
             self.define_from_variant("LIBPRESSIO_HAS_BZIP2", "bzip2"),
             self.define_from_variant("LIBPRESSIO_HAS_QoZ", "qoz"),
+            self.define_from_variant("LIBPRESSIO_HAS_MSz", "msz"),
             self.define_from_variant("LIBPRESSIO_HAS_CUSZ", "cusz"),
             self.define_from_variant("LIBPRESSIO_HAS_CUFILE", "cuda"),
             self.define_from_variant("LIBPRESSIO_HAS_CUDA", "cuda"),
