@@ -16,9 +16,12 @@ class DatastatesAi(CMakePackage):
 
     version("main", branch="main")
 
+    depends_on("c", type="build")
+    depends_on("cxx", type="build")
+    depends_on("cmake", type="build")
     depends_on("py-nanobind")
-    depends_on("cmake")
     depends_on("mochi-thallium")
+    depends_on("py-torch", type="test")
 
     def cmake_args(self):
         args = [
