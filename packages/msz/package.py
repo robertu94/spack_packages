@@ -32,20 +32,13 @@ class Msz(CMakePackage, CudaPackage):
     depends_on("cmake@3.19:", type="build", when="+zstd")
 
     def cmake_args(self):
-        args = []
+        args = [
+                self.define_from_variant("MSZ_ENABLE_ZSTD", "zstd"),
+                self.define_from_variant("MSZ_ENABLE_OPENMP", "openmp"),
+                self.define_from_variant("MSZ_ENABLE_CUDA", "cuda"),
+        ]
         if "+cuda" in self.spec:
-            args.append("-DENABLE_CUDA=ON")
-        else:
-            args.append("-DENABLE_CUDA=OFF")
-
-        if "+openmp" in self.spec:
-            args.append("-DENABLE_OPENMP=ON")
-        else:
-            args.append("-DENABLE_OPENMP=OFF")
-
-        if "+zstd" in self.spec:
-            args.append("-DENABLE_ZSTD=ON")
-        else:
-            args.append("-DENABLE_ZSTD=OFF")
+            cuda_arch_list = self.spec.variants["cuda_arch"].value
+            args.append(self.define("CMAKE_CUDA_ARCHITECTURES", cuda_arch_list))
 
         return args

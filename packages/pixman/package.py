@@ -6,6 +6,7 @@
 import sys
 
 from spack.package import *
+import spack
 
 
 class Pixman(AutotoolsPackage):

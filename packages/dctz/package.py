@@ -21,7 +21,7 @@ class Dctz(CMakePackage):
     depends_on("pkgconfig", type="build")
     depends_on("zlib")
     depends_on("fftw@3:")
-    depends_on("libpressio@0.0.99:", when="+libpressio")
+    depends_on("libpressio@0.99.0:", when="+libpressio")
     depends_on("libstdcompat@0.0.21:", when="+libpressio")
 
     variant("shared", description="build a shared library", default=True)
