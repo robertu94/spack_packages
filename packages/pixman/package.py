@@ -40,6 +40,7 @@ class Pixman(AutotoolsPackage):
     depends_on("pkgconfig", type="build")
     depends_on("flex", type="build")
     depends_on("bison@3:", type="build")
+    depends_on("ninja", type="build")
 
     depends_on("libpng")
 
