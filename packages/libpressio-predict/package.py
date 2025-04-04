@@ -8,6 +8,7 @@ from spack.pkg.builtin.libpressio_predict import LibpressioPredict as BuiltinLib
 
 class LibpressioPredict(BuiltinLibpressioPredict):
     """prediction tools for libpressio"""
+    version("0.0.6", sha256="b26e2d7062825a61e820ca57e9ff0b47c5eccbdf41a63ee4a618faf08f1ab66b")
     version("0.0.5", sha256="4e198558f33c904344558ad09a65e62ed629e368ecb91a4e7a46ea73725ad9bb")
 
     variant("opt", description="enable prediction powered optimizer", default=False)
