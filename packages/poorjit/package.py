@@ -19,6 +19,7 @@ class Poorjit(CMakePackage):
 
     version("0.0.3", sha256="0ac8b450563fdc988384fba2ac563dcc7e7e74f53c88f538d48aa83461a3bdb5")
 
+    depends_on("c", type="build")
     depends_on("cxx", type="build")
 
     depends_on("boost+filesystem")

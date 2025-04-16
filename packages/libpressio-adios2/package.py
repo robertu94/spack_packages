@@ -11,3 +11,4 @@ class LibpressioAdios2(BuiltinLibPressioAdios2):
     """An IO plugin to read/write ADIOS2 files for LibPressio"""
 
     git = "https://github.com/robertu94/libpressio_adios2"
+    depends_on("c", type="build")

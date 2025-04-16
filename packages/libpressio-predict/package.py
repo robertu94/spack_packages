@@ -13,6 +13,7 @@ class LibpressioPredict(BuiltinLibpressioPredict):
 
     variant("opt", description="enable prediction powered optimizer", default=False)
     depends_on("libpressio-opt" ,when="+opt")
+    depends_on("c" , type="build")
 
     with when("+khan2023"):
         depends_on("sz3@3.1.8", when="@0.0.3:0.0.4")

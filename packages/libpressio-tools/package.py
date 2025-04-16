@@ -18,6 +18,8 @@ class LibpressioTools(BuiltinLibPressioTools):
     depends_on("lc-framework@1.3.0:+libpressio+cuda", when="+lcgpu")
     depends_on("libpressio@1.0.0:", when="@0.5.0:")
     depends_on("libpressio-predict@0.0.6:", when="@0.5.3:")
+    depends_on("cxx", type="build")
+    depends_on("c", type="build")
 
     def setup_run_environment(self, env):
         libraries = find_libraries(["liblibpressio_meta"], root=self.prefix, recursive=True)

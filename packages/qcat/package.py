@@ -23,6 +23,7 @@ class Qcat(CMakePackage):
     version("1.4", commit="f16032cf237837b1d32dde0c3daa6ad1ca4a912f")
 
     depends_on("c", type="build")
+    depends_on("cxx", type="build")
 
     depends_on("zstd")
     depends_on("gnuplot", type="run")

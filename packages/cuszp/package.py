@@ -23,6 +23,7 @@ class Cuszp(CMakePackage, CudaPackage):
     variant("examples", description="build the examples", default=True)
     version("2.0.1", commit="47c8f51aeaa1b82293b2f723c17cecf4c239c921", git="https://github.com/robertu94/cuSZp")
 
+    depends_on("c", type="build")
     depends_on("cxx", type="build")
 
     def cmake_args(self):
