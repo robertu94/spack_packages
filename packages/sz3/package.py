@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.sz3 import Sz3 as Sz3Builtin
+try:
+    from spack_repo.builtin.packages.sz3.package  import Sz3 as Sz3Builtin
+except ImportError:
+    from spack.pkg.builtin.sz3 import Sz3 as Sz3Builtin
 
 
 class Sz3(Sz3Builtin):

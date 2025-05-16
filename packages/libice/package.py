@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.libice import Libice as BuiltinLibice
+try:
+        from spack_repo.builtin.packages.libice.package  import Libice as BuiltinLibice
+except ImportError:
+    from spack.pkg.builtin.libice import Libice as BuiltinLibice
 
 class Libice(BuiltinLibice):
     """libICE - Inter-Client Exchange Library."""

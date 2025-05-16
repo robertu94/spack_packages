@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.libpressio_sperr import LibpressioSperr as BuiltinLibPressioSperr
+try:
+    from spack_repo.builtin.packages.libpressio_sperr.package  import LibpressioSperr as BuiltinLibPressioSperr
+except ImportError:
+    from spack.pkg.builtin.libpressio_sperr import LibpressioSperr as BuiltinLibPressioSperr
 
 
 class LibpressioSperr(BuiltinLibPressioSperr):

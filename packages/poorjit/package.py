@@ -22,7 +22,7 @@ class Poorjit(CMakePackage):
     depends_on("c", type="build")
     depends_on("cxx", type="build")
 
-    depends_on("boost+filesystem")
+    depends_on("boost+filesystem@:1.87") # TODO boost process 1.88 requires a different header path
     depends_on("zlib")
     depends_on("fmt")
 

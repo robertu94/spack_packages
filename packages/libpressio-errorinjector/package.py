@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.libpressio_errorinjector import LibpressioErrorinjector as BuiltinLibPressioErrorInjector
+try:
+    from spack_repo.builtin.packages.libpressio_errorinjector.package  import LibpressioErrorinjector as BuiltinLibPressioErrorInjector
+except ImportError:
+    from spack.pkg.builtin.libpressio_errorinjector import LibpressioErrorinjector as BuiltinLibPressioErrorInjector
 
 
 class LibpressioErrorinjector(BuiltinLibPressioErrorInjector):

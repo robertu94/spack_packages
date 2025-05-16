@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.qoz import Qoz as BuiltinQoz
+try:
+    from spack_repo.builtin.packages.qoz.package  import Qoz as BuiltinQoz
+except ImportError:
+    from spack.pkg.builtin.qoz import Qoz as BuiltinQoz
 
 
 class Qoz(BuiltinQoz):

@@ -3,7 +3,10 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 from spack.package import *
-from spack.pkg.builtin.libpressio_predict import LibpressioPredict as BuiltinLibpressioPredict
+try:
+    from spack_repo.builtin.packages.libpressio_predict.package  import LibpressioPredict as BuiltinLibpressioPredict
+except ImportError:
+    from spack.pkg.builtin.libpressio_predict import LibpressioPredict as BuiltinLibpressioPredict
 
 
 class LibpressioPredict(BuiltinLibpressioPredict):
@@ -25,4 +28,5 @@ class LibpressioPredict(BuiltinLibpressioPredict):
     def cmake_args(self):
         args = super().cmake_args()
         args.append(self.define_from_variant("LIBPRESSIO_PREDICT_HAS_OPT", "opt"))
+        args.append(self.define("BUILD_TESTING", self.spec.satisfies("dev_path=*")))
         return args

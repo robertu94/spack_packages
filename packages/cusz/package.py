@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.cusz import Cusz as BuiltinCusz
+try:
+    from spack_repo.builtin.packages.cusz.package import Cusz as BuiltinCusz
+except ImportError:
+    from spack.pkg.builtin.cusz import Cusz as BuiltinCusz
 
 
 class Cusz(BuiltinCusz):

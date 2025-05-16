@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.libpressio_rmetric import LibpressioRmetric as BuiltinLibPressioRmetric
+try:
+    from spack_repo.builtin.packages.libpressio_rmetric.package  import LibpressioRmetric as BuiltinLibPressioRmetric
+except ImportError:
+    from spack.pkg.builtin.libpressio_rmetric import LibpressioRmetric as BuiltinLibPressioRmetric
 
 
 class LibpressioRmetric(BuiltinLibPressioRmetric):

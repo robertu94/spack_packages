@@ -1,5 +1,8 @@
 from spack.package import *
-from spack.pkg.builtin.libpressio_tools import LibpressioTools as BuiltinLibPressioTools
+try:
+    from spack_repo.builtin.packages.libpressio_tools.package  import LibpressioTools as BuiltinLibPressioTools
+except ImportError:
+    from spack.pkg.builtin.libpressio_tools import LibpressioTools as BuiltinLibPressioTools
 
 
 class LibpressioTools(BuiltinLibPressioTools):

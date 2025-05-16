@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.libpressio_nvcomp import LibpressioNvcomp as BuiltinLibPressioNvcomp
+try:
+    from spack_repo.builtin.packages.libpressio_nvcomp.package  import LibpressioNvcomp as BuiltinLibPressioNvcomp
+except ImportError:
+    from spack.pkg.builtin.libpressio_nvcomp import LibpressioNvcomp as BuiltinLibPressioNvcomp
 
 
 class LibpressioNvcomp(BuiltinLibPressioNvcomp):

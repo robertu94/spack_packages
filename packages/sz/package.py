@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.sz import Sz as SzBuiltin, CMakeBuilder as SZCMakeBuilder
+try:
+    from spack_repo.builtin.packages.sz.package  import Sz as SzBuiltin, CMakeBuilder as SZCMakeBuilder
+except ImportError:
+    from spack.pkg.builtin.sz import Sz as SzBuiltin, SZCMakeBuilder
 
 
 class Sz(SzBuiltin):

@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.libpressio_opt import LibpressioOpt as BuiltinLibpressioOpt
+try:
+    from spack_repo.builtin.packages.libpressio_opt.package  import LibpressioOpt as BuiltinLibpressioOpt
+except ImportError:
+    from spack.pkg.builtin.libpressio_opt import LibpressioOpt as BuiltinLibpressioOpt
 
 
 class LibpressioOpt(BuiltinLibpressioOpt):

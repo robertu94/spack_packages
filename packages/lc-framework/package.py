@@ -4,7 +4,10 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack.package import *
-from spack.pkg.builtin.lc_framework import LcFramework as BuiltinLcFramework
+try:
+    from spack_repo.builtin.packages.lc_framework.package  import LcFramework as BuiltinLcFramework
+except ImportError:
+    from spack.pkg.builtin.lc_framework import LcFramework as BuiltinLcFramework
 
 class LcFramework(BuiltinLcFramework):
     """a framework for automatically creating high-speed lossless and error-bounded lossy data compression and decompression algorithms."""
