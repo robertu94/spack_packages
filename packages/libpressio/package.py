@@ -233,6 +233,7 @@ class Libpressio(CMakePackage, CudaPackage):
     )
     variant("grib", default=False, description="build support for grib files", when="@1.0.4:")
     variant("faz", default=False, description="build support for the FAZ compressor", when="@1.0.4:")
+    variant("szp", default=False, description="build support for the SZp compressor", when="@1.0.4:")
 
     # cufile was only added to the .run file installer for cuda in 11.7.1
     # dispite being in the APT/RPM packages for much longer
@@ -335,6 +336,8 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("eccodes+shared", when="+grib")
     depends_on("faz", when="+faz")
 
+    depends_on("szp", when="+szp")
+
     extends("python", when="+python")
 
     def lp_cxx_version(self):
@@ -359,6 +362,7 @@ class Libpressio(CMakePackage, CudaPackage):
     def cmake_args(self):
         args = [
             self.define_from_variant("LIBPRESSIO_HAS_SZ", "sz"),
+            self.define_from_variant("LIBPRESSIO_HAS_SZP", "szp"),
             self.define_from_variant("LIBPRESSIO_HAS_SZx", "szx"),
             self.define_from_variant("LIBPRESSIO_HAS_OPENSSL", "openssl"),
             self.define_from_variant("LIBPRESSIO_HAS_PYTHON_LAUNCH", "pybind"),

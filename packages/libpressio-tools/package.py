@@ -20,7 +20,7 @@ class LibpressioTools(BuiltinLibPressioTools):
     version("0.5.0", sha256="6fbab7fc2ce6dc65f9fa84c6e07feee22ae67d133b46a42e91c775cc99d6071c")
     depends_on("lc-framework@1.3.0:+libpressio+cuda", when="+lcgpu")
     depends_on("libpressio@1.0.0:", when="@0.5.0:")
-    depends_on("libpressio-predict@0.0.6:", when="@0.5.3:")
+    depends_on("libpressio-predict@0.0.6:", when="+predict@0.5.3:")
     depends_on("cxx", type="build")
     depends_on("c", type="build")
 
