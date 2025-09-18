@@ -7,11 +7,10 @@ from spack.package import *
 try:
     from spack_repo.builtin.packages.libpressio_nvcomp.package  import LibpressioNvcomp as BuiltinLibPressioNvcomp
 except ImportError:
-    from spack.pkg.builtin.libpressio_nvcomp import LibpressioNvcomp as BuiltinLibPressioNvcomp
+    from spack_repo.builtin.packages.libpressio_nvcomp.package import LibpressioNvcomp as BuiltinLibPressioNvcomp
 
 
 class LibpressioNvcomp(BuiltinLibPressioNvcomp):
     """LibPressio Bindings for NVCOMP"""
     depends_on("nvcomp@2.0.2:", when="@:0.0.2")
-    depends_on("c")
 

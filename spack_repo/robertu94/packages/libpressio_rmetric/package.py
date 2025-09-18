@@ -7,10 +7,9 @@ from spack.package import *
 try:
     from spack_repo.builtin.packages.libpressio_rmetric.package  import LibpressioRmetric as BuiltinLibPressioRmetric
 except ImportError:
-    from spack.pkg.builtin.libpressio_rmetric import LibpressioRmetric as BuiltinLibPressioRmetric
+    from spack_repo.builtin.packages.libpressio_rmetric.package import LibpressioRmetric as BuiltinLibPressioRmetric
 
 
 class LibpressioRmetric(BuiltinLibPressioRmetric):
     """LibPressio metric that runs R code"""
-    depends_on("c")
 

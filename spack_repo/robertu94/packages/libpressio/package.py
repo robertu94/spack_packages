@@ -3,6 +3,8 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
+from spack_repo.builtin.build_systems.cmake import CMakePackage
+from spack_repo.builtin.build_systems.cuda import CudaPackage
 from spack.package import *
 
 
@@ -20,7 +22,6 @@ class Libpressio(CMakePackage, CudaPackage):
     tests_require_compiler = True
     version("master", branch="master")
     version("develop", branch="develop")
-    version("1.0.5", sha256="26306dd487c865ce2b3746c29cac862abaf4df96f83666b93460aa5b9d6396c1")
     version("1.0.3", sha256="32fbcca83740e30df9fdb655ae67c91726b32c1ea7e8bb0a4798e771d9f88908")
     version("1.0.2", sha256="3f720699d0b4d78382c6aa9997e21a55196c5d0f682edbe23dff32dbddffe0c4")
     version("1.0.1", sha256="cd12019bde3d23829375864118aa336d1ec80951eacb7b8471e736d9ad60059c")
@@ -182,7 +183,6 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("c", type="build")  # generated
     depends_on("cxx", type="build")  # generated
 
-    variant("shared", description="build shared libaries", default=True)
     variant("llvm", description="add support for llvm", default=False)
     variant("cuszp", description="add support for cuszp", default=False)
     variant(
@@ -298,7 +298,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("szx@1.1.1:", when="@0.97.2: +szx")
     depends_on("openssl", when="+openssl")
     depends_on("py-pybind11", when="+pybind")
-    depends_on("matio+shared@1.5.17:", when="+matio+shared")
+    depends_on("matio+shared@1.5.17:", when="+matio")
     depends_on("llvm@17: +clang+link_llvm_dylib", when="+clang")
     conflicts(
         "^ mgard@2022.11.18",
@@ -325,11 +325,9 @@ class Libpressio(CMakePackage, CudaPackage):
     conflicts("+digitrounding", when="@1.0.0", msg="there is a problem building digitrounding in this version")
 
     depends_on("sz3", when="+sz3")
-    depends_on("sz3@3.1.8:", when="@0.98.1:1.0.3 +sz3")
-    depends_on("sz3@3.3.0:", when="@1.0.5: +sz3")
+    depends_on("sz3@3.1.8:", when="@0.98.1: +sz3")
     depends_on("bzip2", when="+bzip2")
-    depends_on("qoz@2022.04.26:2023.03.09", when="@:1.0.3+qoz")
-    depends_on("qoz@2023.11.07:", when="@:1.0.3+qoz")
+    depends_on("qoz", when="+qoz")
     depends_on("msz", when="+msz")
 
     depends_on("cusz@0.6.0:", when="+cusz")
@@ -337,7 +335,7 @@ class Libpressio(CMakePackage, CudaPackage):
 
     depends_on("cuszp@2.0.1:", when="+cuszp")
 
-    depends_on("eccodes+shared", when="+grib+shared")
+    depends_on("eccodes+shared", when="+grib")
     depends_on("faz", when="+faz")
 
     depends_on("szp", when="+szp")
@@ -365,7 +363,6 @@ class Libpressio(CMakePackage, CudaPackage):
 
     def cmake_args(self):
         args = [
-            self.define_from_variant("BUILD_SHARED_LIBS", "shared"),
             self.define_from_variant("LIBPRESSIO_HAS_SZ", "sz"),
             self.define_from_variant("LIBPRESSIO_HAS_SZP", "szp"),
             self.define_from_variant("LIBPRESSIO_HAS_SZx", "szx"),

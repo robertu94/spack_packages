@@ -1,0 +1,45 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c46a46c..91744be 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,6 +1,9 @@
+ project                     (Reeber Fortran CXX C)
+ cmake_minimum_required      (VERSION 3.1)
+ 
++include(GNUInstallDirs)
++
++option                      (install_examples   "Install examples using reeber"                 OFF)
+ option                      (amrex              "Build Reeber with AMReX support"               OFF)
+ option                      (trace              "Enable trace log"                              OFF)
+ option                      (profile            "Build Reeber with profiling"                   ON)
+diff --git a/examples/amr-connected-components/CMakeLists.txt b/examples/amr-connected-components/CMakeLists.txt
+index 0a117fd..de24aca 100644
+--- a/examples/amr-connected-components/CMakeLists.txt
++++ b/examples/amr-connected-components/CMakeLists.txt
+@@ -23,4 +23,10 @@ target_compile_definitions(amr_connected_components_${real} PRIVATE REEBER_REAL=
+ # target_link_libraries(amr_merge_tree PUBLIC ${libraries})
+ target_link_libraries(amr_connected_components_${real} PUBLIC ${libraries} HighFive)
+ 
++if (install_examples)
++install(TARGETS amr_connected_components_${real}
++  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++  )
++endif (install_examples)
++
+ endforeach()
+diff --git a/examples/amr-merge-tree/CMakeLists.txt b/examples/amr-merge-tree/CMakeLists.txt
+index 76cc554..6694f44 100644
+--- a/examples/amr-merge-tree/CMakeLists.txt
++++ b/examples/amr-merge-tree/CMakeLists.txt
+@@ -37,4 +37,11 @@ target_link_libraries(write_refined_amr_${real} PUBLIC ${libraries})
+ 
+ add_test(amr-merge-tree-test-${real} amr_merge_tree_test_${real})
+ 
++if (install_examples)
++install(TARGETS amr_merge_tree_test_${real} amr_merge_tree_simple_${real} write_refined_amr_${real}
++  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
++  )
++endif (install_examples)
++
++
+ endforeach()

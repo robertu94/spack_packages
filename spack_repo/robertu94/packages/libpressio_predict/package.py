@@ -6,7 +6,7 @@ from spack.package import *
 try:
     from spack_repo.builtin.packages.libpressio_predict.package  import LibpressioPredict as BuiltinLibpressioPredict
 except ImportError:
-    from spack.pkg.builtin.libpressio_predict import LibpressioPredict as BuiltinLibpressioPredict
+    from spack_repo.builtin.packages.libpressio_predict.package import LibpressioPredict as BuiltinLibpressioPredict
 
 
 class LibpressioPredict(BuiltinLibpressioPredict):
@@ -20,10 +20,10 @@ class LibpressioPredict(BuiltinLibpressioPredict):
 
     with when("+khan2023"):
         depends_on("sz3@3.1.8", when="@0.0.3:0.0.4")
-        depends_on("sz3@3.2.1:", when="@0.0.5:")
+        depends_on("sz3@3.2.1", when="@0.0.5:")
     with when("+sian2022"):
         depends_on("sz3@3.1.8", when="@0.0.3:0.0.4")
-        depends_on("sz3@3.2.1:", when="@0.0.5:")
+        depends_on("sz3@3.2.1", when="@0.0.5:")
 
     def cmake_args(self):
         args = super().cmake_args()
