@@ -16,4 +16,4 @@ class LibpressioTthresh(BuiltinLibPressioTthresh):
     version("0.0.9", sha256="91fd5b6d8a8711b32743992866fdabd549a07423977776a77d465020b5786f1d")
     depends_on("libpressio@1.0.0:1.0.4", when="@0.0.9")
     depends_on("libpressio@1.0.5:", when="@0.0.10:")
-    depends_on("c")
+    depends_on("c", type="build")
