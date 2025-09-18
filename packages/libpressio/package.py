@@ -20,6 +20,7 @@ class Libpressio(CMakePackage, CudaPackage):
     tests_require_compiler = True
     version("master", branch="master")
     version("develop", branch="develop")
+    version("1.0.6", sha256="689d7295dad7b12b64a7b2d6467fa0b3fe73203a64016d2c651cff19bb65b5ee")
     version("1.0.5", sha256="26306dd487c865ce2b3746c29cac862abaf4df96f83666b93460aa5b9d6396c1")
     version("1.0.3", sha256="32fbcca83740e30df9fdb655ae67c91726b32c1ea7e8bb0a4798e771d9f88908")
     version("1.0.2", sha256="3f720699d0b4d78382c6aa9997e21a55196c5d0f682edbe23dff32dbddffe0c4")
