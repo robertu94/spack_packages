@@ -12,3 +12,6 @@ except ImportError:
 
 class Libstdcompat(BuiltinStdCompat):
     """A compatibility header for C++14, 17, and 20 for C++11"""
+    version("0.0.22", sha256="d1160c3fd66966e0f6e8fc5f43fece4c47e918347c030b4a58d6f3f6930402b7")
+
+

@@ -22,6 +22,8 @@ class Libpressio(CMakePackage, CudaPackage):
     tests_require_compiler = True
     version("master", branch="master")
     version("develop", branch="develop")
+    version("1.0.6", sha256="689d7295dad7b12b64a7b2d6467fa0b3fe73203a64016d2c651cff19bb65b5ee")
+    version("1.0.5", sha256="26306dd487c865ce2b3746c29cac862abaf4df96f83666b93460aa5b9d6396c1")
     version("1.0.3", sha256="32fbcca83740e30df9fdb655ae67c91726b32c1ea7e8bb0a4798e771d9f88908")
     version("1.0.2", sha256="3f720699d0b4d78382c6aa9997e21a55196c5d0f682edbe23dff32dbddffe0c4")
     version("1.0.1", sha256="cd12019bde3d23829375864118aa336d1ec80951eacb7b8471e736d9ad60059c")
@@ -183,6 +185,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("c", type="build")  # generated
     depends_on("cxx", type="build")  # generated
 
+    variant("shared", description="build shared libaries", default=True)
     variant("llvm", description="add support for llvm", default=False)
     variant("cuszp", description="add support for cuszp", default=False)
     variant(
@@ -236,6 +239,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant("grib", default=False, description="build support for grib files", when="@1.0.4:")
     variant("faz", default=False, description="build support for the FAZ compressor", when="@1.0.4:")
     variant("szp", default=False, description="build support for the SZp compressor", when="@1.0.4:")
+    variant("lscomp", default=False, description="build support for the lsCOMP compressor", when="@1.0.4:")
 
     # cufile was only added to the .run file installer for cuda in 11.7.1
     # dispite being in the APT/RPM packages for much longer
@@ -267,6 +271,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("mgard", when="+mgard")
     depends_on("python@3:", when="+python", type=("build", "link", "run"))
     depends_on("py-numpy", when="+python", type=("build", "link", "run"))
+    depends_on("dlpack@1.0:", when="@1.0.6:+python", type=("build", "link", "run"))
     depends_on("swig@3.12:", when="+python", type="build")
     depends_on("sz@2.1.8.1:", when="@0.55.2:+sz")
     depends_on("sz@2.1.11.1:", when="@0.55.3:+sz")
@@ -298,7 +303,8 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("szx@1.1.1:", when="@0.97.2: +szx")
     depends_on("openssl", when="+openssl")
     depends_on("py-pybind11", when="+pybind")
-    depends_on("matio+shared@1.5.17:", when="+matio")
+    depends_on("lscomp@1.0.0:", when="+lscomp")
+    depends_on("matio+shared@1.5.17:", when="+matio+shared")
     depends_on("llvm@17: +clang+link_llvm_dylib", when="+clang")
     conflicts(
         "^ mgard@2022.11.18",
@@ -325,9 +331,11 @@ class Libpressio(CMakePackage, CudaPackage):
     conflicts("+digitrounding", when="@1.0.0", msg="there is a problem building digitrounding in this version")
 
     depends_on("sz3", when="+sz3")
-    depends_on("sz3@3.1.8:", when="@0.98.1: +sz3")
+    depends_on("sz3@3.1.8:", when="@0.98.1:1.0.3 +sz3")
+    depends_on("sz3@3.3.0:", when="@1.0.5: +sz3")
     depends_on("bzip2", when="+bzip2")
-    depends_on("qoz", when="+qoz")
+    depends_on("qoz@2022.04.26:2023.03.09", when="@:1.0.3+qoz")
+    depends_on("qoz@2023.11.07:", when="@:1.0.5+qoz")
     depends_on("msz", when="+msz")
 
     depends_on("cusz@0.6.0:", when="+cusz")
@@ -335,7 +343,7 @@ class Libpressio(CMakePackage, CudaPackage):
 
     depends_on("cuszp@2.0.1:", when="+cuszp")
 
-    depends_on("eccodes+shared", when="+grib")
+    depends_on("eccodes+shared", when="+grib+shared")
     depends_on("faz", when="+faz")
 
     depends_on("szp", when="+szp")
@@ -363,6 +371,7 @@ class Libpressio(CMakePackage, CudaPackage):
 
     def cmake_args(self):
         args = [
+            self.define_from_variant("BUILD_SHARED_LIBS", "shared"),
             self.define_from_variant("LIBPRESSIO_HAS_SZ", "sz"),
             self.define_from_variant("LIBPRESSIO_HAS_SZP", "szp"),
             self.define_from_variant("LIBPRESSIO_HAS_SZx", "szx"),
@@ -402,6 +411,7 @@ class Libpressio(CMakePackage, CudaPackage):
             self.define_from_variant("LIBPRESSIO_HAS_HDF", "hdf5"),
             self.define_from_variant("LIBPRESSIO_HAS_LLVM", "llvm"),
             self.define_from_variant("LIBPRESSIO_HAS_GRIB", "grib"),
+            self.define_from_variant("LIBPRESSIO_HAS_LSCOMP", "lscomp"),
             self.define_from_variant("BUILD_DOCS", "docs"),
             self.define_from_variant("LIBPRESSIO_HAS_CUSZP", "cuszp"),
             self.define_from_variant("LIBPRESSIO_INSTALL_DOCS", "docs"),

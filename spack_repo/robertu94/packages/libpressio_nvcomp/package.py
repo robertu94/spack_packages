@@ -13,4 +13,5 @@ except ImportError:
 class LibpressioNvcomp(BuiltinLibPressioNvcomp):
     """LibPressio Bindings for NVCOMP"""
     depends_on("nvcomp@2.0.2:", when="@:0.0.2")
+    depends_on("c", type="build")
 

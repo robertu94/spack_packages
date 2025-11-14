@@ -15,3 +15,4 @@ class Sz3(Sz3Builtin):
     conflicts("+mdz", when="@3.3.0", msg="mdz doesn't build on 3.3.0")
     version("3.3.0", commit="5d2fd2638bc3512c0b4aed594d6e8a130d0d3ed2")
     version("3.2.1", commit="61816ba1276a83b4f9aa3ee0f8299eb7b0b3528a")
+

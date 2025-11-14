@@ -17,3 +17,8 @@ class Cusz(BuiltinCusz):
     depends_on("python", type=("build","link"), when="@0.14.0:")
     depends_on("swig", type=("build"), when="@0.14.0:")
     depends_on("cub", when="@0.6.0:^cuda@:10.2.89")
+
+    def cmake_args(self):
+        args = super().cmake_args()
+        args.append("-DCMAKE_CUDA_FLAGS_DEBUG='-g -G'")
+        return args

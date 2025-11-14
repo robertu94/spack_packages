@@ -12,4 +12,5 @@ except ImportError:
 
 class LibpressioRmetric(BuiltinLibPressioRmetric):
     """LibPressio metric that runs R code"""
+    depends_on("c", type="build")
 
