@@ -6,6 +6,7 @@
 import sys
 
 from spack_repo.builtin.build_systems.autotools import AutotoolsPackage
+from spack_repo.builtin.build_systems.meson import MesonBuilder
 from spack.package import *
 import spack_repo
 
@@ -81,7 +82,7 @@ class Pixman(AutotoolsPackage):
         )
 
 
-class MesonBuilder(spack_repo.builtin.build_systems.meson.MesonBuilder):
+class MesonBuilder(MesonBuilder):
     def meson_args(self):
         args = ["-Dlibpng=enabled", "-Dgtk=disabled", "-Db_staticpic=true", "-Ddemos=disabled"]
 
