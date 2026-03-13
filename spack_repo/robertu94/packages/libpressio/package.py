@@ -291,6 +291,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("py-mpi4py", when="@0.54.0:+mpi+python", type=("build", "link", "run"))
     depends_on("py-numcodecs@:0.13.0", when="@0.54.0:+python", type="run")
     depends_on("doxygen+graphviz", when="+docs", type="build")
+    depends_on("graphviz+pangocairo", when="+docs", type="build")
     depends_on("curl", when="+remote")
     depends_on("nlohmann-json+multiple_headers", when="+remote")
     depends_on("nlohmann-json+multiple_headers", when="+json")
