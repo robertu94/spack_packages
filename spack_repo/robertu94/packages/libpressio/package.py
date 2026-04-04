@@ -188,6 +188,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant("shared", description="build shared libaries", default=True)
     variant("llvm", description="add support for llvm", default=False)
     variant("cuszp", description="add support for cuszp", default=False)
+    variant("fzgpumodules", description="add support for fzgpumodules", default=False)
     variant(
         "pybind", default=False, description="build support for pybind metrics", when="@0.96.0:"
     )
@@ -344,6 +345,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("cusz@0.14.0:", when="@1.0.0:+cusz")
 
     depends_on("cuszp@2.0.1:", when="+cuszp")
+    depends_on("fzgpumodules@1.0:", when="+fzgpumodules")
 
     depends_on("eccodes+shared", when="+grib+shared")
     depends_on("faz", when="+faz")
@@ -416,6 +418,7 @@ class Libpressio(CMakePackage, CudaPackage):
             self.define_from_variant("LIBPRESSIO_HAS_LSCOMP", "lscomp"),
             self.define_from_variant("BUILD_DOCS", "docs"),
             self.define_from_variant("LIBPRESSIO_HAS_CUSZP", "cuszp"),
+            self.define_from_variant("LIBPRESSIO_HAS_FZGPUMODULES", "fzgpumodules"),
             self.define_from_variant("LIBPRESSIO_INSTALL_DOCS", "docs"),
             self.define_from_variant("BUILD_PYTHON_WRAPPER", "python"),
             self.define("LIBPRESSIO_HAS_MPI4PY", self.spec.satisfies("+python +mpi")),
