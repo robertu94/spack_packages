@@ -19,26 +19,32 @@ class Msz(CMakePackage, CudaPackage):
 
     license("MIT", checked_by="robertu94")
 
+    version("fz", branch="fz", preferred=True)
     version("main", branch="main")
     version("0.0.2", sha256="7f88bf29b6ab7035246173c59b5fa6e3c6b31cab53e5b241530ae7bf72befa13")
     version("0.0.1", sha256="504bed79593ec7605a4a3c63cb038163e9de6fea8f8d75487001612e83bd9073")
-    
 
-
+    variant("python", default=False, description="Build Python bindings")
     variant("zstd", default=True, description="Enable Zstd compression")
     variant("cuda", default=False, description="Enable CUDA support")
     variant("openmp", default=False, description="Enable OpenMP for parallelism")
 
+    extends("python", when="+python")
+    depends_on("python@3.8:", type=("build", "link", "run"), when="+python")
     depends_on("zstd build_system=cmake", when="+zstd")
     depends_on("cuda", when="+cuda")
-    depends_on("cmake@3.19:", type="build", when="+zstd")
+    depends_on("cmake@3.20:", type="build")
 
     def cmake_args(self):
         args = [
-                self.define_from_variant("MSZ_ENABLE_ZSTD", "zstd"),
-                self.define_from_variant("MSZ_ENABLE_OPENMP", "openmp"),
-                self.define_from_variant("MSZ_ENABLE_CUDA", "cuda"),
+            self.define_from_variant("MSZ_ENABLE_ZSTD", "zstd"),
+            self.define_from_variant("MSZ_ENABLE_OPENMP", "openmp"),
+            self.define_from_variant("MSZ_ENABLE_CUDA", "cuda"),
+            self.define_from_variant("BUILD_PYTHON", "python"),
         ]
+        if "+python" in self.spec:
+            args.append(self.define("Python3_EXECUTABLE", self.spec["python"].command.path))
+            args.append(self.define("MSZ_PYTHON_INSTALL_DIR", python_platlib))
         if "+cuda" in self.spec:
             cuda_arch_list = self.spec.variants["cuda_arch"].value
             args.append(self.define("CMAKE_CUDA_ARCHITECTURES", cuda_arch_list))
