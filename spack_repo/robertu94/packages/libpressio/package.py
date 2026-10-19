@@ -20,6 +20,9 @@ class Libpressio(CMakePackage, CudaPackage):
     maintainers("robertu94")
 
     tests_require_compiler = True
+    # Reproducible FZGM integration snapshot while upstream support is under review.
+    version("develop-fzgm-support", git="https://github.com/skyler-ruiter/libpressio.git",
+            commit="6eae9065b796470128cce3e49cf7090c33aa90ed")
     version("master", branch="master")
     version("develop", branch="develop")
     version("1.0.6", sha256="689d7295dad7b12b64a7b2d6467fa0b3fe73203a64016d2c651cff19bb65b5ee")
@@ -188,6 +191,7 @@ class Libpressio(CMakePackage, CudaPackage):
     variant("shared", description="build shared libaries", default=True)
     variant("llvm", description="add support for llvm", default=False)
     variant("cuszp", description="add support for cuszp", default=False)
+    variant("fzgpumodules", description="add support for fzgpumodules", default=False)
     variant(
         "pybind", default=False, description="build support for pybind metrics", when="@0.96.0:"
     )
@@ -290,7 +294,7 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("bitgroomingz", when="+bitgrooming")
     depends_on("cmake@3.14:", type="build")
     depends_on("py-mpi4py", when="@0.54.0:+mpi+python", type=("build", "link", "run"))
-    depends_on("py-numcodecs@:0.13.0", when="@0.54.0:+python", type="run")
+    depends_on("py-numcodecs@:0.13.0", when="@0.54.0:+python~fzgpumodules", type="run")
     depends_on("doxygen+graphviz", when="+docs", type="build")
     depends_on("graphviz+pangocairo", when="+docs", type="build")
     depends_on("curl", when="+remote")
@@ -344,6 +348,19 @@ class Libpressio(CMakePackage, CudaPackage):
     depends_on("cusz@0.14.0:", when="@1.0.0:+cusz")
 
     depends_on("cuszp@2.0.1:", when="+cuszp")
+    conflicts("~cuda", when="+fzgpumodules", msg="FZGPUModules requires CUDA")
+    conflicts("+fzgpumodules", when="@0:1.0.6",
+              msg="Use the develop-fzgm-support integration snapshot")
+    conflicts("+fzgpumodules", when="@=master")
+    conflicts("+fzgpumodules", when="@=develop")
+    depends_on("fzgpumodules +cuda", when="+fzgpumodules")
+    depends_on("fzgpumodules@=2.0.1", when="@develop-fzgm-support +fzgpumodules")
+    depends_on("swig@4.2:", when="+fzgpumodules+python", type="build")
+    depends_on("py-numcodecs@0.16:", when="+fzgpumodules+python", type="run")
+    # SWIG's portable typemap macro supports both the two- and three-argument runtimes.
+    patch("fzgm-python3-swig.patch", when="+fzgpumodules+python")
+    for _arch in CudaPackage.cuda_arch_values:
+        depends_on(f"fzgpumodules cuda_arch={_arch}", when=f"+fzgpumodules cuda_arch={_arch}")
 
     depends_on("eccodes+shared", when="+grib+shared")
     depends_on("faz", when="+faz")
@@ -416,6 +433,7 @@ class Libpressio(CMakePackage, CudaPackage):
             self.define_from_variant("LIBPRESSIO_HAS_LSCOMP", "lscomp"),
             self.define_from_variant("BUILD_DOCS", "docs"),
             self.define_from_variant("LIBPRESSIO_HAS_CUSZP", "cuszp"),
+            self.define_from_variant("LIBPRESSIO_HAS_FZGPUMODULES", "fzgpumodules"),
             self.define_from_variant("LIBPRESSIO_INSTALL_DOCS", "docs"),
             self.define_from_variant("BUILD_PYTHON_WRAPPER", "python"),
             self.define("LIBPRESSIO_HAS_MPI4PY", self.spec.satisfies("+python +mpi")),
@@ -436,6 +454,8 @@ class Libpressio(CMakePackage, CudaPackage):
         # libpressio needs to know where to install the python libraries
         if self.spec.satisfies("+python"):
             args.append(f"-DLIBPRESSIO_PYTHON_SITELIB={python_platlib}")
+        if self.spec.satisfies("+fzgpumodules+python"):
+            args.append(self.define("Python3_EXECUTABLE", self.spec["python"].command.path))
         # help ensure that libpressio finds the correct HDF5 package
         if self.spec.satisfies("+hdf5"):
             args.append("-DHDF5_ROOT=" + self.spec["hdf5"].prefix)
@@ -485,3 +505,11 @@ class Libpressio(CMakePackage, CudaPackage):
 
         expected = "all passed"
         assert expected in out
+
+    def test_fzgm_python(self):
+        """Check the installed FZGM Python interface on a CUDA GPU."""
+        if not self.spec.satisfies("+fzgpumodules+python"):
+            raise SkipTest("Requires the FZGPUModules Python integration")
+        import os
+        script = join_path(os.path.dirname(__file__), "fzgm_smoke.py")
+        self.spec["python"].command(script)
